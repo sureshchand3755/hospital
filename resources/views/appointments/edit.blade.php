@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="form-heading">
-                    <h4>Edit Doctor</h4>
+                    <h4>Edit Patient</h4>
                 </div>
                 <div class="card">
                     <div class="card-body">

@@ -335,24 +335,7 @@
                         <div class="card-box">
                             <h4 class="card-title">Prescriptions Details</h4>
                             <hr>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-md-4 col-form-label"><strong>Subtitle</strong></label>
-                                        <div class="col-md-8">
-                                            <span id="v_subtitle"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <label class="col-md-4 col-form-label"><strong>Patient Name</strong></label>
-                                        <div class="col-md-8">
-                                            <span id="v_patientname"></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="row prescriptionData"></div>
                         </div>
                     </div>
                 </div>
@@ -393,21 +376,7 @@
                         <input type="hidden" id="patient_id" name="patient_id" value="">
                         <input type="hidden" id="doctor_id" name="doctor_id" value="">
                         <div class="row">
-                            <div class="col-12 col-md-12 col-xl-12">
-                                <div class="form-group local-forms">
-                                    <label>Prescription <span class="login-danger">*</span></label>
-                                    <textarea class="form-control" rows="2" cols="15" name="prescription" id="prescription"></textarea>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-6 col-xl-6">
-                                <div class="form-group local-top-form">
-                                    <label class="local-top">Upload Image</label>
-                                    <div class="settings-btn upload-files-avator">
-                                        <input type="file" accept="image/*" name="uploadimage" id="uploadimage" onchange="loadFile(event)" class="hide-input">
-                                        <label for="file" class="upload">Choose File</label>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -496,6 +465,13 @@ $(document).ready(function($) {
             $('#v_note').text(data.note);
             $('#v_doctor').text(data.doctordetails.name);
             $('#v_department').text(data.department.department_name);
+            if(data.patientprescription.length > 0){
+                // var prescription = JSON.stringify(data.patientprescription);
+                $.each(data.patientprescription, function(key, presdata) {
+                    var insertData = '<div class="col-md-12"><label class="col-md-4 col-form-label"><strong>Doctor Name</strong></label><div class="col-md-8"><span class="viewtext">'+data.doctordetails.name+'</span></div></div><div class="col-md-12"><label class="col-md-4 col-form-label"><strong>Prescription</strong></label><div class="col-md-8"><span class="viewtext">'+presdata.prescriptions+'</span></div></div>';
+                    $('.prescriptionData').html(insertData);
+                });
+            }
         })
     });
 

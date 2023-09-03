@@ -95,8 +95,9 @@ class AppointmentController extends Controller
         $appointment->note = $request->note;
         $appointment->doctor_id = $request->doctor_id;
         $appointment->department_id = $request->department_id;
+        $appointment->created_at = new Carbon();
         $appointment->save();
-        return Redirect::route('appointment.index')->with('success','Appointment booked successfully!');
+        return Redirect::route('patient.appointment.index')->with('success','Appointment booked successfully!');
 
         // $str = 'Appolo Hospital';
         // $prefix = substr($str,0,3);
@@ -201,8 +202,11 @@ class AppointmentController extends Controller
                     $dt =  $dt->addColumn('action', function($row){
                         $actionBtn = '<div class="dropdown dropdown-action">
                         <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item view_appointment" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#view_appointment" href="#"><i class="fa-solid fa-eye m-r-5"></i> View</a>
+                        <div class="dropdown-menu dropdown-menu-end">';
+                        if($row->status=='C'){
+                            $actionBtn .='<a class="dropdown-item" href="'.url('appointment/clone/'.$row->id).'"><i class="fa-solid fa-clone m-r-5"></i> Clone</a>';
+                        }
+                        $actionBtn .='<a class="dropdown-item view_appointment" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#view_appointment" href="#"><i class="fa-solid fa-eye m-r-5"></i> View</a>
                         <a class="dropdown-item" href="'.url('appointment/edit/'.$row->id).'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
                         <a class="dropdown-item delete_appointment" href="#" data-id="'.$row->id.'"  data-bs-toggle="modal" data-bs-target="#delete_appointment"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
                         </div>';
@@ -247,6 +251,58 @@ class AppointmentController extends Controller
         $data = PatientDetails::where('id',$id)->get()->first();
         return view('appointments.edit', compact('data', 'doctor', 'department','states'));
     }
+    public function clone($id)
+    {
+        $defaultSelection = [''=>'Please Select'];
+        $doctor = $defaultSelection + User::where('type',1)->where('status',0)->where('deleted_at','N')->pluck("name", "id")->toArray();
+        $states = $defaultSelection + State::pluck("name", "id")->toArray();
+        $department = $defaultSelection + Department::where('status',0)->where('deleted_at','N')->pluck("department_name", "id")->toArray();
+        $data = PatientDetails::where('id',$id)->get()->first();
+        return view('appointments.clone', compact('data', 'doctor', 'department','states'));
+    }
+
+    public function cloneStore(Request $request){
+        $str = 'Appolo Hospital';
+        $prefix = substr($str,0,3);
+        $appointment_no = IdGenerator::generate(['table' => 'patient_details','field'=>'appointment_no', 'length' => 7, 'prefix' =>strtoupper($prefix)]);
+        $appointment = new PatientDetails();
+        $appointment->appointment_no = $appointment_no;
+        $appointment->subtitle = $request->subtitle;
+        $appointment->email = $request->email;
+        $appointment->phone_number = $request->phone_number;
+        $appointment->patient_name = $request->patient_name;
+        $date = explode('/', $request->date_of_birth);
+        $appointment->date_of_birth = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
+        $appointment->age = $request->age;
+        $appointment->gender = $request->gender;
+        $appointment->aadhar_number = $request->aadhar_number;
+        $appointment->father_or_husband = $request->father_or_husband;
+        $appointment->father_or_husband_name = $request->father_or_husband_name;
+        $appointment->mother_or_wife = $request->mother_or_wife;
+        $appointment->mother_or_wife_name = $request->mother_or_wife_name;
+        $appointment->guardian_name = $request->guardian_name;
+        $appointment->address = $request->address;
+        $appointment->state_id = $request->state_id;
+        $appointment->city_id = $request->city_id;
+        $appointment->postal_code = $request->postal_code;
+        $appointment->phone_number = $request->phone_number;
+        $appointment->education = $request->education;
+        $appointment->ref_by = $request->ref_by;
+        $appointment->occupation = $request->occupation;
+        $appointment->send_alert = $request->send_alert;
+        $appointment->blood = $request->blood;
+        $appointment->diet = $request->diet;
+        $appointment->height = $request->height;
+        $appointment->weight = $request->weight;
+        $appointment->brith_weight = $request->brith_weight;
+        $appointment->any_mediciens = $request->any_mediciens;
+        $appointment->note = $request->note;
+        $appointment->doctor_id = $request->doctor_id;
+        $appointment->department_id = $request->department_id;
+        $appointment->created_at = new Carbon();
+        $appointment->save();
+        return Redirect::route('patient.appointment.index')->with('success','Appointment cloned successfully!');
+    }
 
     /**
      * Update the specified resource in storage.
@@ -286,8 +342,9 @@ class AppointmentController extends Controller
         $appointment->note = $request->note;
         $appointment->doctor_id = $request->doctor_id;
         $appointment->department_id = $request->department_id;
+        $appointment->updated_at = new Carbon();
         $appointment->save();
-        return Redirect::route('appointment.index')->with('success','Appointment updated successfully!');
+        return Redirect::route('patient.appointment.index')->with('success','Appointment updated successfully!');
     }
 
     public function changeStatus(Request $request){
@@ -306,11 +363,11 @@ class AppointmentController extends Controller
     {
         try {
             PatientDetails::where("id", $request->id)->update(['deleted_at'=>'Y']);
-            return Redirect::route('appointment.index')->with('success','Appointment deleted successfully');
+            return Redirect::route('patient.appointment.index')->with('success','Appointment deleted successfully');
 
         } catch(\Exception $e) {
 
-            return Redirect::route('appointment.index')->with('Error','Appointment delete fail');
+            return Redirect::route('patient.appointment.index')->with('Error','Appointment delete fail');
             return redirect()->back();
         }
     }

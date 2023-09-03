@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Prescription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
+use Carbon\Carbon;
 
 class PrescriptionController extends Controller
 {
@@ -40,6 +41,7 @@ class PrescriptionController extends Controller
             $prescription->upload_path = $imagePath;
             $prescription->upload_image = $imageName;
         }
+        $prescription->created_at = new Carbon();
         $prescription->save();
         return Redirect::route('appointment.index')->with('success','Prescription added successfully!');
     }

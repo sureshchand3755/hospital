@@ -55,12 +55,14 @@ Reception Routes List
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:0'])->group(function () {
     Route::get('reception/dashboard', [HomeController::class, 'index'])->name('reception.dashboard');
-    Route::get('patient/appointments', [AppointmentController::class, 'index'])->name('appointment.index');
+    Route::get('patient/appointments', [AppointmentController::class, 'index'])->name('patient.appointment.index');
     Route::get('appointment/add', [AppointmentController::class, 'create'])->name('appointment.add');
     Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
     Route::post('appointment/store', [AppointmentController::class, 'store']);
     Route::get('patient/appointment/list', [AppointmentController::class, 'getList'])->name('patient.appointment.list');
     Route::get('appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('appointment.edit');
+    Route::get('appointment/clone/{id}', [AppointmentController::class, 'clone'])->name('appointment.clone');
+    Route::post('appointment/cloneStore', [AppointmentController::class, 'cloneStore']);
     Route::post('appointment/update', [AppointmentController::class, 'update']);
     Route::post('appointment/delete',  [AppointmentController::class, 'destroy'])->name('appointment.delete');
     Route::post('appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('appointment.changestatus');

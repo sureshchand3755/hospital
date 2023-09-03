@@ -76,14 +76,14 @@
                                 <!-- /Form -->
 
                                 <div class="next-sign">
-                                    <p class="account-subtitle">Need an account?  <a href="{{url('register')}}">Sign Up</a></p>
+                                    {{-- <p class="account-subtitle">Need an account?  <a href="{{url('register')}}">Sign Up</a></p> --}}
 
                                     <!-- Social Login -->
-                                    <div class="social-login">
+                                    {{-- <div class="social-login">
                                         <a href="javascript:;" ><img src="assets/img/icons/login-icon-01.svg" alt=""></a>
                                         <a href="javascript:;" ><img src="assets/img/icons/login-icon-02.svg" alt=""></a>
                                         <a href="javascript:;" ><img src="assets/img/icons/login-icon-03.svg" alt=""></a>
-                                    </div>
+                                    </div> --}}
                                     <!-- /Social Login -->
 
                                 </div>
