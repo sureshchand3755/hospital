@@ -9,6 +9,7 @@ use Hash;
 use DataTables;
 use DateTime;
 use URL;
+use Auth;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
@@ -86,7 +87,13 @@ class DoctorsController extends Controller
         }
         $doctorInfo->created_at = new Carbon();
         $doctorInfo->save();
-        return Redirect::route('doctor.list')->with('success','Profile created successfully!');
+
+        $redirect = 'doctor.list';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.doctor.list';
+        }
+
+        return Redirect::route($redirect)->with('success','Profile created successfully!');
     }
 
     public function getDoctors(Request $request)
@@ -126,19 +133,31 @@ class DoctorsController extends Controller
                     $actionBtn='';
                     if($row->status==0){
                         $statusVal = 1;
-                        $actionBtn='<a href="'.url('doctor/changestatus/'.$row->id.'/'.$statusVal).'"<button class="custom-badge status-green ">Active</button></a>';
+                        $changestatusUrl=url('doctor/changestatus/'.$row->id.'/'.$statusVal);
+                        if(Auth::user()->type==3){
+                            $changestatusUrl=url('admin/doctor/changestatus/'.$row->id.'/'.$statusVal);
+                        }
+                        $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-green ">Active</button></a>';
                     }
                     if($row->status==1){
                         $statusVal = 0;
-                        $actionBtn='<a href="'.url('doctor/changestatus/'.$row->id.'/'.$statusVal).'"<button class="custom-badge status-pink">In Active</button></a>';
+                        $changestatusUrl=url('doctor/changestatus/'.$row->id.'/'.$statusVal);
+                        if(Auth::user()->type==3){
+                            $changestatusUrl=url('admin/doctor/changestatus/'.$row->id.'/'.$statusVal);
+                        }
+                        $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-pink">In Active</button></a>';
                     }
                     return $actionBtn;
                 })
                 ->addColumn('action', function($row){
+                    $editUrl=url('doctor/edit/'.$row->id);
+                    if(Auth::user()->type==3){
+                        $editUrl=url('admin/doctor/edit/'.$row->id);
+                    }
                     $actionBtn = '<div class="dropdown dropdown-action">
                     <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="'.url('doctor/edit/'.$row->id).'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                    <a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
                     <a class="dropdown-item delete_doctor" href="#"   data-id="'.$row->id.'"  data-bs-toggle="modal" data-bs-target="#delete_doctor"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
                     </div>';
                     return $actionBtn;
@@ -218,7 +237,11 @@ class DoctorsController extends Controller
         $doctorInfo->getDirty();
         $doctorInfo->save();
         $doctorInfo->getChanges();
-        return Redirect::route('doctor.list')->with('success','Profile Updated successfully!');
+        $redirect = 'doctor.list';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.doctor.list';
+        }
+        return Redirect::route($redirect)->with('success','Profile Updated successfully!');
 
     }
     public function changeStatus($id, $user_status){
@@ -229,10 +252,11 @@ class DoctorsController extends Controller
         }else{
             $ustatus='Activeted';
         }
-        return Redirect::route('doctor.list')->with('success',"User ".$ustatus);
-        // Toastr::success("User ".$ustatus ,'Success');
-        // return redirect('user/list');
-
+        $redirect = 'doctor.list';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.doctor.list';
+        }
+        return Redirect::route($redirect)->with('success',"Doctor is ".$ustatus);
     }
 
     /**
@@ -240,13 +264,17 @@ class DoctorsController extends Controller
      */
     public function destroy(Request $request)
     {
+        $redirect = 'doctor.list';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.doctor.list';
+        }
         try {
             User::where("id", $request->id)->update(['deleted_at'=>'Y']);
-            return Redirect::route('doctor.list')->with('success','Doctor deleted successfully');
+            return Redirect::route($redirect)->with('success','Doctor deleted successfully');
 
         } catch(\Exception $e) {
 
-            return Redirect::route('doctor.list')->with('Error','Doctor delete fail');
+            return Redirect::route($redirect)->with('Error','Doctor delete fail');
             return redirect()->back();
         }
     }

@@ -29,8 +29,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-
-       return view('appointments.list');
+      return view('appointments.list');
     }
 
     /**
@@ -97,7 +96,11 @@ class AppointmentController extends Controller
         $appointment->department_id = $request->department_id;
         $appointment->created_at = new Carbon();
         $appointment->save();
-        return Redirect::route('patient.appointment.index')->with('success','Appointment booked successfully!');
+        $redirect = 'patient.appointment.index';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.patient.appointment.index';
+        }
+        return Redirect::route($redirect)->with('success','Appointment booked successfully!');
 
         // $str = 'Appolo Hospital';
         // $prefix = substr($str,0,3);
@@ -164,7 +167,7 @@ class AppointmentController extends Controller
                 ->addColumn('patient_mobile', function($row){
                     return $row->phone_number;
                 });
-                if(Auth::user()->type==0){
+                if(Auth::user()->type==0 || Auth::user()->type==3){
                     $dt =  $dt->addColumn('doctor', function($row){
                         return $row->doctordetails->name;
                     })
@@ -178,9 +181,9 @@ class AppointmentController extends Controller
                 }
                 $dt =  $dt->addColumn('status', function($row) use($status, $doctorstatus){
 
-                    $actionBtn=Form::select('status', $status, $row->status, ['class' => 'form-control select','id' => 'status', 'data-id'=>$row->id]);
+                    $actionBtn=Form::select('status', $status, $row->status, ['class' => 'form-control select','id' => 'status', 'data-id'=>$row->id],[ 0 => [ "disabled" => true ]]);
                     if(Auth::user()->type==1){
-                        $actionBtn=Form::select('status', $doctorstatus, $row->status, ['class' => 'form-control select','id' => 'status', 'data-id'=>$row->id]);
+                        $actionBtn=Form::select('status', $doctorstatus, $row->status, ['class' => 'form-control select status','id' => 'status', 'data-id'=>$row->id]);
                     }
 
                     // if($row->status=='P'){
@@ -198,16 +201,23 @@ class AppointmentController extends Controller
                     return $actionBtn;
                 });
 
-                if(Auth::user()->type==0){
-                    $dt =  $dt->addColumn('action', function($row){
+                if(Auth::user()->type==0 || Auth::user()->type==3){
+
+                    $dt =  $dt->addColumn('action', function($row) {
+                        $cloneUrl=url('appointment/clone/'.$row->id);
+                        $editUrl=url('appointment/edit/'.$row->id);
+                        if(Auth::user()->type==3){
+                            $cloneUrl=url('admin/appointment/clone/'.$row->id);
+                            $editUrl=url('admin/appointment/edit/'.$row->id);
+                        }
                         $actionBtn = '<div class="dropdown dropdown-action">
                         <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-end">';
                         if($row->status=='C'){
-                            $actionBtn .='<a class="dropdown-item" href="'.url('appointment/clone/'.$row->id).'"><i class="fa-solid fa-clone m-r-5"></i> Clone</a>';
+                            $actionBtn .='<a class="dropdown-item" href="'.$cloneUrl.'"><i class="fa-solid fa-clone m-r-5"></i> Clone</a>';
                         }
                         $actionBtn .='<a class="dropdown-item view_appointment" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#view_appointment" href="#"><i class="fa-solid fa-eye m-r-5"></i> View</a>
-                        <a class="dropdown-item" href="'.url('appointment/edit/'.$row->id).'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                        <a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
                         <a class="dropdown-item delete_appointment" href="#" data-id="'.$row->id.'"  data-bs-toggle="modal" data-bs-target="#delete_appointment"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
                         </div>';
                         return $actionBtn;
@@ -301,7 +311,12 @@ class AppointmentController extends Controller
         $appointment->department_id = $request->department_id;
         $appointment->created_at = new Carbon();
         $appointment->save();
-        return Redirect::route('patient.appointment.index')->with('success','Appointment cloned successfully!');
+
+        $redirect = 'patient.appointment.index';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.patient.appointment.index';
+        }
+        return Redirect::route($redirect)->with('success','Appointment cloned successfully!');
     }
 
     /**
@@ -344,7 +359,12 @@ class AppointmentController extends Controller
         $appointment->department_id = $request->department_id;
         $appointment->updated_at = new Carbon();
         $appointment->save();
-        return Redirect::route('patient.appointment.index')->with('success','Appointment updated successfully!');
+
+        $redirect = 'patient.appointment.index';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.patient.appointment.index';
+        }
+        return Redirect::route($redirect)->with('success','Appointment updated successfully!');
     }
 
     public function changeStatus(Request $request){
@@ -361,13 +381,17 @@ class AppointmentController extends Controller
      */
     public function destroy(Request $request)
     {
+        $redirect = 'patient.appointment.index';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.patient.appointment.index';
+        }
         try {
             PatientDetails::where("id", $request->id)->update(['deleted_at'=>'Y']);
-            return Redirect::route('patient.appointment.index')->with('success','Appointment deleted successfully');
+            return Redirect::route($redirect)->with('success','Appointment deleted successfully');
 
         } catch(\Exception $e) {
 
-            return Redirect::route('patient.appointment.index')->with('Error','Appointment delete fail');
+            return Redirect::route($redirect)->with('Error','Appointment delete fail');
             return redirect()->back();
         }
     }

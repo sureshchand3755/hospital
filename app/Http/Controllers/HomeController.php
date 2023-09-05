@@ -44,9 +44,14 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function managerHome()
+    public function hospitalHome()
     {
-        return view('managerHome');
+        return view('hospital.dashboard');
+    }
+
+    public function adminHome()
+    {
+        return view('admin.dashboard');
     }
 
     public function destroy(Request $request): RedirectResponse

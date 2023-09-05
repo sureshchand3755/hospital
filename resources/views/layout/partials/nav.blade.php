@@ -20,8 +20,8 @@
                         </li>
 
                     @elseif (Auth::user()->type==2)
-                        <li class="{{ Request::is('dashboard') ? 'active' : '' }}">
-                            <a href="{{ url('doctor/dashboard') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
+                        <li class="{{ Request::is('hospital/dashboard') ? 'active' : '' }}">
+                            <a href="{{ url('hospital/dashboard') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
                         </li>
                         <li  class="{{ Request::is('doctors','edit-doctor','doctor/add') ? 'active' : '' }}">
                             <a href="{{ url('doctors') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
@@ -29,8 +29,24 @@
                         <li class="{{ Request::is('departments','edit-department','add-departments') ? 'active' : '' }}">
                             <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
                         </li>
-                    @else
-                    <li class="{{ Request::is('index') ? 'active' : '' }}">
+                    @elseif (Auth::user()->type==3)
+                        <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">
+                            <a href="{{ url('admin/dashboard') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
+                        </li>
+                        <li class="{{ Request::is('admin/patient/appointments','admin/appointment/add','appointment/edit/1') ? 'active' : '' }}">
+                            <a href="{{ url('admin/patient/appointments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
+                        </li>
+                        <li  class="{{ Request::is('admin/doctors','edit-doctor','doctor/add') ? 'active' : '' }}">
+                            <a href="{{ url('admin/doctors') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
+                        </li>
+                        <li class="{{ Request::is('admin/departments','edit-department','add-departments') ? 'active' : '' }}">
+                            <a href="{{ url('admin/departments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
+                        </li>
+                        {{-- <li class="{{ Request::is('departments','edit-department','add-departments') ? 'active' : '' }}">
+                            <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Hospitals </span></a>
+                        </li> --}}
+
+                    {{-- <li class="{{ Request::is('index') ? 'active' : '' }}">
                         <a href="{{ url('index') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a>
                     </li>
                     <li class="{{ Request::is('doctor','add-doctor','edit-doctor') ? 'active' : '' }}">
@@ -202,11 +218,11 @@
                                 <a href="javascript:void(0);"><span>Level 1</span></a>
                             </li>
                         </ul>
-                    </li>
+                    </li> --}}
                     @endif
                 </ul>
                 <div class="logout-btn">
-                    <a href="{{url('logout')}}"><span class="menu-side"><img src="../assets/img/icons/logout.svg" alt=""></span> <span>Logout</span></a>
+                    <a href="{{url('logout')}}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/logout.svg')}}" alt=""></span> <span>Logout</span></a>
                 </div>
             </div>
         </div>

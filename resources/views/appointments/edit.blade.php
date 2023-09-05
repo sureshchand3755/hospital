@@ -10,7 +10,7 @@
                 </div>
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ url('appointment/update') }}" id="add_appointment">
+                        <form method="POST" action="{{(Auth::user()->type==0)?url('appointment/update'):url('admin/appointment/update')}}" id="add_appointment">
                             @csrf
                             <input type="text" name="id" value="{{$data->id}}" style="display: none">
                             <div class="card-box">

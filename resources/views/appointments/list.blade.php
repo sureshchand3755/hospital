@@ -22,8 +22,9 @@
                                                 </form>
                                             </div> --}}
                                             <div class="add-group">
-                                                @if (Auth::user()->type==0)
-                                                <a href="{{url('appointment/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                @if (Auth::user()->type==0 || Auth::user()->type==3)
+
+                                                <a href="{{(Auth::user()->type==0)?url('appointment/add'):url('admin/appointment/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 @endif
                                                 {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::asset('/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
@@ -42,7 +43,7 @@
                         <!-- /Table Header -->
 
                         <div class="table-responsive">
-                            @if (Auth::user()->type==0)
+                            @if (Auth::user()->type==0 || Auth::user()->type==3)
                             <table class="table border-0 custom-table comman-table datatable mb-0" id="appointments_list">
                                 <thead>
                                     <tr>
@@ -349,7 +350,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{ route('appointment.delete') }}" method="POST">
+                <form action="{{(Auth::user()->type==0)?route('appointment.delete'):route('admin.appointment.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
                     <img src="{{URL::asset('assets/img/sent.png')}}" alt="" width="50" height="46">
@@ -376,7 +377,21 @@
                         <input type="hidden" id="patient_id" name="patient_id" value="">
                         <input type="hidden" id="doctor_id" name="doctor_id" value="">
                         <div class="row">
-
+                            <div class="col-12 col-md-12 col-xl-12">
+                                <div class="form-group local-forms">
+                                    <label>Prescription <span class="login-danger">*</span></label>
+                                    <textarea class="form-control" rows="2" cols="15" name="prescription" id="prescription"></textarea>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-6 col-xl-6">
+                                <div class="form-group local-top-form">
+                                    <label class="local-top">Upload Image</label>
+                                    <div class="settings-btn upload-files-avator">
+                                        <input type="file" accept="image/*" name="uploadimage" id="uploadimage" onchange="loadFile(event)" class="hide-input">
+                                        <label for="file" class="upload">Choose File</label>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                 </div>
                 <div class="modal-footer">
@@ -391,10 +406,19 @@
 $(document).ready(function($) {
 
     var loginType = "{{ Auth::user()->type}}";
-    var changeStatusUrl = "{{url('appointment/changestatus')}}";
+    var changeStatusUrl = "";
+    var listUrl='';
     if(loginType==1){
         changeStatusUrl = "{{url('doctor/appointment/changestatus')}}";
+    }else if(loginType==0){
+        changeStatusUrl = "{{url('appointment/changestatus')}}";
+        listUrl="{{ route('patient.appointment.list') }}";
+    }else if(loginType==3){
+        changeStatusUrl = "{{url('admin/appointment/changestatus')}}";
+        listUrl="{{ route('admin.patient.appointment.list') }}";
     }
+    // $('select.status option:first').attr('disabled', true);
+
 
     $(document).on('click','.delete_appointment',function(){
         var id = $(this).data('id');
@@ -415,8 +439,10 @@ $(document).ready(function($) {
         var id = $(this).data('id');
         var doctor_id = $(this).data('doctorid');
         var url = "{{ route('patient.appointment.view', ':id') }}";
-        if(doctor_id==1){
+        if(loginType==1){
             url = "{{ route('doctor.appointment.view', ':id') }}";
+        }else if(loginType==3){
+            url = "{{ route('admin.patient.appointment.view', ':id') }}";
         }
         url = url.replace(':id', id);
         $.get(url, function (data) {
@@ -488,7 +514,7 @@ $(document).ready(function($) {
         pageLength: 10,
         lengthMenu: [[10, 20, 25, 50, -1], [10, 20, 25, 50, 'All']],
         serverSide: true,
-        ajax: "{{ route('patient.appointment.list') }}",
+        ajax: listUrl,
         columns: [
             {data: 'idRows', name: 'idRows'},
             {data: 'appointment_no', name: 'appointment_no'},
@@ -558,6 +584,13 @@ $(document).ready(function($) {
             }
         });
     });
+    if(loginType==0){
+        $("select.select option[value='A']").attr('disabled', true);
+        $("select.select option[value='R']").attr('disabled', true);
+    }else if(loginType==1){
+        $("select.select option[value='P']").attr('disabled', true);
+        $("select.select option[value='C']").attr('disabled', true);
+    }
 });
 </script>
 @endsection

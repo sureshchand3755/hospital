@@ -97,7 +97,8 @@ Hospital Routes List
 --------------------------------------------
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:2'])->group(function () {
-    Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
+    Route::get('hospital/dashboard', [HomeController::class, 'hospitalHome'])->name('hospital.dashboard');
+
     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
     Route::get('/department/add', [DepartmentController::class, 'create'])->name('department.add');
     Route::get('/department/list', [DepartmentController::class, 'getDepartments'])->name('department.list');
@@ -123,5 +124,37 @@ Super Admin Routes List
 --------------------------------------------
 --------------------------------------------*/
 Route::middleware(['auth', 'user-access:3'])->group(function () {
-    Route::get('/manager/home', [HomeController::class, 'managerHome'])->name('manager.home');
+
+    Route::get('admin/dashboard', [HomeController::class, 'adminHome'])->name('admin.dashboard');
+    Route::get('admin/patient/appointments', [AppointmentController::class, 'index'])->name('admin.patient.appointment.index');
+    Route::get('admin/appointment/add', [AppointmentController::class, 'create'])->name('admin.appointment.add');
+    Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
+    Route::post('admin/appointment/store', [AppointmentController::class, 'store']);
+    Route::get('admin/patient/appointment/list', [AppointmentController::class, 'getList'])->name('admin.patient.appointment.list');
+    Route::get('admin/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('admin.appointment.edit');
+    Route::get('admin/appointment/clone/{id}', [AppointmentController::class, 'clone'])->name('admin.appointment.clone');
+    Route::post('admin/appointment/cloneStore', [AppointmentController::class, 'cloneStore']);
+    Route::post('admin/appointment/update', [AppointmentController::class, 'update']);
+    Route::post('admin/appointment/delete',  [AppointmentController::class, 'destroy'])->name('admin.appointment.delete');
+    Route::post('admin/appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('admin.appointment.changestatus');
+    Route::get('admin/appointment/view/{id}', [AppointmentController::class, 'show'])->name('admin.patient.appointment.view');
+
+    Route::get('admin/doctors', [DoctorsController::class, 'index'])->name('admin.doctor.list');
+    Route::get('admin.doctor/add', [DoctorsController::class, 'create'])->name('admin.doctor.add');
+    Route::post('admindoctor/store', [DoctorsController::class, 'store']);
+    Route::get('admin/doctor/list', [DoctorsController::class, 'getDoctors'])->name('admin.doctor.lists');
+    Route::get('admin/doctor/edit/{id}', [DoctorsController::class, 'edit'])->name('admin.doctor.edit');
+    Route::post('admin/doctor/update', [DoctorsController::class, 'update'])->name('admin.doctor.update');
+    Route::get('admin/doctor/changestatus/{id}/{status}', [DoctorsController::class, 'changeStatus'])->name('admin.doctor.changestatus');
+    Route::post('admin/doctor/delete',  [DoctorsController::class, 'destroy'])->name('admin.doctor.delete');
+
+    Route::get('admin/departments', [DepartmentController::class, 'index'])->name('admin.departments.index');
+    Route::get('admin/department/add', [DepartmentController::class, 'create'])->name('admin.department.add');
+    Route::get('admin/department/list', [DepartmentController::class, 'getDepartments'])->name('admin.department.list');
+    Route::post('admin/department/store', [DepartmentController::class, 'store']);
+    Route::get('admin/department/edit/{id}', [DepartmentController::class, 'edit'])->name('admin.department.edit');
+    Route::post('admin/department/update', [DepartmentController::class, 'update'])->name('admin.department.update');
+    Route::get('admin/department/view/{id}', [DepartmentController::class, 'show'])->name('admin.department.view');
+    Route::get('admin/department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('admin.department.changestatus');
+    Route::post('admin/department/delete',  [DepartmentController::class, 'destroy'])->name('admin.department.delete');
 });

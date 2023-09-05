@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use DataTables;
 use Toastr;
 use Carbon\Carbon;
+use Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
 use App\Models\{Country, State, City, Department};
@@ -37,20 +38,33 @@ class DepartmentController extends Controller
                     $actionBtn='';
                     if($row->status==0){
                         $statusVal = 1;
-                        $actionBtn='<a href="'.url('department/changestatus/'.$row->id.'/'.$statusVal).'"<button class="custom-badge status-green ">Active</button></a>';
+                        $changestatusUrl=url('department/changestatus/'.$row->id.'/'.$statusVal);
+                        if(Auth::user()->type==3){
+                            $changestatusUrl=url('admin/department/changestatus/'.$row->id.'/'.$statusVal);
+                        }
+
+                        $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-green ">Active</button></a>';
                     }
                     if($row->status==1){
                         $statusVal = 0;
-                        $actionBtn='<a href="'.url('department/changestatus/'.$row->id.'/'.$statusVal).'"<button class="custom-badge status-pink">In Active</button></a>';
+                        $changestatusUrl=url('department/changestatus/'.$row->id.'/'.$statusVal);
+                        if(Auth::user()->type==3){
+                            $changestatusUrl=url('admin/department/changestatus/'.$row->id.'/'.$statusVal);
+                        }
+                        $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-pink">In Active</button></a>';
                     }
                     return $actionBtn;
                 })
                 ->addColumn('action', function($row){
+                    $editUrl=url('department/edit/'.$row->id);
+                    if(Auth::user()->type==3){
+                        $editUrl=url('admin/department/edit/'.$row->id);
+                    }
+
                     $actionBtn = '<div class="dropdown dropdown-action">
                     <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                     <div class="dropdown-menu dropdown-menu-end">
-
-                    <a class="dropdown-item" href="'.url('department/edit/'.$row->id).'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                    <a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
                     <a class="dropdown-item delete_department" href="#" data-bs-toggle="modal"  data-id="'.$row->id.'" data-bs-target="#delete_department"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
                     </div>';
                     return $actionBtn;
@@ -90,8 +104,13 @@ class DepartmentController extends Controller
         $department->status = $request->status;
         $department->created_at = new Carbon();
         $department->save();
-        Toastr::success('Department created successfully!');
-        return redirect()->to('/doctor/departments');
+        // Toastr::success('Department created successfully!');
+        $redirect = 'departments.index';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.departments.index';
+        }
+        return Redirect::route($redirect)->with('success','Department Added successfully!');
+
     }
 
     /**
@@ -129,7 +148,12 @@ class DepartmentController extends Controller
         $department->getDirty();
         $department->save();
         $department->getChanges();
-        return Redirect::route('departments.index')->with('success','Department Updated successfully!');
+
+        $redirect = 'departments.index';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.departments.index';
+        }
+        return Redirect::route($redirect)->with('success','Department Updated successfully!');
     }
 
     public function changeStatus($id, $user_status){
@@ -140,7 +164,12 @@ class DepartmentController extends Controller
         }else{
             $ustatus='Activeted';
         }
-        return Redirect::route('departments.index')->with('success',"Department ".$ustatus);
+
+        $redirect = 'departments.index';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.departments.index';
+        }
+        return Redirect::route($redirect)->with('success',"Department ".$ustatus);
         // Toastr::success("User ".$ustatus ,'Success');
         // return redirect('user/list');
 
@@ -151,14 +180,18 @@ class DepartmentController extends Controller
      */
     public function destroy(Department $department, Request $request,)
     {
+        $redirect = 'departments.index';
+        if(Auth::user()->type==3){
+            $redirect = 'admin.departments.index';
+        }
         try {
             Department::where("id", $request->id)->update(['deleted_at'=>'Y']);
             // Toastr::success('User deleted successfully :)','Success');
-            return Redirect::route('departments.index')->with('success','Department deleted successfully');
+            return Redirect::route($redirect)->with('success','Department deleted successfully');
 
         } catch(\Exception $e) {
 
-            return Redirect::route('departments.index')->with('Error','Department delete fail');
+            return Redirect::route($redirect)->with('Error','Department delete fail');
         }
     }
 }

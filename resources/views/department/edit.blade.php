@@ -8,7 +8,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ url('department/update') }}" id="edit_department">
+                        <form method="POST" action="{{(Auth::user()->type==0)?url('department/update'):url('admin/department/update')}}" id="edit_department">
                             @csrf
                             <div class="row">
                                 <div class="col-12">

@@ -23,7 +23,7 @@
                                                 </form>
                                             </div> --}}
                                             <div class="add-group">
-                                                <a href="{{url('department/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{(Auth::user()->type==0)?url('department/add'):url('admin/department/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::asset('/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
                                         </div>
@@ -124,7 +124,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{ route('department.delete') }}" method="POST">
+                <form action="{{(Auth::user()->type==0)?route('department.delete'):route('admin.department.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
                     <img src="assets/img/sent.png" alt="" width="50" height="46">
@@ -153,9 +153,40 @@
 //         $('#v_state').text(data.state.name);
 //     })
 // });
-$(document).on('click','.delete_department',function(){
-    var id = $(this).data('id');
-    $('#e_id').val(id);
+$(document).ready(function($) {
+    var loginType = "{{ Auth::user()->type}}";
+    var listUrl="{{ route('department.list') }}";
+    if(loginType==3){
+        listUrl="{{ route('admin.department.list') }}";
+    }
+    $(document).on('click','.delete_department',function(){
+        var id = $(this).data('id');
+        $('#e_id').val(id);
+    });
+
+    var table = $('#department_list').DataTable({
+        processing: true,
+        responsive: true,
+        pageLength: 10,
+        lengthMenu: [[10, 20, 25, 50, -1], [10, 20, 25, 50, 'All']],
+        serverSide: true,
+        ajax: listUrl,
+        columns: [
+            // {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+            {data: 'idRows', name: 'idRows'},
+            {data: 'department_name', name: 'department_name'},
+            {data: 'department_head', name: 'department_head'},
+            {data: 'department_desc', name: 'department_desc'},
+            {data: 'department_date', name: 'department_date'},
+            {data: 'department_status', name: 'department_status'},
+            {
+                data: 'action',
+                name: 'action',
+                orderable: true,
+                searchable: true
+            },
+        ]
+    });
 });
 </script>
 @endsection

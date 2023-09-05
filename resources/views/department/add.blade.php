@@ -8,7 +8,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ url('/department/store') }}" id="add_department">
+                        <form method="POST" action="{{(Auth::user()->type==0)?url('department/store'):url('admin/department/store')}} " id="add_department">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -70,5 +70,30 @@
         </div>
     </div>
 </div>
+<script>
+$(document).ready(function($) {
+    $("#add_department").validate({
+        // Specify validation rules
+        rules: {
+            department_name: "required",
+            department_head: "required",
+            department_desc: "required",
+            department_date: "required",
+            department_status: "required"
+        },
+        // Specify validation error messages
+        messages: {
+            department_name: "Please enter your department name",
+            department_head: "Please enter your department head",
+            department_desc: "Please enter your description",
+            department_date: "Please select date",
+            department_status: "Please select status",
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+});
+</script>
 @endsection
 
