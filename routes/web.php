@@ -85,6 +85,7 @@ Route::middleware(['auth', 'user-access:1'])->group(function () {
     Route::get('doctor/dashboard', [HomeController::class, 'doctorDashbord'])->name('doctor.dashboard');
     Route::get('appointments', [AppointmentController::class, 'index'])->name('appointment.index');
     Route::get('appointment/list', [AppointmentController::class, 'getList'])->name('appointment.list');
+    Route::get('doctor/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('doctor.appointment.edit');
     Route::get('doctor/appointment/view/{id}', [AppointmentController::class, 'show'])->name('doctor.appointment.view');
     Route::post('doctor/appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('doctor.appointment.changestatus');
     Route::post('doctor/prescription/add', [PrescriptionController::class, 'store'])->name('doctor.prescription.add');

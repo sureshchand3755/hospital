@@ -57,7 +57,7 @@ class AppointmentController extends Controller
 
     public function store(Request $request)
     {
-        $str = 'Appolo Hospital';
+        $str = env('HOSPITAL');
         $prefix = substr($str,0,3);
         $appointment_no = IdGenerator::generate(['table' => 'patient_details','field'=>'appointment_no', 'length' => 7, 'prefix' =>strtoupper($prefix)]);
         $appointment = new PatientDetails();
@@ -94,6 +94,12 @@ class AppointmentController extends Controller
         $appointment->note = $request->note;
         $appointment->doctor_id = $request->doctor_id;
         $appointment->department_id = $request->department_id;
+        $appoinment_date = explode('/', $request->appoinment_date);
+        $appointment->appoinment_date = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
+        $appointment->visit_id = $request->visit_id;
+        $appointment->illness_id = $request->illness_id;
+        $appointment->appointment_mode_id = $request->appointment_mode_id;
+        $appointment->symptoms_id = $request->symptoms_id;
         $appointment->created_at = new Carbon();
         $appointment->save();
         $redirect = 'patient.appointment.index';
@@ -181,9 +187,9 @@ class AppointmentController extends Controller
                 }
                 $dt =  $dt->addColumn('status', function($row) use($status, $doctorstatus){
 
-                    $actionBtn=Form::select('status', $status, $row->status, ['class' => 'form-control select','id' => 'status', 'data-id'=>$row->id],[ 0 => [ "disabled" => true ]]);
-                    if(Auth::user()->type==1){
-                        $actionBtn=Form::select('status', $doctorstatus, $row->status, ['class' => 'form-control select status','id' => 'status', 'data-id'=>$row->id]);
+                    $actionBtn=Form::select('status', $status, $row->status, ['class' => 'form-control select','id' => 'status', 'data-id'=>$row->id]);
+                    if(Auth::user()->type===1){
+                        $actionBtn=Form::select('status', $doctorstatus, $row->status, ['class' => 'form-control select','id' => 'status', 'data-id'=>$row->id]);
                     }
 
                     // if($row->status=='P'){
@@ -225,10 +231,12 @@ class AppointmentController extends Controller
                     ->rawColumns(['idRows','appointment_no','patient_name','date_of_birth','age', 'patient_gender',  'patient_mobile',  'doctor',  'department', 'status', 'action']);
                 }else{
                     $dt =  $dt->addColumn('action', function($row){
+                        $editUrl=url('doctor/appointment/edit/'.$row->id);
+
                         $actionBtn = '<div class="dropdown dropdown-action">
                         <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item view_appointment" data-bs-target="#view_appointment"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i> View</a>';
+                        <a class="dropdown-item view_appointment" data-bs-target="#view_appointment"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i> View</a><a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>';
                         if($row->status=='A'){
                             $actionBtn .='<a class="dropdown-item prescription" data-bs-target="#prescription" href="#" data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="'.$row->doctor_id.'" ><i class="fas fa-book-medical m-r-5"></i> Add Medicine</a>';
                         }
@@ -272,7 +280,7 @@ class AppointmentController extends Controller
     }
 
     public function cloneStore(Request $request){
-        $str = 'Appolo Hospital';
+        $str = env('HOSPITAL');
         $prefix = substr($str,0,3);
         $appointment_no = IdGenerator::generate(['table' => 'patient_details','field'=>'appointment_no', 'length' => 7, 'prefix' =>strtoupper($prefix)]);
         $appointment = new PatientDetails();
@@ -309,6 +317,12 @@ class AppointmentController extends Controller
         $appointment->note = $request->note;
         $appointment->doctor_id = $request->doctor_id;
         $appointment->department_id = $request->department_id;
+        $appoinment_date = explode('/', $request->appoinment_date);
+        $appointment->appoinment_date = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
+        $appointment->visit_id = $request->visit_id;
+        $appointment->illness_id = $request->illness_id;
+        $appointment->appointment_mode_id = $request->appointment_mode_id;
+        $appointment->symptoms_id = $request->symptoms_id;
         $appointment->created_at = new Carbon();
         $appointment->save();
 
@@ -357,6 +371,12 @@ class AppointmentController extends Controller
         $appointment->note = $request->note;
         $appointment->doctor_id = $request->doctor_id;
         $appointment->department_id = $request->department_id;
+        $appoinment_date = explode('/', $request->appoinment_date);
+        $appointment->appoinment_date = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
+        $appointment->visit_id = $request->visit_id;
+        $appointment->illness_id = $request->illness_id;
+        $appointment->appointment_mode_id = $request->appointment_mode_id;
+        $appointment->symptoms_id = $request->symptoms_id;
         $appointment->updated_at = new Carbon();
         $appointment->save();
 

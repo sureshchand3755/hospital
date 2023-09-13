@@ -226,6 +226,7 @@
 
                                 </div>
                             </div>
+                            @if (Auth::user()->type==1)
                             <div class="card-box">
                                 <h3 class="card-title">Medical Details</h3>
                                 <hr>
@@ -284,6 +285,7 @@
                                     </div>
                                 </div>
                             </div>
+                            @endif
                             <div class="card-box">
                                 <h3 class="card-title">Doctor Details</h3>
                                 <hr>
@@ -298,6 +300,38 @@
                                         <div class="form-group local-forms">
                                             <label>Department <span class="login-danger">*</span></label>
                                             {!! Form::select('department_id', [], null, ['class' => 'form-control select','id' => 'department_id']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <div class="form-group local-forms cal-icon">
+                                            <label>Date <span class="login-danger">*</span></label>
+                                            <input class="form-control datetimepicker" type="text" placeholder=""
+                                                name="appoinment_date" id="appoinment_date"
+                                                value="">
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <div class="form-group local-forms">
+                                            <label>Visit <span class="login-danger">*</span></label>
+                                            {!! Form::select('visit_id', Config::get('constants.visit'), null, ['class' => 'form-control select','id' => 'visit_id']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <div class="form-group local-forms">
+                                            <label>Illness</label>
+                                            {!! Form::select('illness_id', Config::get('constants.illness'), null, ['class' => 'form-control select','id' => 'illness_id']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <div class="form-group local-forms">
+                                            <label>Appointment Mode</label>
+                                            {!! Form::select('appointment_mode_id', Config::get('constants.appoinment_mode'), null, ['class' => 'form-control select','id' => 'appointment_mode_id']) !!}
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-6 col-xl-3">
+                                        <div class="form-group local-forms">
+                                            <label>Symptoms</label>
+                                            {!! Form::select('symptoms_id', Config::get('constants.symptoms'), null, ['class' => 'form-control select','id' => 'symptoms_id']) !!}
                                         </div>
                                     </div>
                                 </div>
@@ -341,6 +375,8 @@
                 postal_code: "required",
                 phone_number: "required",
                 doctor_id: "required",
+                appoinment_date: "required",
+                visit_id: "required",
             },
             messages: {
                 patient_name: "Please enter patient name",
@@ -353,6 +389,8 @@
                 postal_code: "Please enter postal code",
                 phone_number: "Please enter phone number",
                 doctor_id: "Please select doctor",
+                appoinment_date: "Please select date",
+                visit_id: "Please select visit",
             }
         });
         $('#state_id').on('change', function () {

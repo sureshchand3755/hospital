@@ -15,7 +15,7 @@
                         <li class="{{ Request::is('doctor/dashboard') ? 'active' : '' }}">
                             <a href="{{ url('doctor/dashboard') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
                         </li>
-                        <li class="{{ Request::is('appointments','appointment/add','appointment/edit/1') ? 'active' : '' }}">
+                        <li class="{{ Request::is('appointments','doctor/appointment/edit/*') ? 'active' : '' }}">
                             <a href="{{ url('appointments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Booking List </span></a>
                         </li>
 
