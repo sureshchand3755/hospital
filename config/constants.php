@@ -27,5 +27,20 @@ return [
         '' => '-- Select --',
         '1' => 'illness1',
         '2' => 'illness2'
+    ],
+    'medicine' => [
+        '' => '-- Select --',
+        '1' => 'GEMER 2 MG',
+        '2' => 'CLOPILET A 150',
+        '3' => 'ATORVAS 20MG',
+        '4' => 'SILODAL 8',
+        '5' => 'PAN D',
+        '6' => 'ALPRAX 0.05MG',
+        '7' => 'FORACORT 200ROTOCAPS',
+    ],
+    'medicine_type' => [
+        '' => '-- Select --',
+        '1' => 'Tablet',
+        '2' => 'Capsule'
     ]
 ];

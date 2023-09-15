@@ -48,7 +48,7 @@ Route::get('/clear', function () {
     Route::post('fetch-states', [DoctorsController::class, 'fetchState']);
     Route::post('fetch-cities', [DoctorsController::class, 'fetchCity']);
     Route::get('logout', [HomeController::class, 'destroy'])->name('logout');
-
+    Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
 
 /*------------------------------------------
 Reception Routes List
@@ -57,7 +57,7 @@ Route::middleware(['auth', 'user-access:0'])->group(function () {
     Route::get('reception/dashboard', [HomeController::class, 'index'])->name('reception.dashboard');
     Route::get('patient/appointments', [AppointmentController::class, 'index'])->name('patient.appointment.index');
     Route::get('appointment/add', [AppointmentController::class, 'create'])->name('appointment.add');
-    Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
+    // Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
     Route::post('appointment/store', [AppointmentController::class, 'store']);
     Route::get('patient/appointment/list', [AppointmentController::class, 'getList'])->name('patient.appointment.list');
     Route::get('appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('appointment.edit');
@@ -84,8 +84,10 @@ Doctor Routes List
 Route::middleware(['auth', 'user-access:1'])->group(function () {
     Route::get('doctor/dashboard', [HomeController::class, 'doctorDashbord'])->name('doctor.dashboard');
     Route::get('appointments', [AppointmentController::class, 'index'])->name('appointment.index');
+
     Route::get('appointment/list', [AppointmentController::class, 'getList'])->name('appointment.list');
     Route::get('doctor/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('doctor.appointment.edit');
+    Route::post('doctor/appointment/update', [AppointmentController::class, 'update']);
     Route::get('doctor/appointment/view/{id}', [AppointmentController::class, 'show'])->name('doctor.appointment.view');
     Route::post('doctor/appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('doctor.appointment.changestatus');
     Route::post('doctor/prescription/add', [PrescriptionController::class, 'store'])->name('doctor.prescription.add');
@@ -129,7 +131,7 @@ Route::middleware(['auth', 'user-access:3'])->group(function () {
     Route::get('admin/dashboard', [HomeController::class, 'adminHome'])->name('admin.dashboard');
     Route::get('admin/patient/appointments', [AppointmentController::class, 'index'])->name('admin.patient.appointment.index');
     Route::get('admin/appointment/add', [AppointmentController::class, 'create'])->name('admin.appointment.add');
-    Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
+    // Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
     Route::post('admin/appointment/store', [AppointmentController::class, 'store']);
     Route::get('admin/patient/appointment/list', [AppointmentController::class, 'getList'])->name('admin.patient.appointment.list');
     Route::get('admin/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('admin.appointment.edit');

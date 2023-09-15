@@ -339,50 +339,66 @@ class AppointmentController extends Controller
     public function update(Request $request)
     {
         $appointment = PatientDetails::find($request->id);
-        $appointment->subtitle = $request->subtitle;
-        $appointment->email = $request->email;
-        $appointment->phone_number = $request->phone_number;
-        $appointment->patient_name = $request->patient_name;
-        $date = explode('/', $request->date_of_birth);
-        $appointment->date_of_birth = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
-        $appointment->age = $request->age;
-        $appointment->gender = $request->gender;
-        $appointment->aadhar_number = $request->aadhar_number;
-        $appointment->father_or_husband = $request->father_or_husband;
-        $appointment->father_or_husband_name = $request->father_or_husband_name;
-        $appointment->mother_or_wife = $request->mother_or_wife;
-        $appointment->mother_or_wife_name = $request->mother_or_wife_name;
-        $appointment->guardian_name = $request->guardian_name;
-        $appointment->address = $request->address;
-        $appointment->state_id = $request->state_id;
-        $appointment->city_id = $request->city_id;
-        $appointment->postal_code = $request->postal_code;
-        $appointment->phone_number = $request->phone_number;
-        $appointment->education = $request->education;
-        $appointment->ref_by = $request->ref_by;
-        $appointment->occupation = $request->occupation;
-        $appointment->send_alert = $request->send_alert;
-        $appointment->blood = $request->blood;
-        $appointment->diet = $request->diet;
-        $appointment->height = $request->height;
-        $appointment->weight = $request->weight;
-        $appointment->brith_weight = $request->brith_weight;
-        $appointment->any_mediciens = $request->any_mediciens;
-        $appointment->note = $request->note;
-        $appointment->doctor_id = $request->doctor_id;
-        $appointment->department_id = $request->department_id;
-        $appoinment_date = explode('/', $request->appoinment_date);
-        $appointment->appoinment_date = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
-        $appointment->visit_id = $request->visit_id;
-        $appointment->illness_id = $request->illness_id;
-        $appointment->appointment_mode_id = $request->appointment_mode_id;
-        $appointment->symptoms_id = $request->symptoms_id;
+        if(Auth::user()->type==1){
+            $appointment->blood = $request->blood;
+            $appointment->temp = $request->temp;
+            $appointment->bp = $request->bp;
+            $appointment->pulse = $request->pulse;
+            $appointment->spo2 = $request->spo2;
+            $appointment->resp = $request->resp;
+            $appointment->cbg = $request->cbg;
+            $appointment->medical_ref_by = $request->medical_ref_by;
+            $appointment->bmi = $request->bmi;
+            $appointment->pain_scale = $request->pain_scale;
+            $appointment->diet = $request->diet;
+            $appointment->height = $request->height;
+            $appointment->weight = $request->weight;
+            $appointment->brith_weight = $request->brith_weight;
+            $appointment->symptoms = $request->symptoms;
+            $appointment->any_mediciens = $request->any_mediciens;
+            $appointment->note = $request->note;
+        }else{
+            $appointment->subtitle = $request->subtitle;
+            $appointment->email = $request->email;
+            $appointment->phone_number = $request->phone_number;
+            $appointment->patient_name = $request->patient_name;
+            $date = explode('/', $request->date_of_birth);
+            $appointment->date_of_birth = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
+            $appointment->age = $request->age;
+            $appointment->gender = $request->gender;
+            $appointment->aadhar_number = $request->aadhar_number;
+            $appointment->father_or_husband = $request->father_or_husband;
+            $appointment->father_or_husband_name = $request->father_or_husband_name;
+            $appointment->mother_or_wife = $request->mother_or_wife;
+            $appointment->mother_or_wife_name = $request->mother_or_wife_name;
+            $appointment->guardian_name = $request->guardian_name;
+            $appointment->address = $request->address;
+            $appointment->state_id = $request->state_id;
+            $appointment->city_id = $request->city_id;
+            $appointment->postal_code = $request->postal_code;
+            $appointment->phone_number = $request->phone_number;
+            $appointment->education = $request->education;
+            $appointment->ref_by = $request->ref_by;
+            $appointment->occupation = $request->occupation;
+            $appointment->send_alert = $request->send_alert;
+            $appointment->doctor_id = $request->doctor_id;
+            $appointment->department_id = $request->department_id;
+            $appoinment_date = explode('/', $request->appoinment_date);
+            $appointment->appoinment_date = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
+            $appointment->visit_id = $request->visit_id;
+            $appointment->illness_id = $request->illness_id;
+            $appointment->appointment_mode_id = $request->appointment_mode_id;
+            $appointment->symptoms_id = $request->symptoms_id;
+        }
         $appointment->updated_at = new Carbon();
+
         $appointment->save();
 
         $redirect = 'patient.appointment.index';
         if(Auth::user()->type==3){
             $redirect = 'admin.patient.appointment.index';
+        }else if(Auth::user()->type==1){
+            $redirect = 'appointment.index';
         }
         return Redirect::route($redirect)->with('success','Appointment updated successfully!');
     }

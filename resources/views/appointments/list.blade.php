@@ -365,7 +365,7 @@
 </div>
 <!-- Add Prescription Modal -->
 <div id="prescription" class="modal fade delete-modal" aria-labelledby="prescriptionModalLabel" role="dialog">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-centered" style="max-width: 75% !important;">
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title" id="prescriptionModalLabel">Add Prescription</h4>
@@ -377,6 +377,62 @@
                         <input type="hidden" id="patient_id" name="patient_id" value="">
                         <input type="hidden" id="doctor_id" name="doctor_id" value="">
                         <div class="row">
+                            <div class="card-box">
+                                <div class="card-block">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered table-striped table-hover mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th>Medicine Name</th>
+                                                <th>Type</th>
+                                                <th style="width: 75px;">Days</th>
+                                                <th style="width: 75px;">AF/BF</th>
+                                                <th style="width: 65px;">Morning</th>
+                                                <th style="width: 65px;">Afternoon</th>
+                                                <th style="width: 65px;">Evening</th>
+                                                <th style="width: 65px;">Night</th>
+                                                <th>Remarks</th>
+                                                <th><div class="action_container">
+                                                    <span class="success" onclick="create_tr('table_body')">
+                                                    <i class="fa fa-plus"></i>
+                                                    </span>
+                                                </div></th>
+                                            </tr>
+                                            <tbody id="table_body">
+                                                <tr>
+                                                <td>{!! Form::select('medicine_id[]', Config::get('constants.medicine'), null, ['class' => 'form-control']) !!}</td>
+                                                <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                <td><input class="form-control" type="text"name="days[]" value=""></td>
+                                                <td><input class="form-control" type="text" name="af_bf[]" value=""></td>
+                                                <td><input class="form-control" type="text" name="morning[]" value=""></td>
+                                                <td><input class="form-control" type="text" name="afternoon[]" value=""></td>
+                                                <td><input class="form-control" type="text" name="evening[]" value=""></td>
+                                                <td><input class="form-control" type="text" name="night[]" value=""></td>
+                                                <td><input class="form-control" type="text" name="remarks[]" value=""></td>
+                                                <td><div class="action_container">
+                                                    <span class="danger" onclick="remove_tr(this)">
+                                                    <i class="fa fa-close"></i>
+                                                    </span>
+                                                </div></td>
+                                                </tr>
+                                            </tbody>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <br><br>
+                        <div class="col-12 col-md-6 col-xl-6">
+                            <div class="form-group local-top-form">
+                                <label class="local-top">Upload Image</label>
+                                <div class="settings-btn upload-files-avator">
+                                    <input type="file" accept="image/*" name="uploadimage" id="uploadimage" onchange="loadFile(event)" class="hide-input">
+                                    <label for="file" class="upload">Choose File</label>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="row">
                             <div class="col-12 col-md-12 col-xl-12">
                                 <div class="form-group local-forms">
                                     <label>Prescription <span class="login-danger">*</span></label>
@@ -392,7 +448,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        </div> --}}
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save</button>
@@ -402,6 +458,73 @@
         </div>
     </div>
 </div>
+<style>
+    .form_control {
+        border: 1px solid #0002;
+        background-color: transparent;
+        outline: none;
+        padding: 8px 12px;
+        font-family: 1.2rem;
+        width: 100%;
+        color: #333;
+        font-family: Arial, Helvetica, sans-serif;
+        transition: 0.3s ease-in-out;
+    }
+    /* form field design end */
+
+
+.success {
+    background-color: #24b96f !important;
+}
+
+.warning {
+    background-color: #ebba33 !important;
+}
+
+.primary {
+    background-color: #259dff !important;
+}
+
+.secondery {
+    background-color: #00bcd4 !important;
+}
+
+.danger {
+    background-color: #ff5722 !important;
+}
+
+.action_container {
+    display: inline-flex;
+}
+
+.action_container>* {
+    border: none;
+    outline: none;
+    color: #fff;
+    text-decoration: none;
+    display: inline-block;
+    padding: 8px 14px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.action_container>*+* {
+    border-left: 1px solid #fff5;
+}
+
+.action_container>*:hover {
+    filter: hue-rotate(-20deg) brightness(0.97);
+    transform: scale(1.05);
+    border-color: transparent;
+    box-shadow: 0 2px 10px #0004;
+    border-radius: 2px;
+}
+
+.action_container>*:active {
+    transition: unset;
+    transform: scale(.95);
+}
+</style>
 <script>
 $(document).ready(function($) {
 
@@ -427,14 +550,49 @@ $(document).ready(function($) {
 
     $("#add_prescription").validate({
         rules: {
-            prescription: "required",
+            "medicine_id[]": "required",
+            "medicine_type_id[]": "required",
+            "days[]": "required",
+            "af_bf[]": "required",
+            "morning[]": "required",
+            "afternoon[]": "required",
+            "evening[]": "required",
+            "night[]": "required",
         },
         messages: {
-            prescription: "Please enter prescription",
+            "medicine_id[]": "Please select medicine",
+            "medicine_type_id[]": "Please select type",
+            "days[]": "Please enter days",
+            "af_bf[]": "Please enter AF/BF",
+            "morning[]": "Please enter morning",
+            "afternoon[]": "Please enter afternoon",
+            "evening[]": "Please enter evening",
+            "night[]": "Please enter night",
         }
     });
 
-
+    /*Initialize all rowfy tables*/
+    // $('.rowfy').each(function(){
+    //     $('tbody', this).find('tr').each(function(){
+    //         $(this).append('<td><button type="button" class="btn btn-sm '
+    //         + ($(this).is(":last-child") ?
+    //             'rowfy-addrow btn-success">+' :
+    //             'rowfy-deleterow btn-danger">-')
+    //         +'</button></td>');
+    //     });
+    // });
+    /*Add row event*/
+    // $(document).on('click', '.rowfy-addrow', function(){
+    //     let rowfyable = $(this).closest('table');
+    //     let lastRow = $('tbody tr:last', rowfyable).clone();
+    //     // $('input', lastRow).val('');
+    //     $('tbody', rowfyable).append(lastRow);
+    //     $(this).removeClass('rowfy-addrow btn-success').addClass('rowfy-deleterow btn-danger').text('-');
+    // });
+    /*Delete row event*/
+    // $(document).on('click', '.rowfy-deleterow', function(){
+    //     $(this).closest('tr').remove();
+    // });
     $(document).on('click','.view_appointment',function(){
         var id = $(this).data('id');
         var doctor_id = $(this).data('doctorid');
@@ -525,7 +683,12 @@ $(document).ready(function($) {
             {data: 'patient_mobile', name: 'patient_mobile'},
             {data: 'doctor', name: 'doctor'},
             {data: 'department', name: 'department'},
-            {data: 'status', name: 'status'},
+            // {data: 'status', name: 'status'},
+            {data: 'status', render: function ( data, type, row ) {
+                $("select.select option[value='A']").attr('disabled', true);
+                $("select.select option[value='R']").attr('disabled', true);
+                return data;
+            }},
             {
                 data: 'action',
                 name: 'action',
@@ -551,7 +714,11 @@ $(document).ready(function($) {
             {data: 'patient_gender', name: 'patient_gender'},
             {data: 'patient_mobile', name: 'patient_mobile'},
             {data: 'address', name: 'address'},
-            {data: 'status', name: 'status'},
+            {data: 'status', render: function ( data, type, row ) {
+                // $("select.select option[value='A']").attr('disabled', true);
+                // $("select.select option[value='R']").attr('disabled', true);
+                return data;
+            }},
             {
                 data: 'action',
                 name: 'action',
@@ -584,13 +751,44 @@ $(document).ready(function($) {
             }
         });
     });
-    if(loginType==0){
-        $("select.select option[value='A']").attr('disabled', true);
-        $("select.select option[value='R']").attr('disabled', true);
-    }else if(loginType==1){
-        $("select.select option[value='P']").attr('disabled', true);
-        $("select.select option[value='C']").attr('disabled', true);
-    }
+
+    // if(loginType==0){
+    //     $("select.select option[value='A']").attr('disabled', true);
+    //     $("select.select option[value='R']").attr('disabled', true);
+    // }else if(loginType==1){
+    //     $("select.select option[value='P']").attr('disabled', true);
+    //     $("select.select option[value='C']").attr('disabled', true);
+    // }
 });
+function create_tr(table_id) {
+    let table_body = document.getElementById(table_id),
+        first_tr   = table_body.firstElementChild
+        tr_clone   = first_tr.cloneNode(true);
+
+    table_body.append(tr_clone);
+
+    // clean_first_tr(table_body.firstElementChild);
+}
+
+// function clean_first_tr(firstTr) {
+//     let children = firstTr.children;
+
+//     children = Array.isArray(children) ? children : Object.values(children);
+//     children.forEach(x=>{
+//         if(x !== firstTr.lastElementChild)
+//         {
+//             x.firstElementChild.value = '';
+//         }
+//     });
+// }
+
+function remove_tr(This) {
+    if(This.closest('tbody').childElementCount == 1)
+    {
+        alert("You Don't have Permission to Delete This ?");
+    }else{
+        This.closest('tr').remove();
+    }
+}
 </script>
 @endsection
