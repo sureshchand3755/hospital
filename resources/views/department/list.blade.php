@@ -23,7 +23,7 @@
                                                 </form>
                                             </div> --}}
                                             <div class="add-group">
-                                                <a href="{{(Auth::user()->type==0)?url('department/add'):url('admin/department/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{(Auth::user()->type==2)?url('department/add'):url('admin/department/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::asset('/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
                                         </div>

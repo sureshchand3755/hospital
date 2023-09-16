@@ -143,7 +143,7 @@ Route::middleware(['auth', 'user-access:3'])->group(function () {
     Route::get('admin/appointment/view/{id}', [AppointmentController::class, 'show'])->name('admin.patient.appointment.view');
 
     Route::get('admin/doctors', [DoctorsController::class, 'index'])->name('admin.doctor.list');
-    Route::get('admin.doctor/add', [DoctorsController::class, 'create'])->name('admin.doctor.add');
+    Route::get('admin/doctor/add', [DoctorsController::class, 'create'])->name('admin.doctor.add');
     Route::post('admindoctor/store', [DoctorsController::class, 'store']);
     Route::get('admin/doctor/list', [DoctorsController::class, 'getDoctors'])->name('admin.doctor.lists');
     Route::get('admin/doctor/edit/{id}', [DoctorsController::class, 'edit'])->name('admin.doctor.edit');
