@@ -24,6 +24,7 @@ class PatientDetails extends Model
     {
         return $this->belongsTo(Department::class, 'department_id');
     }
+
     public function patientprescription()
     {
         return $this->hasMany(Prescription::class, 'patient_id');

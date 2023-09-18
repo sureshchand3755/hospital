@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Prescription;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Carbon\Carbon;
+use App\Models\Mediciens;
+use App\Models\Prescription;
 
 class PrescriptionController extends Controller
 {
@@ -30,13 +31,13 @@ class PrescriptionController extends Controller
      */
     public function store(Request $request)
     {
-        // dd(Carbon::now()->addDays($request->days[0]));
-        if(count($request->medicine_id) > 0){
-            for ($i=0; $i < count($request->medicine_id); $i++) {
+        $prescriptionCount = count(array_values(array_filter($request->medicine_id)));
+        if($prescriptionCount > 0){
+            for ($i=0; $i < $prescriptionCount; $i++) {
+                $medicineId = $this->addMedicine($request->medicine_id[$i]);
                 $prescription = new Prescription();
                 $prescription->patient_id = $request->patient_id;
                 $prescription->prescription_doctor_id = $request->doctor_id;
-                //$prescription->prescriptions = $request->prescription;
                 if ($request->hasFile('uploadimage')) {
                     $imageName = time().'.'.$request->uploadimage->extension();
                     $imagePath = public_path('prescriptions');
@@ -44,7 +45,7 @@ class PrescriptionController extends Controller
                     $prescription->upload_path = $imagePath;
                     $prescription->upload_image = $imageName;
                 }
-                $prescription->medicine_id = $request->medicine_id[$i];
+                $prescription->medicine_id = $medicineId;
                 $prescription->medicine_type_id = $request->medicine_type_id[$i];
                 $prescription->days = $request->days[$i];
                 $prescription->af_bf = $request->af_bf[$i];
@@ -60,6 +61,25 @@ class PrescriptionController extends Controller
         }
 
         return Redirect::route('appointment.index')->with('success','Prescription added successfully!');
+    }
+
+    public function addMedicine($name){
+        $checkMedicine = Mediciens::select("id")->where("name","LIKE","%{$name}%")->get();
+        $medicine_id='';
+        if(count($checkMedicine)==0){
+            $medicien = new Mediciens();
+            $medicien->name = $name;
+            $medicien->desc = $name;
+            $medicien->status = 0;
+            $medicien->created_at = new Carbon();
+            $medicien->save();
+
+            $medicine_id=$medicien->id;
+        }else{
+            $medicine_id=$checkMedicine->id;
+        }
+
+        return $medicine_id;
     }
 
     /**

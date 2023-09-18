@@ -18,6 +18,9 @@
                         <li class="{{ Request::is('appointments','doctor/appointment/edit/*') ? 'active' : '' }}">
                             <a href="{{ url('appointments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Booking List </span></a>
                         </li>
+                        <li class="{{ Request::is('mediciens','medicien/add','add-departments') ? 'active' : '' }}">
+                            <a href="{{ url('mediciens') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Medicien List </span></a>
+                        </li>
 
                     @elseif (Auth::user()->type==2)
                         <li class="{{ Request::is('hospital/dashboard') ? 'active' : '' }}">

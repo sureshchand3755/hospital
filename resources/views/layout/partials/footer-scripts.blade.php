@@ -46,6 +46,9 @@
 	<!-- Select2 Js -->
 	<script src="{{ URL::asset('assets/js/select2.min.js')}}"></script>
 
+    <!-- JQuery UI Js -->
+	<script src="{{ URL::asset('assets/js/jquery-ui.js')}}"></script>
+
    {{-- <script src="{{ URL::asset('assets/js/ckeditor.js')}}"></script> --}}
     <script src="{{ URL::asset('assets/js/feather.min.js')}}"></script>
     <script src="{{ URL::asset('assets/js/app.js')}}"></script>

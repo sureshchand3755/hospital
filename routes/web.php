@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PrescriptionController;
+use App\Http\Controllers\MediciensController;
 use Illuminate\Support\Facades\Artisan;
 
 /*
@@ -91,6 +92,18 @@ Route::middleware(['auth', 'user-access:1'])->group(function () {
     Route::get('doctor/appointment/view/{id}', [AppointmentController::class, 'show'])->name('doctor.appointment.view');
     Route::post('doctor/appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('doctor.appointment.changestatus');
     Route::post('doctor/prescription/add', [PrescriptionController::class, 'store'])->name('doctor.prescription.add');
+    Route::get('appointment/mediciensearch', [AppointmentController::class, 'medicienSearch'])->name('appointment.mediciensearch');
+
+
+    Route::get('mediciens', [MediciensController::class, 'index'])->name('mediciens.index');
+    Route::get('medicien/add', [MediciensController::class, 'create'])->name('medicien.add');
+    Route::get('medicien/list', [MediciensController::class, 'getList'])->name('medicien.list');
+    Route::post('medicien/store', [MediciensController::class, 'store']);
+    // Route::get('department/edit/{id}', [DepartmentController::class, 'edit'])->name('department.edit');
+    // Route::post('department/update', [DepartmentController::class, 'update'])->name('department.update');
+    // Route::get('department/view/{id}', [DepartmentController::class, 'show'])->name('department.view');
+    // Route::get('department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('department.changestatus');
+    // Route::post('department/delete',  [DepartmentController::class, 'destroy'])->name('department.delete');
 
 });
 

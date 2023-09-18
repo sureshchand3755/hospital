@@ -9,6 +9,7 @@ use App\Models\City;
 use App\Models\Department;
 use App\Models\PatientDetails;
 use App\Models\DoctorInfo;
+use App\Models\Mediciens;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use Illuminate\Http\Request;
@@ -29,7 +30,7 @@ class AppointmentController extends Controller
      */
     public function index()
     {
-      return view('appointments.list');
+        return view('appointments.list');
     }
 
     /**
@@ -49,6 +50,15 @@ class AppointmentController extends Controller
         $info = DoctorInfo::where("user_id",$request->doctor_id)->get()->first();
         $data['department'] = Department::where("id",$info->department_id)->get(["department_name", "id"]);
         return response()->json($data);
+    }
+
+    public function medicienSearch(Request $request){
+        $res = Mediciens::select("name")
+        ->where('status',0)
+        ->where('deleted_at','N')
+        ->where("name","LIKE","%{$request->term}%")
+        ->get();
+        return response()->json($res);
     }
 
     /**
@@ -253,7 +263,7 @@ class AppointmentController extends Controller
      */
     public function show($id)
     {
-        $data = PatientDetails::with(['doctordetails','department','state','city', 'patientprescription'])->where('id', $id)->first();
+        $data = PatientDetails::with(['doctordetails', 'department', 'state', 'city', 'patientprescription', 'patientprescription.medicien'])->where('id', $id)->first();
         return response()->json($data);
     }
 

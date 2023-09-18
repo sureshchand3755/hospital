@@ -40,8 +40,8 @@
                                 </div> --}}
                             </div>
                         </div>
-                        <!-- /Table Header -->
 
+                        <!-- /Table Header -->
                         <div class="table-responsive">
                             @if (Auth::user()->type==0 || Auth::user()->type==3)
                             <table class="table border-0 custom-table comman-table datatable mb-0" id="appointments_list">
@@ -103,7 +103,7 @@
 </div>
 <!-- View Patient Modal -->
 <div class="modal fade" id="view_appointment" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" style="max-width: 50%">
+    <div class="modal-dialog" style="max-width: 55%">
       <div class="modal-content">
         <div class="modal-header">
           <h3 class="modal-title" id="exampleModalLabel">Patient Details - <span id="appno"> </span> </h3>
@@ -400,20 +400,84 @@
                                             </tr>
                                             <tbody id="table_body">
                                                 <tr>
-                                                <td>{!! Form::select('medicine_id[]', Config::get('constants.medicine'), null, ['class' => 'form-control']) !!}</td>
-                                                <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
-                                                <td><input class="form-control" type="text"name="days[]" value=""></td>
-                                                <td><input class="form-control" type="text" name="af_bf[]" value=""></td>
-                                                <td><input class="form-control" type="text" name="morning[]" value=""></td>
-                                                <td><input class="form-control" type="text" name="afternoon[]" value=""></td>
-                                                <td><input class="form-control" type="text" name="evening[]" value=""></td>
-                                                <td><input class="form-control" type="text" name="night[]" value=""></td>
-                                                <td><input class="form-control" type="text" name="remarks[]" value=""></td>
-                                                <td><div class="action_container">
-                                                    <span class="danger" onclick="remove_tr(this)">
-                                                    <i class="fa fa-close"></i>
-                                                    </span>
-                                                </div></td>
+                                                    <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch"></td>
+                                                    <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                    <td><input class="form-control" type="text"name="days[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="af_bf[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="morning[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="afternoon[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="evening[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="night[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="remarks[]" value=""></td>
+                                                    <td><div class="action_container">
+                                                        <span class="danger" onclick="remove_tr(this)">
+                                                        <i class="fa fa-close"></i>
+                                                        </span>
+                                                    </div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch "></td>
+                                                    <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                    <td><input class="form-control" type="text"name="days[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="af_bf[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="morning[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="afternoon[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="evening[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="night[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="remarks[]" value=""></td>
+                                                    <td><div class="action_container">
+                                                        <span class="danger" onclick="remove_tr(this)">
+                                                        <i class="fa fa-close"></i>
+                                                        </span>
+                                                    </div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch"></td>
+                                                    <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                    <td><input class="form-control" type="text"name="days[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="af_bf[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="morning[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="afternoon[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="evening[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="night[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="remarks[]" value=""></td>
+                                                    <td><div class="action_container">
+                                                        <span class="danger" onclick="remove_tr(this)">
+                                                        <i class="fa fa-close"></i>
+                                                        </span>
+                                                    </div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch"></td>
+                                                    <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                    <td><input class="form-control" type="text"name="days[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="af_bf[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="morning[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="afternoon[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="evening[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="night[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="remarks[]" value=""></td>
+                                                    <td><div class="action_container">
+                                                        <span class="danger" onclick="remove_tr(this)">
+                                                        <i class="fa fa-close"></i>
+                                                        </span>
+                                                    </div></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch"></td>
+                                                    <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                    <td><input class="form-control" type="text"name="days[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="af_bf[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="morning[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="afternoon[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="evening[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="night[]" value=""></td>
+                                                    <td><input class="form-control" type="text" name="remarks[]" value=""></td>
+                                                    <td><div class="action_container">
+                                                        <span class="danger" onclick="remove_tr(this)">
+                                                        <i class="fa fa-close"></i>
+                                                        </span>
+                                                    </div></td>
                                                 </tr>
                                             </tbody>
                                             </thead>
@@ -459,18 +523,21 @@
     </div>
 </div>
 <style>
-    .form_control {
-        border: 1px solid #0002;
-        background-color: transparent;
-        outline: none;
-        padding: 8px 12px;
-        font-family: 1.2rem;
-        width: 100%;
-        color: #333;
-        font-family: Arial, Helvetica, sans-serif;
-        transition: 0.3s ease-in-out;
-    }
-    /* form field design end */
+.ui-autocomplete {
+    z-index: 9999 !important;
+}
+.form_control {
+    border: 1px solid #0002;
+    background-color: transparent;
+    outline: none;
+    padding: 8px 12px;
+    font-family: 1.2rem;
+    width: 100%;
+    color: #333;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 0.3s ease-in-out;
+}
+/* form field design end */
 
 
 .success {
@@ -524,10 +591,33 @@
     transition: unset;
     transform: scale(.95);
 }
+table#prescriptionViewData>thead>tr>th, table#prescriptionViewData>tbody>tr>td{
+    font-size: 12px;
+}
 </style>
 <script>
 $(document).ready(function($) {
 
+    $( '.medicinesearch' ).autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "{{url('appointment/mediciensearch')}}",
+                data:{
+                    term : request.term
+                },
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                    var resp = $.map(data,function(obj){
+                        return obj.name;
+                    });
+                    response(resp);
+                }
+            });
+        },
+        minLength: 1
+    });
+    $('#prescription, #view_appointment').modal({backdrop: 'static', keyboard: false}, 'show');
     var loginType = "{{ Auth::user()->type}}";
     var changeStatusUrl = "";
     var listUrl='';
@@ -651,10 +741,15 @@ $(document).ready(function($) {
             $('#v_department').text(data.department.department_name);
             if(data.patientprescription.length > 0){
                 // var prescription = JSON.stringify(data.patientprescription);
+                var appendData = '<div class="table-responsive"><table class="table table-bordered table-striped table-hover mb-0" id="prescriptionViewData"><thead><tr><th>Medicine</th><th>Type</th><th style="width: 75px;">Days</th><th style="width: 75px;">AF/BF</th><th style="width: 65px;">Morning</th><th style="width: 65px;">Afternoon</th><th style="width: 65px;">Evening</th><th style="width: 65px;">Night</th><th>Remarks</th></tr></thead><tbody>';
                 $.each(data.patientprescription, function(key, presdata) {
-                    var insertData = '<div class="col-md-12"><label class="col-md-4 col-form-label"><strong>Doctor Name</strong></label><div class="col-md-8"><span class="viewtext">'+data.doctordetails.name+'</span></div></div><div class="col-md-12"><label class="col-md-4 col-form-label"><strong>Prescription</strong></label><div class="col-md-8"><span class="viewtext">'+presdata.prescriptions+'</span></div></div>';
-                    $('.prescriptionData').html(insertData);
+                    console.log("presdata", presdata)
+                    var remarks = (presdata.remarks!=null)?presdata.remarks:'';
+                    // var insertData = '<div class="col-md-12"><label class="col-md-4 col-form-label"><strong>Doctor Name</strong></label><div class="col-md-8"><span class="viewtext">'+data.doctordetails.name+'</span></div></div><div class="col-md-12"><label class="col-md-4 col-form-label"><strong>Prescription</strong></label><div class="col-md-8"><span class="viewtext">'+presdata.prescriptions+'</span></div></div>';
+                    appendData += '<tr><td>'+presdata.medicien.name+'</td><td>'+presdata.medicien.name+'</td><td>'+presdata.days+'</td><td>'+presdata.af_bf+'</td><td>'+presdata.morning+'</td><td>'+presdata.afternoon+'</td><td>'+presdata.evening+'</td><td>'+presdata.night+'</td><td>'+remarks+'</td></tr>';
                 });
+                appendData += '</tbody></table></div>';
+                $('.prescriptionData').html(appendData);
             }
         })
     });

@@ -31,6 +31,8 @@
     {{-- <link rel="stylesheet" href="{{ URL::asset('/assets/plugins/lightgallery/css/lightgallery.min.css')}}"> --}}
     <link href="{{ URL::asset('/assets/plugins/bootstrap-tagsinput/css/bootstrap-tagsinput.css')}}" rel="stylesheet" type="text/css" />
     {{-- <link rel="stylesheet" href="{{ URL::asset('/assets/css/ckeditor.css')}}">--}}
+    <!-- JQuery UI Js -->
+    <link rel="stylesheet" href="{{ URL::asset('/assets/css/jquery-ui.css')}}">
     <!-- Main CSS -->
     <link rel="stylesheet" href="{{ URL::asset('/assets/css/style.css')}}">
     <link rel="stylesheet" href="http://cdn.bootcss.com/toastr.js/latest/css/toastr.min.css">
