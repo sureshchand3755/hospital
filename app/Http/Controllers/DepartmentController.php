@@ -175,10 +175,20 @@ class DepartmentController extends Controller
 
     }
 
+    public function checkDepartment($id, Request $request){
+        $result = Department::where("department_name", $request->department_name)->where("id", '!=', $id)->count();
+        $valid = true;
+        if($result > 0){
+            $valid = false;
+        }
+        echo json_encode($valid);
+    }
+
+
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department, Request $request,)
+    public function destroy(Department $department, Request $request)
     {
         $redirect = 'departments.index';
         if(Auth::user()->type==3){

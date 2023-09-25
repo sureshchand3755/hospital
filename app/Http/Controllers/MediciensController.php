@@ -90,6 +90,14 @@ class MediciensController extends Controller
         return Redirect::route($redirect)->with('success','Medicien Added successfully!');
 
     }
+    public function checkMedicien($id, Request $request){
+        $result = Mediciens::where("name", $request->name)->where("id", '!=', $id)->count();
+        $valid = true;
+        if($result > 0){
+            $valid = false;
+        }
+        echo json_encode($valid);
+    }
 
     /**
      * Display the specified resource.

@@ -59,7 +59,7 @@
                                 <div class="col-12">
                                     <div class="doctor-submit text-center">
                                         <button type="submit" class="btn btn-primary submit-form me-2">Create</button>
-                                        <button type="submit" class="btn btn-primary cancel-form">Cancel</button>
+                                        <button type="submit" class="btn btn-primary cancel-form cancel" onclick="window.history.go(-1); return false;">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -72,10 +72,17 @@
 </div>
 <script>
 $(document).ready(function($) {
+    var id = 0;
+    departmenturl = "{{ route('admin.department.check-department', ':id') }}";
+    departmenturl = departmenturl.replace(':id', id);
+    // console.log(url);
     $("#add_department").validate({
         // Specify validation rules
         rules: {
-            department_name: "required",
+            department_name: {
+                required: true,
+                remote: departmenturl
+            },
             department_head: "required",
             department_desc: "required",
             department_date: "required",
@@ -83,7 +90,10 @@ $(document).ready(function($) {
         },
         // Specify validation error messages
         messages: {
-            department_name: "Please enter your department name",
+            department_name: {
+                required :"Please enter your department name",
+                remote : "Department Name is already exists",
+            },
             department_head: "Please enter your department head",
             department_desc: "Please enter your description",
             department_date: "Please select date",

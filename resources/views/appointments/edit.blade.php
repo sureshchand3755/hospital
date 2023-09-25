@@ -464,9 +464,145 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="doctor-submit text-center">
-                                    <button type="submit" class="btn btn-primary submit-btn mb-4">Update</button>
-                                    <button type="submit" class="btn btn-primary cancel-form  mb-4">Cancel</button>
+                                @if (Auth::user()->type == 1 && $data->status == 'A')
+                                <div class="card-box">
+                                    <h3 class="card-title">Add Prescription</h3>
+                                    <hr>
+                                    <div class="row">
+                                        <div class="table-responsive">
+                                            <table class="table table-bordered table-striped table-hover mb-0" id="add_prescription">
+                                                <thead>
+                                                <tr>
+                                                    <th>Medicine Name</th>
+                                                    <th>Type</th>
+                                                    <th style="width: 75px;">Days</th>
+                                                    <th style="width: 75px;">AF/BF</th>
+                                                    <th style="width: 65px;">Morning</th>
+                                                    <th style="width: 65px;">Afternoon</th>
+                                                    <th style="width: 65px;">Evening</th>
+                                                    <th style="width: 65px;">Night</th>
+                                                    <th>Remarks</th>
+                                                    <th><div class="action_container">
+                                                        <span class="success" onclick="create_tr('table_body')">
+                                                        <i class="fa fa-plus"></i>
+                                                        </span>
+                                                    </div></th>
+                                                </tr>
+                                                <tbody id="table_body">
+                                                    @if (isset($data->patientprescription) && count($data->patientprescription) >0 )
+                                                     @foreach ($data->patientprescription as $prescription)
+                                                        <tr>
+                                                            <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch add_prescription" value="{{$prescription->medicien->name}}"></td>
+                                                            <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), $prescription->medicine_type_id, ['class' => 'form-control']) !!}</td>
+                                                            <td><input class="form-control add_prescription" type="text"name="days[]" value="{{$prescription->days}}"></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="af_bf[]" value="{{$prescription->af_bf}}"></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="morning[]" value="{{$prescription->morning}}"></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="afternoon[]" value="{{$prescription->afternoon}}"></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="evening[]" value="{{$prescription->evening}}"></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="night[]" value="{{$prescription->night}}"></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="remarks[]" value="{{$prescription->remarks}}"></td>
+                                                            <td><div class="action_container">
+                                                                <span class="danger" onclick="remove_tr(this)">
+                                                                <i class="fa fa-close"></i>
+                                                                </span>
+                                                            </div></td>
+                                                        </tr>
+                                                     @endforeach
+                                                    @else
+                                                        <tr>
+                                                            <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch add_prescription"></td>
+                                                            <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                            <td><input class="form-control add_prescription" type="text"name="days[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="af_bf[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="morning[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="afternoon[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="evening[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="night[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="remarks[]" value=""></td>
+                                                            <td><div class="action_container">
+                                                                <span class="danger" onclick="remove_tr(this)">
+                                                                <i class="fa fa-close"></i>
+                                                                </span>
+                                                            </div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch add_prescription"></td>
+                                                            <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                            <td><input class="form-control add_prescription" type="text"name="days[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="af_bf[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="morning[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="afternoon[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="evening[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="night[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="remarks[]" value=""></td>
+                                                            <td><div class="action_container">
+                                                                <span class="danger" onclick="remove_tr(this)">
+                                                                <i class="fa fa-close"></i>
+                                                                </span>
+                                                            </div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch add_prescription"></td>
+                                                            <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                            <td><input class="form-control add_prescription" type="text"name="days[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="af_bf[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="morning[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="afternoon[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="evening[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="night[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="remarks[]" value=""></td>
+                                                            <td><div class="action_container">
+                                                                <span class="danger" onclick="remove_tr(this)">
+                                                                <i class="fa fa-close"></i>
+                                                                </span>
+                                                            </div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch add_prescription"></td>
+                                                            <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                            <td><input class="form-control add_prescription" type="text"name="days[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="af_bf[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="morning[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="afternoon[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="evening[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="night[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="remarks[]" value=""></td>
+                                                            <td><div class="action_container">
+                                                                <span class="danger" onclick="remove_tr(this)">
+                                                                <i class="fa fa-close"></i>
+                                                                </span>
+                                                            </div></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input type="text" id="medicine_id" name="medicine_id[]" class="form-control medicinesearch add_prescription"></td>
+                                                            <td>{!! Form::select('medicine_type_id[]', Config::get('constants.medicine_type'), null, ['class' => 'form-control']) !!}</td>
+                                                            <td><input class="form-control add_prescription" type="text"name="days[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="af_bf[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="morning[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="afternoon[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="evening[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="night[]" value=""></td>
+                                                            <td><input class="form-control add_prescription" type="text" name="remarks[]" value=""></td>
+                                                            <td><div class="action_container">
+                                                                <span class="danger" onclick="remove_tr(this)">
+                                                                <i class="fa fa-close"></i>
+                                                                </span>
+                                                            </div></td>
+                                                        </tr>
+                                                    @endif
+
+                                                </tbody>
+                                                </thead>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endif
+                                <div class="col-12">
+                                    <div class="doctor-submit text-center" style="margin-top: 10px">
+                                        <button type="submit" class="btn btn-primary submit-btn">Update</button>
+                                        <button type="submit" class="btn btn-primary cancel-form cancel" onclick="window.history.go(-1); return false;">Cancel</button>
+                                    </div>
                                 </div>
                             </form>
                         </div>
@@ -475,127 +611,180 @@
             </div>
         </div>
     </div>
-    <script>
-        $(document).ready(function($) {
-            var stateId = "{{ isset($data->state_id) ? $data->state_id : 0 }}";
-            var cityId = "{{ isset($data->city_id) ? $data->city_id : 0 }}";
-
-            var doctorId = "{{ isset($data->doctor_id) ? $data->doctor_id : '' }}";
-            var departId = "{{ isset($data->department_id) ? $data->department_id : '' }}";
-
-            var dob = "{{ $data && $data->date_of_birth ? date('m/d/Y', strtotime($data->date_of_birth)) : '' }}";
-            $('#date_of_birth').val(dob);
-
-            var appoinment_date =
-                "{{ $data && $data->appoinment_date ? date('m/d/Y', strtotime($data->appoinment_date)) : '' }}";
-            $('#appoinment_date').val(appoinment_date);
-
-            $('#date_of_birth').datetimepicker({
-                "format": 'DD/MM/YYYY'
-            }).on('dp.change', function(e) {
-                var dob = $('#date_of_birth').val();
-                console.log(dob)
-                if (dob != '') {
-                    var age = moment().diff(moment(dob, 'DD/MM/YYYY'), 'years');
-                    $('#age').val(age);
-                }
-            });
-            $('#aadhar_number').keyup(function() {
-                var value = $(this).val();
-                value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(
-                "-");
-                $(this).val(value);
-            });
-
-            $("#weight, #height").keyup(function() {
-                var weight = $('input[name=weight]').val();
-                var height = $('input[name=height]').val();
-                var bmi = weight / (height / 100 * height / 100);
-                $('#bmi').val(isNaN(parseInt(bmi)) ? '' : parseInt(bmi));
-                bmiCategory(bmi)
-            });
+<style>
+    .ui-autocomplete {
+        z-index: 9999 !important;
+    }
+    .form_control {
+        border: 1px solid #0002;
+        background-color: transparent;
+        outline: none;
+        padding: 8px 12px;
+        font-family: 1.2rem;
+        width: 100%;
+        color: #333;
+        font-family: Arial, Helvetica, sans-serif;
+        transition: 0.3s ease-in-out;
+    }
+    /* form field design end */
 
 
-            $("#add_appointment").validate({
-                rules: {
-                    patient_name: "required",
-                    date_of_birth: "required",
-                    age: "required",
-                    gender: "required",
-                    address: "required",
-                    state_id: "required",
-                    city_id: "required",
-                    postal_code: "required",
-                    phone_number: "required",
-                    doctor_id: "required",
-                    appoinment_date: "required",
-                    visit_id: "required",
-                },
-                messages: {
-                    patient_name: "Please enter patient name",
-                    date_of_birth: "Please select date of birth",
-                    age: "Please enter age",
-                    gender: "Please select gender",
-                    address: "Please enter address",
-                    state_id: "Please select state",
-                    city_id: "Please select city",
-                    postal_code: "Please enter postal code",
-                    phone_number: "Please enter phone number",
-                    doctor_id: "Please select doctor",
-                    appoinment_date: "Please select date",
-                    visit_id: "Please select visit",
-                }
-            });
-            $('#state_id').on('change', function() {
-                var idState = this.value;
-                $("#city_id").html('');
-                $.ajax({
-                    url: "{{ url('fetch-cities') }}",
-                    type: "POST",
-                    data: {
-                        state_id: idState,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'json',
-                    success: function(res) {
-                        $('#city_id').html('<option value="">Select City</option>');
-                        $.each(res.cities, function(key, value) {
-                            $("#city_id").append('<option value="' + value
-                                .id + '">' + value.name + '</option>');
-                        });
-                    }
-                });
-            });
-            $('#doctor_id').on('change', function() {
-                var idState = this.value;
-                $("#department_id").html('');
-                $.ajax({
-                    url: "{{ url('fetch-department') }}",
-                    type: "POST",
-                    data: {
-                        doctor_id: idState,
-                        _token: '{{ csrf_token() }}'
-                    },
-                    dataType: 'json',
-                    success: function(res) {
-                        // $('#city').html('<option value="">Select City</option>');
-                        $.each(res.department, function(key, value) {
-                            $("#department_id").append('<option value="' + value
-                                .id + '">' + value.department_name + '</option>');
-                        });
-                    }
-                });
-            });
-            selectCity(stateId, cityId);
-            selectDepartment(doctorId, departId);
+    .success {
+        background-color: #24b96f !important;
+        font-size: 12px;
+    }
+
+    .warning {
+        background-color: #ebba33 !important;
+        font-size: 12px;
+    }
+
+    .primary {
+        background-color: #259dff !important;
+        font-size: 12px;
+    }
+
+    .secondery {
+        background-color: #00bcd4 !important;
+        font-size: 12px;
+    }
+
+    .danger {
+        background-color: #ff5722 !important;
+        font-size: 12px;
+    }
+
+    .action_container {
+        display: inline-flex;
+    }
+
+    .action_container>* {
+        border: none;
+        outline: none;
+        color: #fff;
+        text-decoration: none;
+        display: inline-block;
+        padding: 4px 8px;
+        cursor: pointer;
+        transition: 0.3s ease-in-out;
+    }
+
+    .action_container>*+* {
+        border-left: 1px solid #fff5;
+    }
+
+    .action_container>*:hover {
+        filter: hue-rotate(-20deg) brightness(0.97);
+        transform: scale(1.05);
+        border-color: transparent;
+        box-shadow: 0 2px 10px #0004;
+        border-radius: 2px;
+    }
+
+    .action_container>*:active {
+        transition: unset;
+        transform: scale(.95);
+    }
+    table#prescriptionViewData>thead>tr>th, table#prescriptionViewData>tbody>tr>td{
+        font-size: 12px;
+    }
+.table>thead>tr>th {
+    font-size: 14px;
+    line-height: 15px;
+    text-align: center;
+}
+.table>tbody>tr {
+    font-size: 14px;
+    line-height: 15px;
+}
+.add_prescription {
+    max-height: 35px !important;
+    min-height: 35px !important;
+}
+select.form-control{
+    min-height: 30px !important;
+    line-height: 1 !important;
+}
+</style>
+<script>
+    $(document).ready(function($) {
+        var stateId = "{{ isset($data->state_id) ? $data->state_id : 0 }}";
+        var cityId = "{{ isset($data->city_id) ? $data->city_id : 0 }}";
+
+        var doctorId = "{{ isset($data->doctor_id) ? $data->doctor_id : '' }}";
+        var departId = "{{ isset($data->department_id) ? $data->department_id : '' }}";
+
+        var dob = "{{ $data && $data->date_of_birth ? date('m/d/Y', strtotime($data->date_of_birth)) : '' }}";
+        $('#date_of_birth').val(dob);
+
+        var appoinment_date =
+            "{{ $data && $data->appoinment_date ? date('m/d/Y', strtotime($data->appoinment_date)) : '' }}";
+        $('#appoinment_date').val(appoinment_date);
+
+        $('#date_of_birth').datetimepicker({
+            "format": 'DD/MM/YYYY'
+        }).on('dp.change', function(e) {
+            var dob = $('#date_of_birth').val();
+            console.log(dob)
+            if (dob != '') {
+                var age = moment().diff(moment(dob, 'DD/MM/YYYY'), 'years');
+                $('#age').val(age);
+            }
+        });
+        $('#aadhar_number').keyup(function() {
+            var value = $(this).val();
+            value = value.replace(/\D/g, "").split(/(?:([\d]{4}))/g).filter(s => s.length > 0).join(
+            "-");
+            $(this).val(value);
         });
 
-        function selectCity(state_id, city_id) {
+        $("#weight, #height").keyup(function() {
+            var weight = $('input[name=weight]').val();
+            var height = $('input[name=height]').val();
+            var bmi = weight / (height / 100 * height / 100);
+            $('#bmi').val(isNaN(parseInt(bmi)) ? '' : parseInt(bmi));
+            bmiCategory(bmi)
+        });
+
+
+        $("#add_appointment").validate({
+            rules: {
+                patient_name: "required",
+                date_of_birth: "required",
+                age: "required",
+                gender: "required",
+                address: "required",
+                state_id: "required",
+                city_id: "required",
+                postal_code: "required",
+                phone_number: "required",
+                doctor_id: "required",
+                appoinment_date: "required",
+                visit_id: "required",
+            },
+            messages: {
+                patient_name: "Please enter patient name",
+                date_of_birth: "Please select date of birth",
+                age: "Please enter age",
+                gender: "Please select gender",
+                address: "Please enter address",
+                state_id: "Please select state",
+                city_id: "Please select city",
+                postal_code: "Please enter postal code",
+                phone_number: "Please enter phone number",
+                doctor_id: "Please select doctor",
+                appoinment_date: "Please select date",
+                visit_id: "Please select visit",
+            }
+        });
+        $('#state_id').on('change', function() {
+            var idState = this.value;
+            $("#city_id").html('');
             $.ajax({
                 url: "{{ url('fetch-cities') }}",
                 type: "POST",
                 data: {
-                    state_id: state_id,
+                    state_id: idState,
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json',
@@ -605,41 +794,133 @@
                         $("#city_id").append('<option value="' + value
                             .id + '">' + value.name + '</option>');
                     });
-                    $('#city_id').val(city_id)
                 }
             });
-        }
-
-        function selectDepartment(doctor_id, department_id) {
+        });
+        $('#doctor_id').on('change', function() {
+            var idState = this.value;
+            $("#department_id").html('');
             $.ajax({
                 url: "{{ url('fetch-department') }}",
                 type: "POST",
                 data: {
-                    doctor_id: doctor_id,
+                    doctor_id: idState,
                     _token: '{{ csrf_token() }}'
                 },
                 dataType: 'json',
                 success: function(res) {
+                    // $('#city').html('<option value="">Select City</option>');
                     $.each(res.department, function(key, value) {
                         $("#department_id").append('<option value="' + value
                             .id + '">' + value.department_name + '</option>');
                     });
-                    $('#department_id').val(department_id)
                 }
             });
+        });
+        selectCity(stateId, cityId);
+        selectDepartment(doctorId, departId);
+        autocomplete();
+    });
+
+function selectCity(state_id, city_id) {
+    $.ajax({
+        url: "{{ url('fetch-cities') }}",
+        type: "POST",
+        data: {
+            state_id: state_id,
+            _token: '{{ csrf_token() }}'
+        },
+        dataType: 'json',
+        success: function(res) {
+            $('#city_id').html('<option value="">Select City</option>');
+            $.each(res.cities, function(key, value) {
+                $("#city_id").append('<option value="' + value
+                    .id + '">' + value.name + '</option>');
+            });
+            $('#city_id').val(city_id)
         }
-    function bmiCategory(bmi){
-        var output='';
-        if (bmi <= 18.5) {
-            output = "UNDERWEIGHT";
-        } else if (bmi > 18.5 && bmi<=24.9 ) {
-            output = "NORMAL WEIGHT";
-        } else if (bmi > 24.9 && bmi<=29.9) {
-            output = "OVERWEIGHT";
-        } else if (bmi > 30.0) {
-            output = "OBESE";
+    });
+}
+
+function selectDepartment(doctor_id, department_id) {
+    $.ajax({
+        url: "{{ url('fetch-department') }}",
+        type: "POST",
+        data: {
+            doctor_id: doctor_id,
+            _token: '{{ csrf_token() }}'
+        },
+        dataType: 'json',
+        success: function(res) {
+            $.each(res.department, function(key, value) {
+                $("#department_id").append('<option value="' + value
+                    .id + '">' + value.department_name + '</option>');
+            });
+            $('#department_id').val(department_id)
         }
-        $("#bmicategory").text(output);
+    });
+}
+function bmiCategory(bmi){
+    var output='';
+    if (bmi <= 18.5) {
+        output = "UNDERWEIGHT";
+    } else if (bmi > 18.5 && bmi<=24.9 ) {
+        output = "NORMAL WEIGHT";
+    } else if (bmi > 24.9 && bmi<=29.9) {
+        output = "OVERWEIGHT";
+    } else if (bmi > 30.0) {
+        output = "OBESE";
     }
-    </script>
+    $("#bmicategory").text(output);
+}
+function create_tr(table_id) {
+    let table_body = document.getElementById(table_id),
+        first_tr   = table_body.firstElementChild
+        last_tr   = table_body.lastElementChild
+        tr_clone   = last_tr.cloneNode(true);
+        table_body.append(tr_clone);
+    // clean_first_tr(table_body.lastElementChild);
+    autocomplete();
+}
+function remove_tr(This) {
+    if(This.closest('tbody').childElementCount == 1)
+    {
+        alert("You Don't have Permission to Delete This ?");
+    }else{
+        This.closest('tr').remove();
+    }
+}
+function clean_first_tr(firstTr) {
+    let children = firstTr.children;
+
+    children = Array.isArray(children) ? children : Object.values(children);
+    children.forEach(x=>{
+        if(x !== firstTr.lastElementChild)
+        {
+            x.firstElementChild.value = '';
+        }
+    });
+}
+function autocomplete(){
+    $( '.medicinesearch' ).autocomplete({
+        source: function(request, response) {
+            $.ajax({
+                url: "{{url('appointment/mediciensearch')}}",
+                data:{
+                    term : request.term
+                },
+                dataType: "json",
+                success: function(data){
+                    console.log(data);
+                    var resp = $.map(data,function(obj){
+                        return obj.name;
+                    });
+                    response(resp);
+                }
+            });
+        },
+        minLength: 1
+    });
+}
+</script>
 @endsection

@@ -48,7 +48,7 @@
                                 <div class="col-12">
                                     <div class="doctor-submit text-center">
                                         <button type="submit" class="btn btn-primary submit-form me-2">Create</button>
-                                        <button type="submit" class="btn btn-primary cancel-form">Cancel</button>
+                                        <button type="submit" class="btn btn-primary cancel-form cancel" onclick="window.history.go(-1); return false;">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -61,15 +61,24 @@
 </div>
 <script>
 $(document).ready(function($) {
+    var id = 0;
+    url = "{{ route('medicien.check', ':id') }}";
+    url = url.replace(':id', id);
     $("#add_medicien").validate({
         // Specify validation rules
         rules: {
-            name: "required",
+            name: {
+                required: true,
+                remote: url
+            },
             status: "required"
         },
         // Specify validation error messages
         messages: {
-            name: "Please enter your name",
+            name: {
+                required :"Please enter your name",
+                remote : "Medicien Name is already exists",
+            },
             status: "Please select status",
         },
         submitHandler: function(form) {

@@ -17,10 +17,10 @@ return new class extends Migration
                 $table->integer('medicine_type_id')->nullable();
                 $table->integer('days')->nullable();
                 $table->string('af_bf')->nullable();
-                $table->integer('morning')->nullable();
-                $table->integer('afternoon')->nullable();
-                $table->integer('evening')->nullable();
-                $table->integer('night')->nullable();
+                $table->string('morning')->nullable();
+                $table->string('afternoon')->nullable();
+                $table->string('evening')->nullable();
+                $table->string('night')->nullable();
                 $table->string('remarks')->nullable();
                 $table->date('next_consulting_date')->nullable();
             });

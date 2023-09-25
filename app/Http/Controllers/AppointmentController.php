@@ -10,6 +10,7 @@ use App\Models\Department;
 use App\Models\PatientDetails;
 use App\Models\DoctorInfo;
 use App\Models\Mediciens;
+use App\Models\Prescription;
 use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use Illuminate\Http\Request;
@@ -22,6 +23,8 @@ use Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
 use Haruncpi\LaravelIdGenerator\IdGenerator;
+use App\Http\Controllers\PrescriptionController;
+
 
 class AppointmentController extends Controller
 {
@@ -247,9 +250,9 @@ class AppointmentController extends Controller
                         <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
                         <div class="dropdown-menu dropdown-menu-end">
                         <a class="dropdown-item view_appointment" data-bs-target="#view_appointment"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i> View</a><a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>';
-                        if($row->status=='A'){
-                            $actionBtn .='<a class="dropdown-item prescription" data-bs-target="#prescription" href="#" data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="'.$row->doctor_id.'" ><i class="fas fa-book-medical m-r-5"></i> Add Medicine</a>';
-                        }
+                        // if($row->status=='A'){
+                        //     $actionBtn .='<a class="dropdown-item prescription" data-bs-target="#prescription" href="#" data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="'.$row->doctor_id.'" ><i class="fas fa-book-medical m-r-5"></i> Add Medicine</a>';
+                        // }
                         $actionBtn .='</div>';
                         return $actionBtn;
                     })
@@ -276,7 +279,8 @@ class AppointmentController extends Controller
         $doctor = $defaultSelection + User::where('type',1)->where('status',0)->where('deleted_at','N')->pluck("name", "id")->toArray();
         $states = $defaultSelection + State::pluck("name", "id")->toArray();
         $department = $defaultSelection + Department::where('status',0)->where('deleted_at','N')->pluck("department_name", "id")->toArray();
-        $data = PatientDetails::where('id',$id)->get()->first();
+        // $data = PatientDetails::where('id',$id)->get()->first();
+        $data = PatientDetails::with(['patientprescription', 'patientprescription.medicien'])->where('id',$id)->get()->first();
         return view('appointments.edit', compact('data', 'doctor', 'department','states'));
     }
     public function clone($id)
@@ -367,6 +371,9 @@ class AppointmentController extends Controller
             $appointment->symptoms = $request->symptoms;
             $appointment->any_mediciens = $request->any_mediciens;
             $appointment->note = $request->note;
+            if($appointment->status=='A'){
+                (new PrescriptionController)->storePrescription($request, $request->id);
+            }
         }else{
             $appointment->subtitle = $request->subtitle;
             $appointment->email = $request->email;
@@ -394,7 +401,7 @@ class AppointmentController extends Controller
             $appointment->doctor_id = $request->doctor_id;
             $appointment->department_id = $request->department_id;
             $appoinment_date = explode('/', $request->appoinment_date);
-            $appointment->appoinment_date = date("Y-m-d", strtotime($date[0].'-'.$date[1].'-'.$date[2]));
+            $appointment->appoinment_date = date("Y-m-d", strtotime($appoinment_date[0].'-'.$appoinment_date[1].'-'.$appoinment_date[2]));
             $appointment->visit_id = $request->visit_id;
             $appointment->illness_id = $request->illness_id;
             $appointment->appointment_mode_id = $request->appointment_mode_id;

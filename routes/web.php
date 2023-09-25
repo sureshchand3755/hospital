@@ -99,6 +99,7 @@ Route::middleware(['auth', 'user-access:1'])->group(function () {
     Route::get('medicien/add', [MediciensController::class, 'create'])->name('medicien.add');
     Route::get('medicien/list', [MediciensController::class, 'getList'])->name('medicien.list');
     Route::post('medicien/store', [MediciensController::class, 'store']);
+    Route::get('medicien/check/{id}', [MediciensController::class, 'checkMedicien'])->name('medicien.check');
     // Route::get('department/edit/{id}', [DepartmentController::class, 'edit'])->name('department.edit');
     // Route::post('department/update', [DepartmentController::class, 'update'])->name('department.update');
     // Route::get('department/view/{id}', [DepartmentController::class, 'show'])->name('department.view');
@@ -173,4 +174,5 @@ Route::middleware(['auth', 'user-access:3'])->group(function () {
     Route::get('admin/department/view/{id}', [DepartmentController::class, 'show'])->name('admin.department.view');
     Route::get('admin/department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('admin.department.changestatus');
     Route::post('admin/department/delete',  [DepartmentController::class, 'destroy'])->name('admin.department.delete');
+    Route::get('admin/department/check-department/{id}', [DepartmentController::class, 'checkDepartment'])->name('admin.department.check-department');
 });

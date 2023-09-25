@@ -523,74 +523,6 @@
     </div>
 </div>
 <style>
-.ui-autocomplete {
-    z-index: 9999 !important;
-}
-.form_control {
-    border: 1px solid #0002;
-    background-color: transparent;
-    outline: none;
-    padding: 8px 12px;
-    font-family: 1.2rem;
-    width: 100%;
-    color: #333;
-    font-family: Arial, Helvetica, sans-serif;
-    transition: 0.3s ease-in-out;
-}
-/* form field design end */
-
-
-.success {
-    background-color: #24b96f !important;
-}
-
-.warning {
-    background-color: #ebba33 !important;
-}
-
-.primary {
-    background-color: #259dff !important;
-}
-
-.secondery {
-    background-color: #00bcd4 !important;
-}
-
-.danger {
-    background-color: #ff5722 !important;
-}
-
-.action_container {
-    display: inline-flex;
-}
-
-.action_container>* {
-    border: none;
-    outline: none;
-    color: #fff;
-    text-decoration: none;
-    display: inline-block;
-    padding: 8px 14px;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-}
-
-.action_container>*+* {
-    border-left: 1px solid #fff5;
-}
-
-.action_container>*:hover {
-    filter: hue-rotate(-20deg) brightness(0.97);
-    transform: scale(1.05);
-    border-color: transparent;
-    box-shadow: 0 2px 10px #0004;
-    border-radius: 2px;
-}
-
-.action_container>*:active {
-    transition: unset;
-    transform: scale(.95);
-}
 table#prescriptionViewData>thead>tr>th, table#prescriptionViewData>tbody>tr>td{
     font-size: 12px;
 }
@@ -598,25 +530,6 @@ table#prescriptionViewData>thead>tr>th, table#prescriptionViewData>tbody>tr>td{
 <script>
 $(document).ready(function($) {
 
-    $( '.medicinesearch' ).autocomplete({
-        source: function(request, response) {
-            $.ajax({
-                url: "{{url('appointment/mediciensearch')}}",
-                data:{
-                    term : request.term
-                },
-                dataType: "json",
-                success: function(data){
-                    console.log(data);
-                    var resp = $.map(data,function(obj){
-                        return obj.name;
-                    });
-                    response(resp);
-                }
-            });
-        },
-        minLength: 1
-    });
     $('#prescription, #view_appointment').modal({backdrop: 'static', keyboard: false}, 'show');
     var loginType = "{{ Auth::user()->type}}";
     var changeStatusUrl = "";
