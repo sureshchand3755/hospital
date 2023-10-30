@@ -1258,7 +1258,7 @@ textarea.form-control {
 }
 .logout-btn {
 	margin: 50px 0px;
-    position: absolute;
+    /* position: absolute; */
     right: 0;
     bottom: 0;
     left: 0;
@@ -10834,4 +10834,7 @@ textarea.form-control {
 }
 .text-right{
     text-align: right;
+}
+.action a{
+    padding: 5px;
 }

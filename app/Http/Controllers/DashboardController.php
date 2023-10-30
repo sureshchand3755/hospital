@@ -23,11 +23,8 @@ class DashboardController extends Controller
     }
     public function viewProfile()
     {
-        $data['states'] = State::get(["name", "id"]);
-        $data['PatientGeneralInfo'] = PatientGeneralInfo::where('user_id',Auth::user()->id)->get()->first();
-        $data['PatientContactInfo'] = PatientContactInfo::where('user_id',Auth::user()->id)->get()->first();
-        $data['PatientMedicalInfo'] = PatientMedicalInfo::where('user_id',Auth::user()->id)->get()->first();
-        return view('patient.profile',$data);
+        $user = User::where('id',Auth::user()->id)->first();
+        return view('patient.profile', compact('user'));
     }
 
 }

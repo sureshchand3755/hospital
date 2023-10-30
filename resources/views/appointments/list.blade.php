@@ -61,7 +61,7 @@
                                         <th>Consulting Doctor</th>
                                         <th>Department</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -85,7 +85,7 @@
                                         <th>Phone No.</th>
                                         <th>Address</th>
                                         <th>Status</th>
-                                        <th></th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -526,6 +526,9 @@
 table#prescriptionViewData>thead>tr>th, table#prescriptionViewData>tbody>tr>td{
     font-size: 12px;
 }
+select#status{
+    width: 115px;
+}
 </style>
 <script>
 $(document).ready(function($) {
@@ -678,9 +681,11 @@ $(document).ready(function($) {
         processing: true,
         responsive: true,
         pageLength: 10,
+        autoWidth: false,
         lengthMenu: [[10, 20, 25, 50, -1], [10, 20, 25, 50, 'All']],
         serverSide: true,
         ajax: listUrl,
+
         columns: [
             {data: 'idRows', name: 'idRows'},
             {data: 'appointment_no', name: 'appointment_no'},
@@ -692,7 +697,7 @@ $(document).ready(function($) {
             {data: 'doctor', name: 'doctor'},
             {data: 'department', name: 'department'},
             // {data: 'status', name: 'status'},
-            {data: 'status', render: function ( data, type, row ) {
+            {data: 'status',  render: function ( data, type, row ) {
                 $("select.select option[value='A']").attr('disabled', true);
                 $("select.select option[value='R']").attr('disabled', true);
                 return data;
@@ -703,6 +708,19 @@ $(document).ready(function($) {
                 orderable: true,
                 searchable: true
             },
+        ],
+        columnDefs: [
+            { "width": "10%", "targets": 0 },
+            { "width": "10%", "targets": 1 },
+            { "width": "50%", "targets": 2 },
+            { "width": "10%", "targets": 3 },
+            { "width": "20%", "targets": 4 },
+            { "width": "20%", "targets": 5 },
+            { "width": "20%", "targets": 6 },
+            { "width": "20%", "targets": 7 },
+            { "width": "20%", "targets": 8 },
+            { "width": "20%", "targets": 9 },
+            { "width": "20%", "targets": 10 },
         ]
     });
 

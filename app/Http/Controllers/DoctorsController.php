@@ -81,9 +81,9 @@ class DoctorsController extends Controller
         $doctorInfo->biography = $request->biography;
         $doctorInfo->status = $request->status;
         if ($request->hasFile('profile_image')) {
-            $imageName = time().'.'.$request->profile_image->extension();
+            $imageName = 'profileimage'.$lastInsertID.'.'.$request->profile_image->extension();
             $request->profile_image->move(public_path('images'), $imageName);
-            $userData->profile_image = $imageName;
+            $doctorInfo->profile_image = $imageName;
         }
         $doctorInfo->created_at = new Carbon();
         $doctorInfo->save();
@@ -154,11 +154,10 @@ class DoctorsController extends Controller
                     if(Auth::user()->type==3){
                         $editUrl=url('admin/doctor/edit/'.$row->id);
                     }
-                    $actionBtn = '<div class="dropdown dropdown-action">
-                    <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                    <a class="dropdown-item delete_doctor" href="#"   data-id="'.$row->id.'"  data-bs-toggle="modal" data-bs-target="#delete_doctor"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
+                    $actionBtn = '<div class="action">
+                    <a class="view_doctor" data-bs-target="#view_doctor"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i>
+                    <a class="" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>
+                    <a class="delete_doctor" href="#"   data-id="'.$row->id.'"  data-bs-toggle="modal" data-bs-target="#delete_doctor"><i class="far fa-trash-alt m-r-5"></i></a>
                     </div>';
                     return $actionBtn;
                 })

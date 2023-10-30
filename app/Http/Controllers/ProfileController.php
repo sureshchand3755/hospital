@@ -8,6 +8,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Hash;
+use App\Models\User;
 use App\Models\{Country, State, City};
 use App\Models\{PatientContactInfo, PatientGeneralInfo, PatientMedicalInfo};
 use Carbon\Carbon;
@@ -158,5 +160,21 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function profileUpdate(Request $request){
+        $user = User::find(Auth::user()->id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->updated_at = new Carbon();
+        $user->save();
+        return back()->with('success','Profile Updated successfully!');
+    }
+    public function updatePassword(Request $request){
+        #Update the new Password
+        User::whereId(Auth()->user()->id)->update([
+            'password' => Hash::make($request->password)
+        ]);
+        return back()->with("success", "Password changed successfully!");
     }
 }

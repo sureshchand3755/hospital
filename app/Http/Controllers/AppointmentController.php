@@ -15,6 +15,7 @@ use App\Http\Requests\StoreAppointmentRequest;
 use App\Http\Requests\UpdateAppointmentRequest;
 use Illuminate\Http\Request;
 use DataTables;
+use PDF;
 use DateTime;
 use URL;
 use Carbon\Carbon;
@@ -225,19 +226,18 @@ class AppointmentController extends Controller
                     $dt =  $dt->addColumn('action', function($row) {
                         $cloneUrl=url('appointment/clone/'.$row->id);
                         $editUrl=url('appointment/edit/'.$row->id);
+                        $generateReportUrl=url('generate_report/'.$row->id);
                         if(Auth::user()->type==3){
                             $cloneUrl=url('admin/appointment/clone/'.$row->id);
                             $editUrl=url('admin/appointment/edit/'.$row->id);
                         }
-                        $actionBtn = '<div class="dropdown dropdown-action">
-                        <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end">';
+                        $actionBtn = '<div class="action">';
                         if($row->status=='C'){
-                            $actionBtn .='<a class="dropdown-item" href="'.$cloneUrl.'"><i class="fa-solid fa-clone m-r-5"></i> Clone</a>';
+                            $actionBtn .='<a href="'.$cloneUrl.'" title="Clone"><i class="fa-solid fa-clone m-r-5"></i></a>';
                         }
-                        $actionBtn .='<a class="dropdown-item view_appointment" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#view_appointment" href="#"><i class="fa-solid fa-eye m-r-5"></i> View</a>
-                        <a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                        <a class="dropdown-item delete_appointment" href="#" data-id="'.$row->id.'"  data-bs-toggle="modal" data-bs-target="#delete_appointment"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
+                        $actionBtn .='<a class="view_appointment"  title="View" data-id="'.$row->id.'" data-bs-toggle="modal" data-bs-target="#view_appointment" href="#"><i class="fa-solid fa-eye m-r-5"></i></a>
+                        <a href="'.$editUrl.'" title="Edit"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>
+                        <a class="delete_appointment" href="#" title="Delete" data-id="'.$row->id.'"  data-bs-toggle="modal" data-bs-target="#delete_appointment"><i class="far fa-trash-alt m-r-5"></i></a><a href="'.$generateReportUrl.'" title="Generate Report"><i class="fa fa-file-pdf-o m-r-5"></i></a>
                         </div>';
                         return $actionBtn;
                     })
@@ -246,10 +246,8 @@ class AppointmentController extends Controller
                     $dt =  $dt->addColumn('action', function($row){
                         $editUrl=url('doctor/appointment/edit/'.$row->id);
 
-                        $actionBtn = '<div class="dropdown dropdown-action">
-                        <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                        <div class="dropdown-menu dropdown-menu-end">
-                        <a class="dropdown-item view_appointment" data-bs-target="#view_appointment"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i> View</a><a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>';
+                        $actionBtn = '<div class="action">
+                        <a class="view_appointment" data-bs-target="#view_appointment"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i></a><a href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>';
                         // if($row->status=='A'){
                         //     $actionBtn .='<a class="dropdown-item prescription" data-bs-target="#prescription" href="#" data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="'.$row->doctor_id.'" ><i class="fas fa-book-medical m-r-5"></i> Add Medicine</a>';
                         // }
@@ -447,5 +445,17 @@ class AppointmentController extends Controller
             return Redirect::route($redirect)->with('Error','Appointment delete fail');
             return redirect()->back();
         }
+    }
+
+    public function generateReport($id){
+        // $data['data'] = PatientDetails::with(['doctordetails', 'department', 'state', 'city', 'patientprescription', 'patientprescription.medicien'])->where('id', $id)->first();
+        $data = [
+            'title' => 'Welcome to Tutsmake.com',
+            'date' => date('m/d/Y')
+        ];
+        $pdf = PDF::loadView('appointments.report', $data);
+
+        return $pdf->download('test.pdf');
+        // return view('appointments.report', compact('data'));
     }
 }

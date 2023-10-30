@@ -61,12 +61,16 @@ class DepartmentController extends Controller
                         $editUrl=url('admin/department/edit/'.$row->id);
                     }
 
-                    $actionBtn = '<div class="dropdown dropdown-action">
-                    <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                    <a class="dropdown-item delete_department" href="#" data-bs-toggle="modal"  data-id="'.$row->id.'" data-bs-target="#delete_department"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
-                    </div>';
+
+                    $actionBtn = '<div class="action"><a class="view_department" data-bs-target="#view_department"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i><a title="Edit"  href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a><a class="delete_department" href="#" data-bs-toggle="modal" title="Delete"  data-id="'.$row->id.'" data-bs-target="#delete_department"><i class="far fa-trash-alt m-r-5"></i></a></div>';
+                    // $actionBtn = '<div class="dropdown dropdown-action">
+                    // <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
+                    // <div class="dropdown-menu dropdown-menu-end">
+                    // <a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
+                    // <a class="dropdown-item delete_department" href="#" data-bs-toggle="modal"  data-id="'.$row->id.'" data-bs-target="#delete_department"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
+                    // </div>';
+
+
                     return $actionBtn;
                 })
                 ->rawColumns(['idRows','department_status','action'])

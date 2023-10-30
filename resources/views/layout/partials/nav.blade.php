@@ -39,12 +39,30 @@
                         <li class="{{ Request::is('admin/patient/appointments','admin/appointment/add','appointment/edit/1') ? 'active' : '' }}">
                             <a href="{{ url('admin/patient/appointments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
                         </li>
+                        <li  class="{{ Request::is('admin/hospitals','admin/hospital/edit','admin/hospital/add') ? 'active' : '' }}">
+                            <a href="{{ url('admin/hospitals') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Hospital </span></a>
+                        </li>
                         <li  class="{{ Request::is('admin/doctors','edit-doctor','doctor/add') ? 'active' : '' }}">
                             <a href="{{ url('admin/doctors') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
                         </li>
                         <li class="{{ Request::is('admin/departments','edit-department','add-departments') ? 'active' : '' }}">
                             <a href="{{ url('admin/departments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
                         </li>
+
+                        <li class="{{ Request::is('visits','visit/add','visit/edit/*') ? 'active' : '' }}">
+                            <a href="{{ url('visits') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Visits </span></a>
+                        </li>
+                        <li class="{{ Request::is('appoinment_modes','appoinment_modes/add','appoinment_modes/edit/*') ? 'active' : '' }}">
+                            <a href="{{ url('appoinment_modes') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Appoinment Modes </span></a>
+                        </li>
+                        <li class="{{ Request::is('symptoms','symptoms/add','symptoms/edit/*') ? 'active' : '' }}">
+                            <a href="{{ url('symptoms') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Symptoms </span></a>
+                        </li>
+                        <li class="{{ Request::is('illness','illness/add','illness/edit/*') ? 'active' : '' }}">
+                            <a href="{{ url('illness') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Illness </span></a>
+                        </li>
+
+
                         {{-- <li class="{{ Request::is('departments','edit-department','add-departments') ? 'active' : '' }}">
                             <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Hospitals </span></a>
                         </li> --}}

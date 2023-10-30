@@ -47,11 +47,9 @@ class MediciensController extends Controller
                 })
                 ->addColumn('action', function($row){
                     $editUrl=url('medicien/edit/'.$row->id);
-                    $actionBtn = '<div class="dropdown dropdown-action">
-                    <a href="#" class="action-icon dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-ellipsis-v"></i></a>
-                    <div class="dropdown-menu dropdown-menu-end">
-                    <a class="dropdown-item" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i> Edit</a>
-                    <a class="dropdown-item delete_department" href="#" data-bs-toggle="modal"  data-id="'.$row->id.'" data-bs-target="#delete_department"><i class="far fa-trash-alt m-r-5"></i> Delete</a>
+                    $actionBtn = '<div class="action">
+                    <a href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>
+                    <a class="delete_department" href="#" data-bs-toggle="modal"  data-id="'.$row->id.'" data-bs-target="#delete_department"><i class="far fa-trash-alt m-r-5"></i></a>
                     </div>';
                     return $actionBtn;
                 })
@@ -164,7 +162,7 @@ class MediciensController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Department $department, Request $request,)
+    public function destroy(Department $department, Request $request)
     {
         $redirect = 'departments.index';
         if(Auth::user()->type==3){

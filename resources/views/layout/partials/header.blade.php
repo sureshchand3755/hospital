@@ -104,7 +104,7 @@
                 </span>
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="{{url('patient/profile')}}">My Profile</a>
+                <a class="dropdown-item" href="{{url('profile')}}">My Profile</a>
                 <a class="dropdown-item" href="{{url('logout')}}">Logout</a>
             </div>
         </li>

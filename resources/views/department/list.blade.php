@@ -53,8 +53,8 @@
                                         <th>Department Head</th>
                                         <th>Description</th>
                                         <th>Date</th>
-                                        <th>Status</th>
-                                        <th></th>
+                                        <th>Status    </th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -75,43 +75,53 @@
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">View</h5>
+          <h4 class="modal-title" id="exampleModalLabel">View</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Name</label>
+                        <label class="col-md-3 col-form-label"><strong>Name :</strong></label>
                         <div class="col-md-9">
-                            <p id=""></p>
+                            <span id="v_name" class="viewtext"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Date</label>
+                        <label class="col-md-3 col-form-label"><strong>Date :</strong></label>
                         <div class="col-md-9">
-                            <p id=""></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Head</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
+                            <span id="v_date" class="viewtext"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Status</label>
+                        <label class="col-md-3 col-form-label"><strong>Head :</strong></label>
                         <div class="col-md-9">
-                            <p id=""></p>
+                            <span id="v_head" class="viewtext"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-3 col-form-label"><strong>Status :</strong></label>
+                        <div class="col-md-9">
+                            <span id="v_status" class="viewtext"></span>
                         </div>
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-md-3 col-form-label">Description</label>
+                    <label class="col-md-3 col-form-label"><strong>Description :</strong></label>
                     <div class="col-md-9">
-                        <p id=""></p>
+                        <span id="v_desc" class="viewtext"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label"><strong>Created Dt. :</strong></label>
+                    <div class="col-md-8">
+                        <span id="v_created" class="viewtext"></span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-4 col-form-label"><strong>Updated Dt. :</strong></label>
+                    <div class="col-md-8">
+                        <span id="v_updated" class="viewtext"></span>
                     </div>
                 </div>
             </div>
@@ -139,20 +149,28 @@
 </div>
 <!-- Delete Department Modal -->
 <script>
-// $(document).on('click','.view_department',function(){
-//     var id = $(this).data('id');
-//     var url = "{{ route('department.view', ':id') }}";
-//     url = url.replace(':id', id);
-//     $.get(url, function (data) {
-//         $('#v_name').text(data.name);
-//         $('#v_email').text(data.email);
-//         $('#v_mobile').text(data.phone_number);
-//         $('#v_department').text(data.department.name);
-//         $('#v_position').text(data.position.name);
-//         $('#v_country').text(data.country.name);
-//         $('#v_state').text(data.state.name);
-//     })
-// });
+$(document).on('click','.view_department',function(){
+    var loginType = "{{ Auth::user()->type}}";
+    var url = "{{ route('department.view', ':id') }}";
+    if(loginType==3){
+        url="{{ route('admin.department.view', ':id') }}";
+    }
+    var id = $(this).data('id');
+    url = url.replace(':id', id);
+    $.get(url, function (data) {
+        var status = 'Active'
+        if(data.status!=0){
+            status = 'In Active'
+        }
+        $('#v_name').text(data.department_name);
+        $('#v_date').text(dateFormate(data.department_date));
+        $('#v_head').text(data.department_head);
+        $('#v_status').text(status);
+        $('#v_desc').text(data.department_desc);
+        $('#v_created').text(dateFormate(data.created_at));
+        $('#v_updated').text(dateFormate(data.updated_at));
+    })
+});
 $(document).ready(function($) {
     var loginType = "{{ Auth::user()->type}}";
     var listUrl="{{ route('department.list') }}";

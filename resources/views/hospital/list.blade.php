@@ -14,7 +14,7 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <div class="doctor-table-blk">
-                                        <h3>Medicine List</h3>
+                                        <h3>Hospital List</h3>
                                         <div class="doctor-search-blk">
                                             {{-- <div class="top-nav-search table-search-blk">
                                                 <form>
@@ -23,25 +23,18 @@
                                                 </form>
                                             </div> --}}
                                             <div class="add-group">
-                                                <a href="{{url('medicien/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{(Auth::user()->type==2)?url('hospital/add'):url('admin/hospital/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::asset('/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-auto text-end float-end ms-auto download-grp">
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg" alt=""></a>
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg" alt=""></a>
-                                    <a href="javascript:;" ><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a>
-
-                                </div> --}}
                             </div>
                         </div>
                         <!-- /Table Header -->
 
                         <div class="table-responsive">
-                            <table class="table border-0 custom-table comman-table datatable mb-0" id="medicine_list">
+                            <table class="table border-0 custom-table comman-table datatable mb-0" id="hospital_list">
                                 <thead>
                                     <tr>
                                         <th>
@@ -50,7 +43,6 @@
                                             </div>
                                         </th>
                                         <th>Name</th>
-                                        <th>Description</th>
                                         <th>Status</th>
                                         <th>Action</th>
                                     </tr>
@@ -64,68 +56,71 @@
                 </div>
             </div>
 
-
         </div>
     </div>
 </div>
-<!-- View Department Modal -->
-<div class="modal fade" id="view_department" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="view_hospital" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">View</h5>
+          <h4 class="modal-title" id="exampleModalLabel">View</h4>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Name</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="card-box">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label"><strong>Name :</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="v_name" class="viewtext"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label"><strong>Email :</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="v_email" class="viewtext"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label"><strong>Status :</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="v_status" class="viewtext"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label"><strong>Created Dt. :</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="v_created" class="viewtext"></span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row">
+                                        <label class="col-md-4 col-form-label"><strong>Updated Dt. :</strong></label>
+                                        <div class="col-md-8">
+                                            <span id="v_updated" class="viewtext"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Date</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Head</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Status</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-3 col-form-label">Description</label>
-                    <div class="col-md-9">
-                        <p id=""></p>
                     </div>
                 </div>
             </div>
         </div>
       </div>
     </div>
-  </div>
-<!-- Delete Department Modal -->
-<div id="delete_department" class="modal fade delete-modal" role="dialog">
+</div>
+<div id="delete_hospital" class="modal fade delete-modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{(Auth::user()->type==0)?route('department.delete'):route('admin.department.delete')}}" method="POST">
+                <form action="{{route('admin.hospital.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
-                    <img src="assets/img/sent.png" alt="" width="50" height="46">
+                    <img src="{{URL::asset('assets/img/sent.png')}}" alt="" width="50" height="46">
                     <h3>Are you sure want to delete this ?</h3>
                     <div class="m-t-20"> <a href="#" class="btn btn-white" data-bs-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger">Delete</button>
@@ -135,31 +130,19 @@
         </div>
     </div>
 </div>
-<!-- Delete Department Modal -->
 <script>
-// $(document).on('click','.view_department',function(){
-//     var id = $(this).data('id');
-//     var url = "{{ route('department.view', ':id') }}";
-//     url = url.replace(':id', id);
-//     $.get(url, function (data) {
-//         $('#v_name').text(data.name);
-//         $('#v_email').text(data.email);
-//         $('#v_mobile').text(data.phone_number);
-//         $('#v_department').text(data.department.name);
-//         $('#v_position').text(data.position.name);
-//         $('#v_country').text(data.country.name);
-//         $('#v_state').text(data.state.name);
-//     })
-// });
 $(document).ready(function($) {
     var loginType = "{{ Auth::user()->type}}";
-    var listUrl="{{ route('medicien.list') }}";
-    $(document).on('click','.delete_department',function(){
+    var listUrl="{{ route('admin.hospital.lists') }}";
+    if(loginType==3){
+        listUrl="{{ route('admin.hospital.lists') }}";
+    }
+    $(document).on('click','.delete_hospital',function(){
         var id = $(this).data('id');
         $('#e_id').val(id);
     });
 
-    var table = $('#medicine_list').DataTable({
+    var doctorTable = $('#hospital_list').DataTable({
         processing: true,
         responsive: true,
         pageLength: 10,
@@ -169,16 +152,28 @@ $(document).ready(function($) {
         columns: [
             {data: 'idRows', name: 'idRows'},
             {data: 'name', name: 'name'},
-            {data: 'desc', name: 'desc'},
             {data: 'status', name: 'status'},
-            {
-                data: 'action',
-                name: 'action',
-                orderable: true,
-                searchable: true
-            },
+            {data: 'action', name: 'action'},
         ]
     });
+
+    $(document).on('click','.view_hospital',function(){
+        var id = $(this).data('id');
+        var url = "{{ route('admin.hospital.view', ':id') }}";
+        url = url.replace(':id', id);
+        $.get(url, function (data) {
+            var status = 'Active'
+            if(data.status!=0){
+                status = 'In Active'
+            }
+            $('#v_name').text(data.name);
+            $('#v_email').text(data.email);
+            $('#v_status').text(status);
+            $('#v_created').text(dateFormate(data.created_at));
+            $('#v_updated').text(dateFormate(data.updated_at));
+        })
+    });
 });
+
 </script>
 @endsection

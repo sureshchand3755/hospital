@@ -14,34 +14,20 @@
                             <div class="row align-items-center">
                                 <div class="col">
                                     <div class="doctor-table-blk">
-                                        <h3>Medicine List</h3>
+                                        <h3>Symptoms List</h3>
                                         <div class="doctor-search-blk">
-                                            {{-- <div class="top-nav-search table-search-blk">
-                                                <form>
-                                                    <input type="text" class="form-control" placeholder="Search here">
-                                                    <a class="btn"><img src="../assets/img/icons/search-normal.svg" alt=""></a>
-                                                </form>
-                                            </div> --}}
                                             <div class="add-group">
-                                                <a href="{{url('medicien/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
-                                                {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::asset('/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
+                                                <a href="{{url('symptoms/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                {{-- <div class="col-auto text-end float-end ms-auto download-grp">
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-01.svg" alt=""></a>
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-02.svg" alt=""></a>
-                                    <a href="javascript:;" class=" me-2"><img src="assets/img/icons/pdf-icon-03.svg" alt=""></a>
-                                    <a href="javascript:;" ><img src="assets/img/icons/pdf-icon-04.svg" alt=""></a>
-
-                                </div> --}}
                             </div>
                         </div>
                         <!-- /Table Header -->
 
                         <div class="table-responsive">
-                            <table class="table border-0 custom-table comman-table datatable mb-0" id="medicine_list">
+                            <table class="table border-0 custom-table comman-table datatable mb-0" id="symptoms_list">
                                 <thead>
                                     <tr>
                                         <th>
@@ -68,8 +54,8 @@
         </div>
     </div>
 </div>
-<!-- View Department Modal -->
-<div class="modal fade" id="view_department" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- View Modal -->
+<div class="modal fade" id="view_symptoms" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -78,38 +64,36 @@
         </div>
         <div class="modal-body">
             <div class="row">
-                <div class="col-md-6">
+                <div class="col-md-12">
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Name</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
+                        <label class="col-md-4 col-form-label"><strong>Name :</strong></label>
+                        <div class="col-md-8">
+                            <span id="v_name" class="viewtext"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Date</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Head</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
+                        <label class="col-md-4 col-form-label"><strong>Description :</strong></label>
+                        <div class="col-md-8">
+                            <span id="v_desc" class="viewtext"></span>
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-3 col-form-label">Status</label>
-                        <div class="col-md-9">
-                            <p id=""></p>
+                        <label class="col-md-4 col-form-label"><strong>Status :</strong></label>
+                        <div class="col-md-8">
+                            <span id="v_status" class="viewtext"></span>
                         </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-3 col-form-label">Description</label>
-                    <div class="col-md-9">
-                        <p id=""></p>
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label"><strong>Created Dt. :</strong></label>
+                        <div class="col-md-8">
+                            <span id="v_created" class="viewtext"></span>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 col-form-label"><strong>Updated Dt. :</strong></label>
+                        <div class="col-md-8">
+                            <span id="v_updated" class="viewtext"></span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -117,12 +101,12 @@
       </div>
     </div>
   </div>
-<!-- Delete Department Modal -->
-<div id="delete_department" class="modal fade delete-modal" role="dialog">
+<!-- Delete Modal -->
+<div id="delete_symptoms" class="modal fade delete-modal" role="dialog">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{(Auth::user()->type==0)?route('department.delete'):route('admin.department.delete')}}" method="POST">
+                <form action="{{route('symptoms.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
                     <img src="assets/img/sent.png" alt="" width="50" height="46">
@@ -135,31 +119,39 @@
         </div>
     </div>
 </div>
-<!-- Delete Department Modal -->
+<!-- Delete Modal -->
 <script>
-// $(document).on('click','.view_department',function(){
-//     var id = $(this).data('id');
-//     var url = "{{ route('department.view', ':id') }}";
-//     url = url.replace(':id', id);
-//     $.get(url, function (data) {
-//         $('#v_name').text(data.name);
-//         $('#v_email').text(data.email);
-//         $('#v_mobile').text(data.phone_number);
-//         $('#v_department').text(data.department.name);
-//         $('#v_position').text(data.position.name);
-//         $('#v_country').text(data.country.name);
-//         $('#v_state').text(data.state.name);
-//     })
-// });
+
+$(document).on('click','.view_symptoms',function(){
+    var id = $(this).data('id');
+    var url = "{{ route('symptoms.view', ':id') }}";
+    url = url.replace(':id', id);
+    $.get(url, function (data) {
+        var status = 'Active'
+            if(data.status!=0){
+                status = 'In Active'
+            }
+            $('#v_name').text(data.name);
+            $('#v_desc').text(data.desc);
+            $('#v_status').text(status);
+            $('#v_created').text(dateFormate(data.created_at));
+            $('#v_updated').text(dateFormate(data.updated_at));
+    })
+});
 $(document).ready(function($) {
+setTimeout(() => {
+    // $('.alert').removeClass('show')
+    // $('.alert').addClass('hide')
+    $('.alert').trigger('close')
+}, 2500)
     var loginType = "{{ Auth::user()->type}}";
-    var listUrl="{{ route('medicien.list') }}";
-    $(document).on('click','.delete_department',function(){
+    var listUrl="{{ route('symptoms.list') }}";
+    $(document).on('click','.delete_symptoms',function(){
         var id = $(this).data('id');
         $('#e_id').val(id);
     });
 
-    var table = $('#medicine_list').DataTable({
+    var table = $('#symptoms_list').DataTable({
         processing: true,
         responsive: true,
         pageLength: 10,
