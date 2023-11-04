@@ -22,7 +22,7 @@
             <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                 <div class="dash-widget">
                     <div class="dash-boxs comman-flex-center">
-                        <img src="{{URL::to('publicassets/img/icons/calendar.svg')}}" alt="">
+                        <img src="{{URL::to('public/assets/img/icons/calendar.svg')}}" alt="">
                     </div>
                     <div class="dash-content dash-count">
                         <h4>Appointments</h4>
@@ -46,7 +46,7 @@
             <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                 <div class="dash-widget">
                     <div class="dash-boxs comman-flex-center">
-                        <img src="{{URL::to('publicassets/img/icons/scissor.svg')}}" alt="">
+                        <img src="{{URL::to('public/assets/img/icons/scissor.svg')}}" alt="">
                     </div>
                     <div class="dash-content dash-count">
                         <h4>Operations</h4>
@@ -58,7 +58,7 @@
             <div class="col-md-6 col-sm-6 col-lg-6 col-xl-3">
                 <div class="dash-widget">
                     <div class="dash-boxs comman-flex-center">
-                        <img src="{{URL::to('publicassets/img/icons/empty-wallet.svg')}}" alt="">
+                        <img src="{{URL::to('public/assets/img/icons/empty-wallet.svg')}}" alt="">
                     </div>
                     <div class="dash-content dash-count">
                         <h4>Earnings</h4>
@@ -100,7 +100,7 @@
                             <h4>Patient by Department</h4>
                         </div>
                         <div id="donut-chart-dash" class="chart-user-icon">
-                            <img src="{{URL::to('publicassets/img/icons/user-icon.svg')}}" alt="">
+                            <img src="{{URL::to('public/assets/img/icons/user-icon.svg')}}" alt="">
                         </div>
                     </div>
                 </div>
@@ -115,7 +115,7 @@
                     <div class="card-body">
                         <div class="activity-top">
                             <div class="activity-boxs comman-flex-center">
-                                <img src="{{URL::to('publicassets/img/icons/dep-icon-01.svg')}}" alt="">
+                                <img src="{{URL::to('public/assets/img/icons/dep-icon-01.svg')}}" alt="">
                             </div>
                             <div class="departments-list">
                                 <h4>General Physician</h4>
@@ -124,7 +124,7 @@
                         </div>
                         <div class="activity-top">
                             <div class="activity-boxs comman-flex-center">
-                                <img src="{{URL::to('publicassets/img/icons/dep-icon-02.svg')}}" alt="">
+                                <img src="{{URL::to('public/assets/img/icons/dep-icon-02.svg')}}" alt="">
                             </div>
                             <div class="departments-list">
                                 <h4>Dentist</h4>
@@ -133,7 +133,7 @@
                         </div>
                         <div class="activity-top">
                             <div class="activity-boxs comman-flex-center">
-                                <img src="{{URL::to('publicassets/img/icons/dep-icon-03.svg')}}" alt="">
+                                <img src="{{URL::to('public/assets/img/icons/dep-icon-03.svg')}}" alt="">
                             </div>
                             <div class="departments-list">
                                 <h4>ENT</h4>
@@ -142,7 +142,7 @@
                         </div>
                         <div class="activity-top">
                             <div class="activity-boxs comman-flex-center">
-                                <img src="{{URL::to('publicassets/img/icons/dep-icon-04.svg')}}" alt="">
+                                <img src="{{URL::to('public/assets/img/icons/dep-icon-04.svg')}}" alt="">
                             </div>
                             <div class="departments-list">
                                 <h4>Cardiologist</h4>
@@ -151,7 +151,7 @@
                         </div>
                         <div class="activity-top mb-0">
                             <div class="activity-boxs comman-flex-center">
-                                <img src="{{URL::to('publicassets/img/icons/dep-icon-05.svg')}}" alt="">
+                                <img src="{{URL::to('public/assets/img/icons/dep-icon-05.svg')}}" alt="">
                             </div>
                             <div class="departments-list">
                                 <h4>Opthomology</h4>
@@ -194,7 +194,7 @@
                                         <td>R00001</td>
                                         <td>Andrea Lalema</td>
                                         <td class="table-image appoint-doctor">
-                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('publicassets/img/profiles/avatar-02.jpg')}}" alt="">
+                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-02.jpg')}}" alt="">
                                             <h2>Dr.Jenny Smith</h2>
                                         </td>
                                         <td class="appoint-time"><span>12.05.2022 at </span>7.00 PM</td>
@@ -218,7 +218,7 @@
                                         <td>R00002</td>
                                         <td>Cristina Groves</td>
                                         <td class="table-image appoint-doctor">
-                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('publicassets/img/profiles/avatar-03.jpg')}}" alt="">
+                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-03.jpg')}}" alt="">
                                             <h2>Dr.Angelica Ramos</h2>
                                         </td>
                                         <td class="appoint-time"><span>13.05.2022 at </span>7.00 PM</td>
@@ -242,7 +242,7 @@
                                         <td>R00003</td>
                                         <td>Bernardo </td>
                                         <td class="table-image appoint-doctor">
-                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('publicassets/img/profiles/avatar-04.jpg')}}" alt="">
+                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-04.jpg')}}" alt="">
                                             <h2>Dr.Martin Doe</h2>
                                         </td>
                                         <td class="appoint-time"><span>14.05.2022 at </span>7.00 PM</td>
@@ -266,7 +266,7 @@
                                         <td>R00004</td>
                                         <td>Galaviz Lalema</td>
                                         <td class="table-image appoint-doctor">
-                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('publicassets/img/profiles/avatar-05.jpg')}}" alt="">
+                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-05.jpg')}}" alt="">
                                             <h2>Dr.William Jerk</h2>
                                         </td>
                                         <td class="appoint-time"><span>15.05.2022 at </span>7.00 PM</td>
@@ -290,7 +290,7 @@
                                         <td>R00005</td>
                                         <td>Cristina Groves</td>
                                         <td class="table-image appoint-doctor">
-                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('publicassets/img/profiles/avatar-03.jpg')}}" alt="">
+                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-03.jpg')}}" alt="">
                                             <h2>Dr.Angelica Ramos</h2>
                                         </td>
                                         <td class="appoint-time"><span>16.05.2022 at </span>7.00 PM</td>
@@ -371,7 +371,7 @@
                                         </td>
                                         <td>R00002</td>
                                         <td class="table-image">
-                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('publicassets/img/profiles/avatar-03.jpg')}}" alt="">
+                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-03.jpg')}}" alt="">
                                             <h2>Mark Hay Smith</h2>
                                         </td>
                                         <td>23</td>
@@ -396,7 +396,7 @@
                                         </td>
                                         <td>R00003</td>
                                         <td class="table-image">
-                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('publicassets/img/profiles/avatar-04.jpg')}}" alt="">
+                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-04.jpg')}}" alt="">
                                             <h2>Cristina Groves</h2>
                                         </td>
                                         <td>25</td>
@@ -421,7 +421,7 @@
                                         </td>
                                         <td>R00004</td>
                                         <td class="table-image">
-                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('publicassets/img/profiles/avatar-05.jpg')}}" alt="">
+                                            <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-05.jpg')}}" alt="">
                                             <h2>Galaviz Lalema</h2>
                                         </td>
                                         <td>21</td>

@@ -120,7 +120,7 @@
                 <form action="{{route('admin.hospital.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
-                    <img src="{{URL::to('publicassets/img/sent.png')}}" alt="" width="50" height="46">
+                    <img src="{{URL::to('public/assets/img/sent.png')}}" alt="" width="50" height="46">
                     <h3>Are you sure want to delete this ?</h3>
                     <div class="m-t-20"> <a href="#" class="btn btn-white" data-bs-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger">Delete</button>
