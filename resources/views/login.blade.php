@@ -7,7 +7,7 @@
             <div class="col-lg-6 login-wrap">
                 <div class="login-sec">
                     <div class="log-img">
-                        <img class="img-fluid" src="assets/img/login-02.png" alt="Logo">
+                        <img class="img-fluid" src="{{URL::to('public/assets/img/login-02.png')}}" alt="Logo">
                     </div>
                 </div>
             </div>

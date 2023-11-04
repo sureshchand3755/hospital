@@ -6,65 +6,68 @@
                     <li class="menu-title">Main</li>
                     @if (Auth::user()->type==0)
                         <li class="{{ Request::is('reception/dashboard') ? 'active' : '' }}">
-                            <a href="{{ url('reception/dashboard') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
+                            <a href="{{ url('reception/dashboard') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
                         </li>
                         <li class="{{ Request::is('patient/appointments','appointment/add','appointment/edit/1') ? 'active' : '' }}">
-                            <a href="{{ url('patient/appointments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
+                            <a href="{{ url('patient/appointments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
                         </li>
                     @elseif (Auth::user()->type==1)
                         <li class="{{ Request::is('doctor/dashboard') ? 'active' : '' }}">
-                            <a href="{{ url('doctor/dashboard') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
+                            <a href="{{ url('doctor/dashboard') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
                         </li>
                         <li class="{{ Request::is('appointments','doctor/appointment/edit/*') ? 'active' : '' }}">
-                            <a href="{{ url('appointments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Booking List </span></a>
+                            <a href="{{ url('appointments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Booking List </span></a>
                         </li>
                         <li class="{{ Request::is('mediciens','medicien/add','add-departments') ? 'active' : '' }}">
-                            <a href="{{ url('mediciens') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Medicien List </span></a>
+                            <a href="{{ url('mediciens') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Medicien List </span></a>
                         </li>
 
                     @elseif (Auth::user()->type==2)
                         <li class="{{ Request::is('hospital/dashboard') ? 'active' : '' }}">
-                            <a href="{{ url('hospital/dashboard') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
+                            <a href="{{ url('hospital/dashboard') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
                         </li>
                         <li  class="{{ Request::is('doctors','edit-doctor','doctor/add') ? 'active' : '' }}">
-                            <a href="{{ url('doctors') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
+                            <a href="{{ url('doctors') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
                         </li>
                         <li class="{{ Request::is('departments','edit-department','add-departments') ? 'active' : '' }}">
-                            <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
+                            <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
                         </li>
                     @elseif (Auth::user()->type==3)
                         <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">
-                            <a href="{{ url('admin/dashboard') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
+                            <a href="{{ url('admin/dashboard') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
                         </li>
                         <li class="{{ Request::is('admin/patient/appointments','admin/appointment/add','appointment/edit/1') ? 'active' : '' }}">
-                            <a href="{{ url('admin/patient/appointments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
+                            <a href="{{ url('admin/patient/appointments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
                         </li>
                         <li  class="{{ Request::is('admin/hospitals','admin/hospital/edit','admin/hospital/add') ? 'active' : '' }}">
-                            <a href="{{ url('admin/hospitals') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Hospital </span></a>
+                            <a href="{{ url('admin/hospitals') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Hospital </span></a>
                         </li>
-                        <li  class="{{ Request::is('admin/doctors','edit-doctor','doctor/add') ? 'active' : '' }}">
-                            <a href="{{ url('admin/doctors') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
+                        <li  class="{{ Request::is('admin/doctors','admin/doctor/edit/*','admin/doctor/add') ? 'active' : '' }}">
+                            <a href="{{ url('admin/doctors') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
+                        </li>
+                        <li  class="{{ Request::is('admin/receptions','admin/reception/edit','admin/reception/add') ? 'active' : '' }}">
+                            <a href="{{ url('admin/receptions') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Receptionist </span></a>
                         </li>
                         <li class="{{ Request::is('admin/departments','edit-department','add-departments') ? 'active' : '' }}">
-                            <a href="{{ url('admin/departments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
+                            <a href="{{ url('admin/departments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
                         </li>
 
                         <li class="{{ Request::is('visits','visit/add','visit/edit/*') ? 'active' : '' }}">
-                            <a href="{{ url('visits') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Visits </span></a>
+                            <a href="{{ url('visits') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Visits </span></a>
                         </li>
                         <li class="{{ Request::is('appoinment_modes','appoinment_modes/add','appoinment_modes/edit/*') ? 'active' : '' }}">
-                            <a href="{{ url('appoinment_modes') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Appoinment Modes </span></a>
+                            <a href="{{ url('appoinment_modes') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Appoinment Modes </span></a>
                         </li>
                         <li class="{{ Request::is('symptoms','symptoms/add','symptoms/edit/*') ? 'active' : '' }}">
-                            <a href="{{ url('symptoms') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Symptoms </span></a>
+                            <a href="{{ url('symptoms') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Symptoms </span></a>
                         </li>
                         <li class="{{ Request::is('illness','illness/add','illness/edit/*') ? 'active' : '' }}">
-                            <a href="{{ url('illness') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Illness </span></a>
+                            <a href="{{ url('illness') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Illness </span></a>
                         </li>
 
 
                         {{-- <li class="{{ Request::is('departments','edit-department','add-departments') ? 'active' : '' }}">
-                            <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Hospitals </span></a>
+                            <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Hospitals </span></a>
                         </li> --}}
 
                     {{-- <li class="{{ Request::is('index') ? 'active' : '' }}">
@@ -243,7 +246,7 @@
                     @endif
                 </ul>
                 <div class="logout-btn">
-                    <a href="{{url('logout')}}"><span class="menu-side"><img src="{{ URL::asset('/assets/img/icons/logout.svg')}}" alt=""></span> <span>Logout</span></a>
+                    <a href="{{url('logout')}}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/logout.svg')}}" alt=""></span> <span>Logout</span></a>
                 </div>
             </div>
         </div>

@@ -74,6 +74,7 @@
                                                 </label>
                                             </div>
                                             <x-input-error :messages="$errors->get('gender')" class="mt-2  text-danger" />
+                                            <label id="gender-error" class="error __web-inspector-hide-shortcut__" for="gender"></label>
                                         </div>
                                     </div>
                                     <div class="col-12 col-md-6 col-xl-4">
@@ -338,7 +339,7 @@
                             </div>
                             <div class="doctor-submit text-center">
                                 <button type="submit" class="btn btn-primary submit-btn mb-4">Create</button>
-                                <button type="submit" class="btn btn-primary cancel-form  mb-4">Cancel</button>
+                                <button type="submit" class="btn btn-primary cancel-form  mb-4" onclick="window.history.go(-1); return false;">Cancel</button>
                             </div>
                         </form>
                     </div>

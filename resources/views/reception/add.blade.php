@@ -8,12 +8,12 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ url('admin/hospital/store') }}" id="add_hospital" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('admin/reception/store') }}" id="add_reception" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
                                     <div class="form-heading">
-                                        <h4>Add Hospital</h4>
+                                        <h4>Add Receptionist</h4>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
@@ -26,6 +26,12 @@
                                     <div class="form-group local-forms">
                                         <label >Email <span class="login-danger">*</span></label>
                                         <input class="form-control" type="email" id="email" name="email" placeholder="" >
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6 col-xl-6">
+                                    <div class="form-group local-forms">
+                                        <label >Mobile <span class="login-danger">*</span></label>
+                                        <input class="form-control" type="mobile" id="mobile" name="mobile" placeholder="" >
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-6">
@@ -81,11 +87,12 @@
 </div>
 <script>
     $(document).ready(function($) {
-        $("#add_hospital").validate({
+        $("#add_reception").validate({
             // Specify validation rules
             rules: {
                 name: "required",
                 email: "required",
+                mobile: "required",
                 password: {
                     required: true,
                     minlength: 6
@@ -101,6 +108,7 @@
             messages: {
                 name: "Please enter first name",
                 email: "Please enter the email",
+                mobile: "Please enter the mobile",
                 password: "Please enter password",
                 cpassword: {
                     required: 'Confirm Password is required',

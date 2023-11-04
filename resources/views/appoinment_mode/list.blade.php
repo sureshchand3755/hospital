@@ -17,7 +17,7 @@
                                         <h3>Appoinment Mode List</h3>
                                         <div class="doctor-search-blk">
                                             <div class="add-group">
-                                                <a href="{{url('appoinment_mode/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{url('appoinment_mode/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
                                             </div>
                                         </div>
                                     </div>

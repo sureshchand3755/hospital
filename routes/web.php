@@ -12,6 +12,7 @@ use App\Http\Controllers\AppointmentController;
 use App\Http\Controllers\PrescriptionController;
 use App\Http\Controllers\MediciensController;
 use App\Http\Controllers\HospitalController;
+use App\Http\Controllers\ReceptionController;
 use App\Http\Controllers\VisitController;
 use App\Http\Controllers\AppoinmentModeController;
 use App\Http\Controllers\SymptomsController;
@@ -224,6 +225,16 @@ Route::middleware(['auth', 'user-access:3'])->group(function () {
     Route::post('admin/hospital/update', [HospitalController::class, 'update'])->name('admin.hospital.update');
     Route::get('admin/hospital/changestatus/{id}/{status}', [HospitalController::class, 'changeStatus'])->name('admin.hospital.changestatus');
     Route::post('admin/hospital/delete',  [HospitalController::class, 'destroy'])->name('admin.hospital.delete');
+
+    Route::get('admin/receptions', [ReceptionController::class, 'index'])->name('admin.reception.list');
+    Route::get('admin/reception/add', [ReceptionController::class, 'create'])->name('admin.reception.add');
+    Route::post('admin/reception/store', [ReceptionController::class, 'store']);
+    Route::get('admin/reception/list', [ReceptionController::class, 'getList'])->name('admin.reception.lists');
+    Route::get('admin/reception/view/{id}', [ReceptionController::class, 'show'])->name('admin.reception.view');
+    Route::get('admin/reception/edit/{id}', [ReceptionController::class, 'edit'])->name('admin.reception.edit');
+    Route::post('admin/reception/update', [ReceptionController::class, 'update'])->name('admin.reception.update');
+    Route::get('admin/reception/changestatus/{id}/{status}', [ReceptionController::class, 'changeStatus'])->name('admin.reception.changestatus');
+    Route::post('admin/reception/delete',  [ReceptionController::class, 'destroy'])->name('admin.reception.delete');
 
     Route::get('admin/doctors', [DoctorsController::class, 'index'])->name('admin.doctor.list');
     Route::get('admin/doctor/add', [DoctorsController::class, 'create'])->name('admin.doctor.add');

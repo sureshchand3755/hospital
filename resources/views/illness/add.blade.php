@@ -43,6 +43,7 @@
                                                 <input type="radio" id="status" name="status" class="form-check-input" value="1">In Active
                                             </label>
                                         </div>
+                                        <label id="status-error" class="error" for="status"></label>
                                     </div>
                                 </div>
                                 <div class="col-12">

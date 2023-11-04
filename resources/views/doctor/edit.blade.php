@@ -146,7 +146,7 @@
 
                                         </div>
                                         <div class="upload-images upload-size">
-                                            <img id="profileimg" src="{{($data->doctorinfo->profile_image!='')?URL::to('images/'.$data->doctorinfo->profile_image):URL::asset('/assets/img/profiles/avatar-01.jpg')}}" alt="Image">
+                                            <img id="profileimg" src="{{($data->doctorinfo->profile_image!='')?URL::to('images/'.$data->doctorinfo->profile_image):URL::to('public/assets/img/profiles/avatar-01.jpg')}}" alt="Image">
                                             <a href="javascript:void(0);" class="btn-icon logo-hide-btn">
                                                 <i class="feather-x-circle"></i>
                                             </a>
@@ -166,12 +166,13 @@
                                                 <input type="radio" id="status" name="status" class="form-check-input" value="1" {{ $data->doctorinfo && $data->doctorinfo->status == '1' ? 'checked' : ''}}>In Active
                                             </label>
                                         </div>
+                                        <label id="status-error" class="error" for="status"></label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="doctor-submit text-center">
                                         <button type="submit" class="btn btn-primary submit-form me-2">Update</button>
-                                        <button type="submit" class="btn btn-primary cancel-form">Cancel</button>
+                                        <button type="submit" class="btn btn-primary cancel-form" onclick="window.history.go(-1); return false;">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -252,23 +253,6 @@
             postal_code: "Please enter postal code",
             edit_profile_image: "Please upload profile image",
             status: "Please select status",
-        },
-        errorElement: "label",
-        errorPlacement: function ( error, element ) {
-            // Add the `help-block` class to the error element
-            error.addClass( "help-block" );
-
-            if ( element.prop( "type" ) === "checkbox" ) {
-                error.insertAfter( element.parent( "label" ) );
-            } else {
-                error.insertAfter( element );
-            }
-        },
-        highlight: function ( element, errorClass, validClass ) {
-            $( element ).parents( ".col-sm-5" ).addClass( "has-error" ).removeClass( "has-success" );
-        },
-        unhighlight: function (element, errorClass, validClass) {
-            $( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
         },
         submitHandler: function(form) {
             form.submit();

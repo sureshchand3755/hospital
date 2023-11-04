@@ -54,6 +54,7 @@
                                                 <input type="radio" id="status" name="status" class="form-check-input" value="1">In Active
                                             </label>
                                         </div>
+                                        <label id="status-error" class="error" for="status"></label>
                                     </div>
                                 </div>
                                 <div class="col-12">
@@ -86,7 +87,7 @@ $(document).ready(function($) {
             department_head: "required",
             department_desc: "required",
             department_date: "required",
-            department_status: "required"
+            status: "required"
         },
         // Specify validation error messages
         messages: {
@@ -97,7 +98,7 @@ $(document).ready(function($) {
             department_head: "Please enter your department head",
             department_desc: "Please enter your description",
             department_date: "Please select date",
-            department_status: "Please select status",
+            status: "Please select status",
         },
         submitHandler: function(form) {
             form.submit();

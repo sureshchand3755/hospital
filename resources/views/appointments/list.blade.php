@@ -24,9 +24,9 @@
                                             <div class="add-group">
                                                 @if (Auth::user()->type==0 || Auth::user()->type==3)
 
-                                                <a href="{{(Auth::user()->type==0)?url('appointment/add'):url('admin/appointment/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::asset('/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{(Auth::user()->type==0)?url('appointment/add'):url('admin/appointment/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 @endif
-                                                {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::asset('/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
+                                                {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::to('public/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
                                         </div>
                                     </div>
@@ -353,7 +353,7 @@
                 <form action="{{(Auth::user()->type==0)?route('appointment.delete'):route('admin.appointment.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
-                    <img src="{{URL::asset('assets/img/sent.png')}}" alt="" width="50" height="46">
+                    <img src="{{URL::to('publicassets/img/sent.png')}}" alt="" width="50" height="46">
                     <h3>Are you sure want to delete this ?</h3>
                     <div class="m-t-20"> <a href="#" class="btn btn-white" data-bs-dismiss="modal">Close</a>
                         <button type="submit" class="btn btn-danger">Delete</button>

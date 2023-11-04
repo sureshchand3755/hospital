@@ -8,26 +8,32 @@ use Toastr;
 use Carbon\Carbon;
 use Auth;
 use Hash;
+use URL;
 use Illuminate\Support\Facades\Redirect;
 use App\Models\User;
-class HospitalController extends Controller
+class ReceptionController extends Controller
 {
     public function index(){
-        return view('hospital.list');
+        return view('reception.list');
     }
     public function create()
     {
-        return view('hospital.add');
+        return view('reception.add');
     }
 
     public function getList(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::where('deleted_at','N')->where('type',2)->latest()->get();
+            $data = User::where('deleted_at','N')->where('type',0)->latest()->get();
             return Datatables::of($data)
                 ->addColumn('idRows', function($row){
+                    $pimage = URL::to('public/images/logo/'.$row->logo);
+                    if($row->logo=='' || $row->logo==null){
+                        $pimage = URL::to('public/assets/img/profile-user.jpg');
+                    }
                     $actionBtn = '<div class="form-check check-tables">
                             <input class="form-check-input" type="checkbox" value="something">
+                            <img src="'.$pimage.'" alt="" width="50" height="46">
                         </div>';
                     return $actionBtn;
                 })
@@ -35,32 +41,32 @@ class HospitalController extends Controller
                     $actionBtn='';
                     if($row->status==0){
                         $statusVal = 1;
-                        $changestatusUrl=url('hospital/changestatus/'.$row->id.'/'.$statusVal);
+                        $changestatusUrl=url('reception/changestatus/'.$row->id.'/'.$statusVal);
                         if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/hospital/changestatus/'.$row->id.'/'.$statusVal);
+                            $changestatusUrl=url('admin/reception/changestatus/'.$row->id.'/'.$statusVal);
                         }
 
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-green ">Active</button></a>';
                     }
                     if($row->status==1){
                         $statusVal = 0;
-                        $changestatusUrl=url('hospital/changestatus/'.$row->id.'/'.$statusVal);
+                        $changestatusUrl=url('reception/changestatus/'.$row->id.'/'.$statusVal);
                         if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/hospital/changestatus/'.$row->id.'/'.$statusVal);
+                            $changestatusUrl=url('admin/reception/changestatus/'.$row->id.'/'.$statusVal);
                         }
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-pink">In Active</button></a>';
                     }
                     return $actionBtn;
                 })
                 ->addColumn('action', function($row){
-                    $editUrl=url('hospital/edit/'.$row->id);
+                    $editUrl=url('reception/edit/'.$row->id);
                     if(Auth::user()->type==3){
-                        $editUrl=url('admin/hospital/edit/'.$row->id);
+                        $editUrl=url('admin/reception/edit/'.$row->id);
                     }
 
-                    $actionBtn = '<div class="action"><a class="view_hospital" data-bs-target="#view_hospital"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i>
+                    $actionBtn = '<div class="action"><a class="view_reception" data-bs-target="#view_reception"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i>
                     <a href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>
-                    <a class="delete_hospital" href="#" data-bs-toggle="modal"  data-id="'.$row->id.'" data-bs-target="#delete_hospital"><i class="far fa-trash-alt m-r-5"></i></a>
+                    <a class="delete_reception" href="#" data-bs-toggle="modal"  data-id="'.$row->id.'" data-bs-target="#delete_reception"><i class="far fa-trash-alt m-r-5"></i></a>
                     </div>';
                     return $actionBtn;
                 })
@@ -71,32 +77,32 @@ class HospitalController extends Controller
 
     public function store(Request $request)
     {
-
         $userData = new User();
-        $userData->created_at = new Carbon();
-        $userData->name = $request->username;
+        $userData->name = $request->name;
         $userData->email = $request->email;
+        $userData->mobile = $request->mobile;
         $userData->password = Hash::make($request->password);
-        $userData->type = 2;
+        $userData->type = 0;
         if ($request->hasFile('profile_image')) {
-            $imageName = 'profileimage_.'.time().'.'.$request->profile_image->extension();
-            $request->logo->move(public_path('images/logo'), $imageName);
+            $imageName = 'profileimage_'.time().'.'.$request->profile_image->extension();
+            $request->profile_image->move(public_path('images/logo'), $imageName);
             $userData->logo = $imageName;
         }
+        $userData->created_at = new Carbon();
         $userData->save();
 
-        $redirect = 'hospital.list';
+        $redirect = 'reception.list';
         if(Auth::user()->type==3){
-            $redirect = 'admin.hospital.list';
+            $redirect = 'admin.reception.list';
         }
 
-        return Redirect::route($redirect)->with('success','Hospital created successfully!');
+        return Redirect::route($redirect)->with('success','Reception created successfully!');
     }
 
     public function edit($id)
     {
         $data = User::where('id',$id)->first();
-        return view('hospital.edit', compact('data'));
+        return view('reception.edit', compact('data'));
     }
     public function show($id)
     {
@@ -119,11 +125,11 @@ class HospitalController extends Controller
         $userData->status = $request->status;
         $userData->updated_at = new Carbon();
         $userData->save();
-        $redirect = 'hospital.list';
+        $redirect = 'reception.list';
         if(Auth::user()->type==3){
-            $redirect = 'admin.hospital.list';
+            $redirect = 'admin.reception.list';
         }
-        return Redirect::route($redirect)->with('success','Hospital Updated successfully!');
+        return Redirect::route($redirect)->with('success','Reception Updated successfully!');
 
     }
 
@@ -135,26 +141,26 @@ class HospitalController extends Controller
         }else{
             $ustatus='Activeted';
         }
-        $redirect = 'hospital.list';
+        $redirect = 'reception.list';
         if(Auth::user()->type==3){
-            $redirect = 'admin.hospital.list';
+            $redirect = 'admin.reception.list';
         }
-        return Redirect::route($redirect)->with('success',"Hospital is ".$ustatus);
+        return Redirect::route($redirect)->with('success',"Reception is ".$ustatus);
     }
 
     public function destroy(Request $request)
     {
-        $redirect = 'hospital.list';
+        $redirect = 'reception.list';
         if(Auth::user()->type==3){
-            $redirect = 'admin.hospital.list';
+            $redirect = 'admin.reception.list';
         }
         try {
             User::where("id", $request->id)->update(['deleted_at'=>'Y']);
-            return Redirect::route($redirect)->with('success','Hospital deleted successfully');
+            return Redirect::route($redirect)->with('success','Reception deleted successfully');
 
         } catch(\Exception $e) {
 
-            return Redirect::route($redirect)->with('Error','Hospital delete fail');
+            return Redirect::route($redirect)->with('Error','Reception delete fail');
             return redirect()->back();
         }
     }

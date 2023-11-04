@@ -8,7 +8,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ url('doctor/store') }}" id="add_doctor" enctype="multipart/form-data">
+                        <form method="POST" action="{{(Auth::user()->type==2)?url('doctor/store'):url('admin/doctor/store')}}" id="add_doctor" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -77,6 +77,7 @@
                                                 <input type="radio" name="gender" class="form-check-input" value="female">Female
                                             </label>
                                         </div>
+                                        <label id="gender-error" class="error" for="gender"></label>
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-4">
@@ -156,12 +157,13 @@
                                                 <input type="radio" id="status" name="status" class="form-check-input" value="1">In Active
                                             </label>
                                         </div>
+                                        <label id="status-error" class="error" for="status"></label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="doctor-submit text-center">
                                         <button type="submit" class="btn btn-primary submit-form me-2">Submit</button>
-                                        <button type="submit" class="btn btn-primary cancel-form">Cancel</button>
+                                        <button type="submit" class="btn btn-primary cancel-form" onclick="window.history.go(-1); return false;">Cancel</button>
                                     </div>
                                 </div>
                             </div>
@@ -172,6 +174,79 @@
         </div>
     </div>
 </div>
+<script>
+    $(document).ready(function($) {
+        var url = $('img#profileimg').attr('src');
+        $('#profileimage').val(url)
+        $("#profile_image").change(function(){
+            var file = $(this).prop('files')[0];
+            $('#profileimage').val(file.name)
+        });
+
+        $("#add_doctor").validate({
+        // Specify validation rules
+        rules: {
+            first_name: "required",
+            last_name: "required",
+            username: "required",
+            mobile_number: "required",
+            email: "required",
+            password: {
+                required: true,
+                minlength: 5
+            },
+            cpassword: {
+                required: true,
+                minlength: 5,
+                equalTo: "#password"
+            },
+            dob: "required",
+            gender: "required",
+            education: "required",
+            designation: "required",
+            department_id: "required",
+            address: "required",
+            country_id: "required",
+            state_id: "required",
+            city_id: "required",
+            postal_code: "required",
+            edit_profile_image: "required",
+            status: "required",
+        },
+        // Specify validation error messages
+        messages: {
+            first_name: "Please enter first name",
+            last_name: "Please enter last name",
+            username: "Please enter username",
+            mobile_number: "Please enter mobile number",
+            email: "Please enter emsil",
+            password: "Please enter password",
+            cpassword: {
+                required : 'Confirm Password is required',
+                equalTo : 'Password not matching',
+            },
+            dob: "Please select date of birth",
+            gender: "Please select gender",
+            education: "Please enter education",
+            designation: "Please enter designation",
+            department_id: "Please select department",
+            address: "Please enter address",
+            country_id: "Please select country",
+            state_id: "Please select state",
+            city_id: "Please select city",
+            postal_code: "Please enter postal code",
+            edit_profile_image: "Please upload profile image",
+            status: "Please select status",
+        },
+        submitHandler: function(form) {
+            form.submit();
+        }
+    });
+
+});
+</script>
 @endsection
+
+
 
 

@@ -100,6 +100,7 @@
                                                         </label>
                                                     </div>
                                                     <x-input-error :messages="$errors->get('gender')" class="mt-2  text-danger" />
+                                                    <label id="gender-error" class="error __web-inspector-hide-shortcut__" for="gender"></label>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-md-6 col-xl-4">

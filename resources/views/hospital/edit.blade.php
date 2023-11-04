@@ -64,12 +64,13 @@
                                                 <input type="radio" id="status" name="status" class="form-check-input" value="1" {{ $data->status == 1 ? 'checked' : ''}}>In Active
                                             </label>
                                         </div>
+                                        <label id="status-error" class="error" for="status"></label>
                                     </div>
                                 </div>
                                 <div class="col-12">
                                     <div class="doctor-submit text-center">
                                         <button type="submit" class="btn btn-primary submit-form me-2">Update</button>
-                                        <button type="submit" class="btn btn-primary cancel-form">Cancel</button>
+                                        <button type="submit" class="btn btn-primary cancel-form" onclick="window.history.go(-1); return false;">Cancel</button>
                                     </div>
                                 </div>
                             </div>

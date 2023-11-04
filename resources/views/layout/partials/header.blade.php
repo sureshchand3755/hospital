@@ -1,11 +1,11 @@
 <div class="header">
     <div class="header-left">
         <a href="{{ url('/') }}" class="logo">
-            <img src="{{ URL::asset('/assets/img/logo.png')}}" width="35" height="35" alt=""> <span>Pre Clinic</span>
+            <img src="{{ URL::to('public/assets/img/logo.png')}}" width="35" height="35" alt=""> <span>Pre Clinic</span>
         </a>
     </div>
-    <a id="toggle_btn" href="javascript:void(0);"><img src="{{ URL::asset('/assets/img/icons/bar-icon.svg')}}"  alt=""></a>
-    <a id="mobile_btn" class="mobile_btn float-start" href="#sidebar"><img src="{{ URL::asset('/assets/img/icons/bar-icon.svg')}}"  alt=""></a>
+    <a id="toggle_btn" href="javascript:void(0);"><img src="{{ URL::to('public/assets/img/icons/bar-icon.svg')}}"  alt=""></a>
+    <a id="mobile_btn" class="mobile_btn float-start" href="#sidebar"><img src="{{ URL::to('public/assets/img/icons/bar-icon.svg')}}"  alt=""></a>
     {{-- <div class="top-nav-search mob-view">
         <form>
             <input type="text" class="form-control" placeholder="Search here">
@@ -96,9 +96,9 @@
                 </div>
                 <span class="user-img">
                     @if (Auth::user()->type==0)
-                    <img  src="{{ Auth::user()->generalinfo && Auth::user()->generalinfo->profile_image ? asset('images/'.Auth::user()->generalinfo->profile_image) : URL::asset('assets/img/user-06.jpg') }}"  alt="Patient">
+                    <img  src="{{ Auth::user()->generalinfo && Auth::user()->generalinfo->profile_image ? asset('images/'.Auth::user()->generalinfo->profile_image) : URL::to('publicassets/img/user-06.jpg') }}"  alt="Patient">
                     @elseif (Auth::user()->type==1)
-                        <img  src="{{ Auth::user()->doctorinfo && Auth::user()->doctorinfo->profile_image ? asset('images/'.Auth::user()->doctorinfo->profile_image) : URL::asset('assets/img/user-06.jpg') }}"  alt="Doctor">
+                        <img  src="{{ Auth::user()->doctorinfo && Auth::user()->doctorinfo->profile_image ? asset('images/'.Auth::user()->doctorinfo->profile_image) : URL::to('publicassets/img/user-06.jpg') }}"  alt="Doctor">
                     @endif
 
                 </span>
