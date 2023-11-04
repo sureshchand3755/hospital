@@ -192,6 +192,16 @@ Route::middleware(['auth', 'user-access:2'])->group(function () {
     Route::post('doctor/update', [DoctorsController::class, 'update'])->name('doctor.update');
     Route::get('doctor/changestatus/{id}/{status}', [DoctorsController::class, 'changeStatus'])->name('doctor.changestatus');
     Route::post('doctor/delete',  [DoctorsController::class, 'destroy'])->name('doctor.delete');
+
+    Route::get('receptions', [ReceptionController::class, 'index'])->name('reception.list');
+    Route::get('reception/add', [ReceptionController::class, 'create'])->name('reception.add');
+    Route::post('reception/store', [ReceptionController::class, 'store']);
+    Route::get('reception/list', [ReceptionController::class, 'getList'])->name('reception.lists');
+    Route::get('reception/view/{id}', [ReceptionController::class, 'show'])->name('reception.view');
+    Route::get('reception/edit/{id}', [ReceptionController::class, 'edit'])->name('reception.edit');
+    Route::post('reception/update', [ReceptionController::class, 'update'])->name('reception.update');
+    Route::get('reception/changestatus/{id}/{status}', [ReceptionController::class, 'changeStatus'])->name('reception.changestatus');
+    Route::post('reception/delete',  [ReceptionController::class, 'destroy'])->name('reception.delete');
 });
 /*------------------------------------------
 --------------------------------------------

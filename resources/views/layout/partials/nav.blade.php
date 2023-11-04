@@ -32,6 +32,9 @@
                         <li class="{{ Request::is('departments','edit-department','add-departments') ? 'active' : '' }}">
                             <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
                         </li>
+                        <li  class="{{ Request::is('receptions','reception/edit','reception/add') ? 'active' : '' }}">
+                            <a href="{{ url('receptions') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Receptionist </span></a>
+                        </li>
                     @elseif (Auth::user()->type==3)
                         <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">
                             <a href="{{ url('admin/dashboard') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>

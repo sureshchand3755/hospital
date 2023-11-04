@@ -13,7 +13,7 @@
                 </div>
                 <div class="col-md-6 position-blk">
                     <div class="morning-img">
-                        <img src="../assets/img/morning-img-02.png" alt="">
+                        <img src="{{URL::to('public/assets/img/morning-img-02.png')}}" alt="">
                     </div>
                 </div>
             </div>
@@ -23,7 +23,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="doctor-widget border-right-bg">
                         <div class="doctor-box-icon flex-shrink-0">
-                            <img src="../assets/img/icons/doctor-dash-01.svg" alt="">
+                            <img src="{{URL::to('public/assets/img/icons/doctor-dash-01.svg')}}" alt="">
                         </div>
                         <div class="doctor-content dash-count flex-grow-1">
                             <h4><span class="counter-up" >30</span><span>/85</span><span class="status-green">+60%</span></h4>
@@ -34,7 +34,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="doctor-widget border-right-bg">
                         <div class="doctor-box-icon flex-shrink-0">
-                            <img src="../assets/img/icons/doctor-dash-02.svg" alt="">
+                            <img src="{{URL::to('public/assets/img/icons/doctor-dash-02.svg')}}" alt="">
                         </div>
                         <div class="doctor-content dash-count flex-grow-1">
                             <h4><span class="counter-up" >20</span><span>/125</span><span class="status-pink">-20%</span></h4>
@@ -45,7 +45,7 @@
                 <div class="col-xl-3 col-md-6">
                     <div class="doctor-widget border-right-bg">
                         <div class="doctor-box-icon flex-shrink-0">
-                            <img src="../assets/img/icons/doctor-dash-03.svg" alt="">
+                            <img src="{{URL::to('public/assets/img/icons/doctor-dash-03.svg')}}" alt="">
                         </div>
                         <div class="doctor-content dash-count flex-grow-1">
                             <h4><span class="counter-up" >12</span><span>/30</span><span class="status-green">+40%</span></h4>
@@ -55,7 +55,7 @@
                 </div><div class="col-xl-3 col-md-6">
                     <div class="doctor-widget">
                         <div class="doctor-box-icon flex-shrink-0">
-                            <img src="../assets/img/icons/doctor-dash-04.svg" alt="">
+                            <img src="{{URL::to('public/assets/img/icons/doctor-dash-04.svg')}}" alt="">
                         </div>
                         <div class="doctor-content dash-count flex-grow-1">
                             <h4>$<span class="counter-up" >530</span><span></span><span class="status-green">+50%</span></h4>
@@ -100,13 +100,13 @@
                     <div class="card patient-structure">
                         <div class="card-body">
                             <h5>New Patients</h5>
-                            <h3>56<span class="status-green"><img src="../assets/img/icons/sort-icon-01.svg" alt="" class="me-1">60%</span></h3>
+                            <h3>56<span class="status-green"><img src="{{URL::to('public/assets/img/icons/sort-icon-01.svg')}}" alt="" class="me-1">60%</span></h3>
                         </div>
                     </div>
                     <div class="card patient-structure">
                         <div class="card-body">
                             <h5>Old Patients</h5>
-                            <h3>35<span class="status-pink"><img src="../assets/img/icons/sort-icon-02.svg" alt="" class="me-1">-20%</span></h3>
+                            <h3>35<span class="status-pink"><img src="{{URL::to('public/assets/img/icons/sort-icon-02.svg')}}" alt="" class="me-1">-20%</span></h3>
                         </div>
                     </div>
                 </div>
@@ -148,7 +148,7 @@
                                         <tbody>
                                             <tr>
                                                 <td class="table-image appoint-doctor">
-                                                    <img width="28" height="28" class="rounded-circle" src="../assets/img/profiles/avatar-02.jpg" alt="">
+                                                    <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-02.jpg')}}" alt="">
                                                     <h2>Dr.Jenny Smith</h2>
                                                 </td>
                                                 <td class="appoint-time text-center">
@@ -162,7 +162,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="table-image appoint-doctor">
-                                                    <img width="28" height="28" class="rounded-circle" src="../assets/img/profiles/avatar-03.jpg" alt="">
+                                                    <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-03.jpg')}}" alt="">
                                                     <h2>Dr.Angelica Ramos</h2>
                                                 </td>
                                                 <td class="appoint-time text-center">
@@ -176,7 +176,7 @@
                                             </tr>
                                             <tr>
                                                 <td class="table-image appoint-doctor">
-                                                    <img width="28" height="28" class="rounded-circle" src="../assets/img/profiles/avatar-04.jpg" alt="">
+                                                    <img width="28" height="28" class="rounded-circle" src="{{URL::to('public/assets/img/profiles/avatar-04.jpg')}}" alt="">
                                                     <h2>Dr.Martin Doe</h2>
                                                 </td>
                                                 <td class="appoint-time text-center">
@@ -198,7 +198,7 @@
                         <div class="card wallet-widget">
                             <div class="circle-bar circle-bar2">
                                 <div class="circle-graph2" data-percent="66">
-                                    <b><img src="../assets/img/icons/timer.svg" alt=""></b>
+                                    <b><img src="{{URL::to('public/assets/img/icons/timer.svg')}}" alt=""></b>
                                 </div>
                             </div>
                             <div class="main-limit">
@@ -237,9 +237,9 @@
                                                     <li class="dropdown-item">Time<span>8:30 - 9:00 (30min)</span></li>
                                                     <li class="schedule-blk mb-0 pt-2 dropdown-item">
                                                         <ul class="nav schedule-time">
-                                                            <li><a href="javascript:;"><img src="../assets/img/icons/trash.svg" alt=""></a></li>
-                                                            <li><a href="javascript:;"><img src="../assets/img/icons/profile.svg" alt=""></a></li>
-                                                            <li><a href="javascript:;"><img src="../assets/img/icons/edit.svg" alt=""></a></li>
+                                                            <li><a href="javascript:;"><img src="{{URL::to('public/assets/img/icons/trash.svg')}}" alt=""></a></li>
+                                                            <li><a href="javascript:;"><img src="{{URL::to('public/assets/img/icons/profile.svg')}}" alt=""></a></li>
+                                                            <li><a href="javascript:;"><img src="{{URL::to('public/assets/img/icons/edit.svg')}}" alt=""></a></li>
                                                         </ul>
                                                         <a class="btn btn-primary appoint-start">Start Appointment</a>
                                                     </li>
