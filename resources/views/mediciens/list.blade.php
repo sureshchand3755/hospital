@@ -122,7 +122,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{(Auth::user()->type==0)?route('department.delete'):route('admin.department.delete')}}" method="POST">
+                <form action="{{route('department.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
                     <img src="assets/img/sent.png" alt="" width="50" height="46">

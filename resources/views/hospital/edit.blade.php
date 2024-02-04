@@ -9,7 +9,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ url('admin/hospital/update') }}" id="update_hospital" enctype="multipart/form-data">
+                        <form method="POST" action="{{ url('hospital/update') }}" id="update_hospital" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12">

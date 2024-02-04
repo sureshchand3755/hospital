@@ -8,7 +8,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ url('admin/reception/store') }}" id="add_reception" enctype="multipart/form-data">
+                        <form method="POST" action="{{ (Auth::user()->type==2)?route('hospital.reception.store'):route('admin.reception.store') }}" id="add_reception" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -31,7 +31,7 @@
                                 <div class="col-12 col-md-6 col-xl-6">
                                     <div class="form-group local-forms">
                                         <label >Mobile <span class="login-danger">*</span></label>
-                                        <input class="form-control" type="mobile" id="mobile" name="mobile" placeholder="" >
+                                        <input class="form-control" type="mobile" id="mobile" name="mobile" placeholder="" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-6">
@@ -85,14 +85,25 @@
         </div>
     </div>
 </div>
+<style>
+    .settings-btn .hide-input{
+        width: 30% !important;
+        margin-left: 404px  !important;
+        margin-top: -15px  !important;
+    }
+</style>
 <script>
     $(document).ready(function($) {
+
         $("#add_reception").validate({
             // Specify validation rules
             rules: {
                 name: "required",
                 email: "required",
-                mobile: "required",
+                mobile: {
+                    required: true,
+                    maxlength: 10
+                },
                 password: {
                     required: true,
                     minlength: 6
@@ -108,7 +119,10 @@
             messages: {
                 name: "Please enter first name",
                 email: "Please enter the email",
-                mobile: "Please enter the mobile",
+                mobile: {
+                    required: "Please enter the mobile",
+                    maxlength: "Please enter maximum 10 digit number"
+                },
                 password: "Please enter password",
                 cpassword: {
                     required: 'Confirm Password is required',

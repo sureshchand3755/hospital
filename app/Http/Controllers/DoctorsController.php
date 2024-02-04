@@ -89,9 +89,9 @@ class DoctorsController extends Controller
         $doctorInfo->save();
 
         $redirect = 'doctor.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.doctor.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.doctor.list';
+        // }
 
         return Redirect::route($redirect)->with('success','Profile created successfully!');
     }
@@ -134,26 +134,26 @@ class DoctorsController extends Controller
                     if($row->status==0){
                         $statusVal = 1;
                         $changestatusUrl=url('doctor/changestatus/'.$row->id.'/'.$statusVal);
-                        if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/doctor/changestatus/'.$row->id.'/'.$statusVal);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $changestatusUrl=url('admin/doctor/changestatus/'.$row->id.'/'.$statusVal);
+                        // }
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-green ">Active</button></a>';
                     }
                     if($row->status==1){
                         $statusVal = 0;
                         $changestatusUrl=url('doctor/changestatus/'.$row->id.'/'.$statusVal);
-                        if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/doctor/changestatus/'.$row->id.'/'.$statusVal);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $changestatusUrl=url('admin/doctor/changestatus/'.$row->id.'/'.$statusVal);
+                        // }
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-pink">In Active</button></a>';
                     }
                     return $actionBtn;
                 })
                 ->addColumn('action', function($row){
                     $editUrl=url('doctor/edit/'.$row->id);
-                    if(Auth::user()->type==3){
-                        $editUrl=url('admin/doctor/edit/'.$row->id);
-                    }
+                    // if(Auth::user()->type==3){
+                    //     $editUrl=url('admin/doctor/edit/'.$row->id);
+                    // }
                     $actionBtn = '<div class="action">
                     <a class="view_doctor" data-bs-target="#view_doctor"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i>
                     <a class="" href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>
@@ -237,9 +237,9 @@ class DoctorsController extends Controller
         $doctorInfo->save();
         $doctorInfo->getChanges();
         $redirect = 'doctor.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.doctor.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.doctor.list';
+        // }
         return Redirect::route($redirect)->with('success','Profile Updated successfully!');
 
     }
@@ -252,9 +252,9 @@ class DoctorsController extends Controller
             $ustatus='Activeted';
         }
         $redirect = 'doctor.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.doctor.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.doctor.list';
+        // }
         return Redirect::route($redirect)->with('success',"Doctor is ".$ustatus);
     }
 
@@ -264,9 +264,9 @@ class DoctorsController extends Controller
     public function destroy(Request $request)
     {
         $redirect = 'doctor.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.doctor.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.doctor.list';
+        // }
         try {
             User::where("id", $request->id)->update(['deleted_at'=>'Y']);
             return Redirect::route($redirect)->with('success','Doctor deleted successfully');

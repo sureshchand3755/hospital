@@ -42,27 +42,27 @@ class ReceptionController extends Controller
                     if($row->status==0){
                         $statusVal = 1;
                         $changestatusUrl=url('reception/changestatus/'.$row->id.'/'.$statusVal);
-                        if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/reception/changestatus/'.$row->id.'/'.$statusVal);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $changestatusUrl=url('admin/reception/changestatus/'.$row->id.'/'.$statusVal);
+                        // }
 
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-green ">Active</button></a>';
                     }
                     if($row->status==1){
                         $statusVal = 0;
                         $changestatusUrl=url('reception/changestatus/'.$row->id.'/'.$statusVal);
-                        if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/reception/changestatus/'.$row->id.'/'.$statusVal);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $changestatusUrl=url('admin/reception/changestatus/'.$row->id.'/'.$statusVal);
+                        // }
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-pink">In Active</button></a>';
                     }
                     return $actionBtn;
                 })
                 ->addColumn('action', function($row){
                     $editUrl=url('reception/edit/'.$row->id);
-                    if(Auth::user()->type==3){
-                        $editUrl=url('admin/reception/edit/'.$row->id);
-                    }
+                    // if(Auth::user()->type==3){
+                    //     $editUrl=url('admin/reception/edit/'.$row->id);
+                    // }
 
                     $actionBtn = '<div class="action"><a class="view_reception" data-bs-target="#view_reception"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i>
                     <a href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>
@@ -92,9 +92,9 @@ class ReceptionController extends Controller
         $userData->save();
 
         $redirect = 'reception.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.reception.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.reception.list';
+        // }
 
         return Redirect::route($redirect)->with('success','Reception created successfully!');
     }
@@ -126,9 +126,9 @@ class ReceptionController extends Controller
         $userData->updated_at = new Carbon();
         $userData->save();
         $redirect = 'reception.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.reception.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.reception.list';
+        // }
         return Redirect::route($redirect)->with('success','Reception Updated successfully!');
 
     }
@@ -142,18 +142,18 @@ class ReceptionController extends Controller
             $ustatus='Activeted';
         }
         $redirect = 'reception.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.reception.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.reception.list';
+        // }
         return Redirect::route($redirect)->with('success',"Reception is ".$ustatus);
     }
 
     public function destroy(Request $request)
     {
         $redirect = 'reception.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.reception.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.reception.list';
+        // }
         try {
             User::where("id", $request->id)->update(['deleted_at'=>'Y']);
             return Redirect::route($redirect)->with('success','Reception deleted successfully');

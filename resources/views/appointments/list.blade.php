@@ -23,11 +23,21 @@
                                             </div> --}}
                                             <div class="add-group">
                                                 @if (Auth::user()->type==0 || Auth::user()->type==3)
-
-                                                <a href="{{(Auth::user()->type==0)?url('appointment/add'):url('admin/appointment/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{url('appointment/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 @endif
                                                 {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::to('public/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="row">
+                                                <div class="col-md-3">From </div>
+                                                <div class="col-md-3"></div>
+                                                <div class="col-md-3">TO</div>
+                                                <div class="col-md-3">
+                                                    <button type="submit" class="btn btn-primary submit-form me-2">Search</button>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -350,7 +360,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{(Auth::user()->type==0)?route('appointment.delete'):route('admin.appointment.delete')}}" method="POST">
+                <form action="{{route('appointment.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
                     <img src="{{URL::to('public/assets/img/sent.png')}}" alt="" width="50" height="46">
@@ -371,7 +381,7 @@
                 <h4 class="modal-title" id="prescriptionModalLabel">Add Prescription</h4>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form action="{{ route('doctor.prescription.add') }}" method="POST" id="add_prescription" enctype="multipart/form-data">
+            <form action="{{ route('prescription.add') }}" method="POST" id="add_prescription" enctype="multipart/form-data">
                 <div class="modal-body text-center">
                         @csrf
                         <input type="hidden" id="patient_id" name="patient_id" value="">
@@ -535,17 +545,9 @@ $(document).ready(function($) {
 
     $('#prescription, #view_appointment').modal({backdrop: 'static', keyboard: false}, 'show');
     var loginType = "{{ Auth::user()->type}}";
-    var changeStatusUrl = "";
-    var listUrl='';
-    if(loginType==1){
-        changeStatusUrl = "{{url('doctor/appointment/changestatus')}}";
-    }else if(loginType==0){
-        changeStatusUrl = "{{url('appointment/changestatus')}}";
-        listUrl="{{ route('patient.appointment.list') }}";
-    }else if(loginType==3){
-        changeStatusUrl = "{{url('admin/appointment/changestatus')}}";
-        listUrl="{{ route('admin.patient.appointment.list') }}";
-    }
+    var changeStatusUrl = "{{url('appointment/changestatus')}}";
+    var listUrl="{{ route('appointment.list') }}";
+
     // $('select.status option:first').attr('disabled', true);
 
 
@@ -602,12 +604,8 @@ $(document).ready(function($) {
     $(document).on('click','.view_appointment',function(){
         var id = $(this).data('id');
         var doctor_id = $(this).data('doctorid');
-        var url = "{{ route('patient.appointment.view', ':id') }}";
-        if(loginType==1){
-            url = "{{ route('doctor.appointment.view', ':id') }}";
-        }else if(loginType==3){
-            url = "{{ route('admin.patient.appointment.view', ':id') }}";
-        }
+        var url = "{{ route('appointment.view', ':id') }}";
+
         url = url.replace(':id', id);
         $.get(url, function (data) {
             $('#appno').text('#'+data.appointment_no);
@@ -684,6 +682,7 @@ $(document).ready(function($) {
         autoWidth: false,
         lengthMenu: [[10, 20, 25, 50, -1], [10, 20, 25, 50, 'All']],
         serverSide: true,
+        filter: false,
         ajax: listUrl,
 
         columns: [

@@ -9,7 +9,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{ url('admin/reception/update') }}" id="update_reception" enctype="multipart/form-data">
+                        <form method="POST" action="{{ (Auth::user()->type==2)?route('hospital.reception.update'):route('admin.reception.update') }}" id="update_reception" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12">
@@ -39,7 +39,7 @@
                                 <div class="col-12 col-md-6 col-xl-6">
                                     <div class="form-group local-forms">
                                         <label >Password</label>
-                                        <input class="form-control" type="password" placeholder="" id="password" name="password" >
+                                        <input class="form-control" type="password" placeholder="" id="password" name="password">
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6 col-xl-6">
@@ -87,6 +87,13 @@
         </div>
     </div>
 </div>
+<style>
+    .settings-btn .hide-input{
+        width: 30% !important;
+        margin-left: 404px  !important;
+        margin-top: -15px  !important;
+    }
+</style>
 <script>
 $(document).ready(function($) {
     $("#update_reception").validate({
@@ -94,14 +101,20 @@ $(document).ready(function($) {
             rules: {
                 name: "required",
                 email: "required",
-                mobile: "required",
+                mobile: {
+                    required: true,
+                    maxlength: 10
+                },
                 status: "required"
             },
             // Specify validation error messages
             messages: {
                 name: "Please enter first name",
                 email: "Please enter the email",
-                mobile: "Please enter the mobile",
+                mobile: {
+                    required: "Please enter the mobile",
+                    maxlength: "Please enter maximum 10 digit number"
+                },
                 status: "Please select status",
             },
             submitHandler: function(form) {

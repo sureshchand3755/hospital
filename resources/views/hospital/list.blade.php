@@ -23,7 +23,7 @@
                                                 </form>
                                             </div> --}}
                                             <div class="add-group">
-                                                <a href="{{(Auth::user()->type==2)?url('hospital/add'):url('admin/hospital/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{url('hospital/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::to('public/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
                                         </div>
@@ -117,7 +117,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{route('admin.hospital.delete')}}" method="POST">
+                <form action="{{route('hospital.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
                     <img src="{{URL::to('public/assets/img/sent.png')}}" alt="" width="50" height="46">
@@ -133,10 +133,8 @@
 <script>
 $(document).ready(function($) {
     var loginType = "{{ Auth::user()->type}}";
-    var listUrl="{{ route('admin.hospital.lists') }}";
-    if(loginType==3){
-        listUrl="{{ route('admin.hospital.lists') }}";
-    }
+    var listUrl="{{ route('hospital.lists') }}";
+
     $(document).on('click','.delete_hospital',function(){
         var id = $(this).data('id');
         $('#e_id').val(id);
@@ -159,7 +157,7 @@ $(document).ready(function($) {
 
     $(document).on('click','.view_hospital',function(){
         var id = $(this).data('id');
-        var url = "{{ route('admin.hospital.view', ':id') }}";
+        var url = "{{ route('hospital.view', ':id') }}";
         url = url.replace(':id', id);
         $.get(url, function (data) {
             var status = 'Active'

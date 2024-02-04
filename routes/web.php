@@ -109,160 +109,227 @@ Route::post('illness/delete',  [IllnessController::class, 'destroy'])->name('ill
 Route::get('illness/check/{id}', [IllnessController::class, 'checkIllness'])->name('illness.check');
 
 
+Route::get('appointments', [AppointmentController::class, 'index'])->name('appointment.index');
+Route::get('appointment/add', [AppointmentController::class, 'create'])->name('appointment.add');
+Route::post('appointment/store', [AppointmentController::class, 'store']);
+Route::get('appointment/list', [AppointmentController::class, 'getList'])->name('appointment.list');
+Route::get('appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('appointment.edit');
+Route::get('appointment/clone/{id}', [AppointmentController::class, 'clone'])->name('appointment.clone');
+Route::post('appointment/cloneStore', [AppointmentController::class, 'cloneStore']);
+Route::post('appointment/update', [AppointmentController::class, 'update']);
+Route::post('appointment/delete',  [AppointmentController::class, 'destroy'])->name('appointment.delete');
+Route::post('appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('appointment.changestatus');
+Route::get('appointment/view/{id}', [AppointmentController::class, 'show'])->name('appointment.view');
+Route::post('prescription/add', [PrescriptionController::class, 'store'])->name('prescription.add');
+Route::get('appointment/mediciensearch', [AppointmentController::class, 'medicienSearch'])->name('appointment.mediciensearch');
+Route::get('generate_report/{id}', [AppointmentController::class, 'generateReport']);
+
+Route::get('mediciens', [MediciensController::class, 'index'])->name('mediciens.index');
+Route::get('medicien/add', [MediciensController::class, 'create'])->name('medicien.add');
+Route::get('medicien/list', [MediciensController::class, 'getList'])->name('medicien.list');
+Route::post('medicien/store', [MediciensController::class, 'store']);
+Route::get('medicien/check/{id}', [MediciensController::class, 'checkMedicien'])->name('medicien.check');
+
+Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+Route::get('/department/add', [DepartmentController::class, 'create'])->name('department.add');
+Route::get('/department/list', [DepartmentController::class, 'getDepartments'])->name('department.list');
+Route::post('/department/store', [DepartmentController::class, 'store']);
+Route::get('department/edit/{id}', [DepartmentController::class, 'edit'])->name('department.edit');
+Route::post('department/update', [DepartmentController::class, 'update'])->name('department.update');
+Route::get('department/view/{id}', [DepartmentController::class, 'show'])->name('department.view');
+Route::get('department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('department.changestatus');
+Route::post('department/delete',  [DepartmentController::class, 'destroy'])->name('department.delete');
+
+Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctor.list');
+Route::get('doctor/add', [DoctorsController::class, 'create'])->name('doctor.add');
+Route::post('doctor/store', [DoctorsController::class, 'store']);
+Route::get('doctor/list', [DoctorsController::class, 'getDoctors'])->name('doctor.lists');
+Route::get('doctor/edit/{id}', [DoctorsController::class, 'edit'])->name('doctor.edit');
+Route::post('doctor/update', [DoctorsController::class, 'update'])->name('doctor.update');
+Route::get('doctor/changestatus/{id}/{status}', [DoctorsController::class, 'changeStatus'])->name('doctor.changestatus');
+Route::post('doctor/delete',  [DoctorsController::class, 'destroy'])->name('doctor.delete');
+
+Route::get('receptions', [ReceptionController::class, 'index'])->name('reception.list');
+Route::get('reception/add', [ReceptionController::class, 'create'])->name('reception.add');
+Route::post('reception/store', [ReceptionController::class, 'store'])->name('reception.store');
+Route::get('reception/list', [ReceptionController::class, 'getList'])->name('reception.lists');
+Route::get('reception/view/{id}', [ReceptionController::class, 'show'])->name('reception.view');
+Route::get('reception/edit/{id}', [ReceptionController::class, 'edit'])->name('reception.edit');
+Route::post('reception/update', [ReceptionController::class, 'update'])->name('reception.update');
+Route::get('reception/changestatus/{id}/{status}', [ReceptionController::class, 'changeStatus'])->name('reception.changestatus');
+Route::post('reception/delete',  [ReceptionController::class, 'destroy'])->name('reception.delete');
+
+Route::get('hospitals', [HospitalController::class, 'index'])->name('hospital.list');
+Route::get('hospital/add', [HospitalController::class, 'create'])->name('hospital.add');
+Route::post('hospital/store', [HospitalController::class, 'store']);
+Route::get('hospital/list', [HospitalController::class, 'getList'])->name('hospital.lists');
+Route::get('hospital/view/{id}', [HospitalController::class, 'show'])->name('hospital.view');
+Route::get('hospital/edit/{id}', [HospitalController::class, 'edit'])->name('hospital.edit');
+Route::post('hospital/update', [HospitalController::class, 'update'])->name('hospital.update');
+Route::get('hospital/changestatus/{id}/{status}', [HospitalController::class, 'changeStatus'])->name('hospital.changestatus');
+Route::post('hospital/delete',  [HospitalController::class, 'destroy'])->name('hospital.delete');
+
+
+
 /*------------------------------------------
 Reception Routes List
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:0'])->group(function () {
-    Route::get('reception/dashboard', [HomeController::class, 'index'])->name('reception.dashboard');
-    Route::get('patient/appointments', [AppointmentController::class, 'index'])->name('patient.appointment.index');
-    Route::get('appointment/add', [AppointmentController::class, 'create'])->name('appointment.add');
-    // Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
-    Route::post('appointment/store', [AppointmentController::class, 'store']);
-    Route::get('patient/appointment/list', [AppointmentController::class, 'getList'])->name('patient.appointment.list');
-    Route::get('appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('appointment.edit');
-    Route::get('appointment/clone/{id}', [AppointmentController::class, 'clone'])->name('appointment.clone');
-    Route::post('appointment/cloneStore', [AppointmentController::class, 'cloneStore']);
-    Route::post('appointment/update', [AppointmentController::class, 'update']);
-    Route::post('appointment/delete',  [AppointmentController::class, 'destroy'])->name('appointment.delete');
-    Route::post('appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('appointment.changestatus');
-    Route::get('appointment/view/{id}', [AppointmentController::class, 'show'])->name('patient.appointment.view');
+Route::get('reception/dashboard', [HomeController::class, 'index'])->name('reception.dashboard');
+// Route::middleware(['auth', 'user-access:0'])->group(function () {
+//     Route::get('reception/dashboard', [HomeController::class, 'index'])->name('reception.dashboard');
+//     Route::get('patient/appointments', [AppointmentController::class, 'index'])->name('patient.appointment.index');
+//     Route::get('appointment/add', [AppointmentController::class, 'create'])->name('appointment.add');
+//     // Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
+//     Route::post('appointment/store', [AppointmentController::class, 'store']);
+//     Route::get('patient/appointment/list', [AppointmentController::class, 'getList'])->name('patient.appointment.list');
+//     Route::get('appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('appointment.edit');
+//     Route::get('appointment/clone/{id}', [AppointmentController::class, 'clone'])->name('appointment.clone');
+//     Route::post('appointment/cloneStore', [AppointmentController::class, 'cloneStore']);
+//     Route::post('appointment/update', [AppointmentController::class, 'update']);
+//     Route::post('appointment/delete',  [AppointmentController::class, 'destroy'])->name('appointment.delete');
+//     Route::post('appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('appointment.changestatus');
+//     Route::get('appointment/view/{id}', [AppointmentController::class, 'show'])->name('patient.appointment.view');
 
-    // Route::get('/patient/profile', [DashboardController::class, 'viewProfile'])->name('patient.profile');
-    // Route::post('/patient/profile', [ProfileController::class, 'store']);
+//     // Route::get('/patient/profile', [DashboardController::class, 'viewProfile'])->name('patient.profile');
+//     // Route::post('/patient/profile', [ProfileController::class, 'store']);
 
-    // Route::get('patient/appointments', [AppointmentController::class, 'index'])->name('patient.appointments');
-    // Route::get('appointment/add', [AppointmentController::class, 'create'])->name('appointment.add');
-    // Route::post('appointment/store', [AppointmentController::class, 'store']);
-    // Route::get('appointment/list', [AppointmentController::class, 'getList'])->name('appointment.list');
+//     // Route::get('patient/appointments', [AppointmentController::class, 'index'])->name('patient.appointments');
+//     // Route::get('appointment/add', [AppointmentController::class, 'create'])->name('appointment.add');
+//     // Route::post('appointment/store', [AppointmentController::class, 'store']);
+//     // Route::get('appointment/list', [AppointmentController::class, 'getList'])->name('appointment.list');
 
-});
+// });
 
 /*------------------------------------------
 Doctor Routes List
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:1'])->group(function () {
-    Route::get('doctor/dashboard', [HomeController::class, 'doctorDashbord'])->name('doctor.dashboard');
-    Route::get('appointments', [AppointmentController::class, 'index'])->name('appointment.index');
+Route::get('doctor/dashboard', [HomeController::class, 'doctorDashbord'])->name('doctor.dashboard');
+// Route::middleware(['auth', 'user-access:1'])->group(function () {
+//     Route::get('doctor/dashboard', [HomeController::class, 'doctorDashbord'])->name('doctor.dashboard');
+//     Route::get('appointments', [AppointmentController::class, 'index'])->name('appointment.index');
 
-    Route::get('appointment/list', [AppointmentController::class, 'getList'])->name('appointment.list');
-    Route::get('doctor/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('doctor.appointment.edit');
-    Route::post('doctor/appointment/update', [AppointmentController::class, 'update']);
-    Route::get('doctor/appointment/view/{id}', [AppointmentController::class, 'show'])->name('doctor.appointment.view');
-    Route::post('doctor/appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('doctor.appointment.changestatus');
-    Route::post('doctor/prescription/add', [PrescriptionController::class, 'store'])->name('doctor.prescription.add');
-    Route::get('appointment/mediciensearch', [AppointmentController::class, 'medicienSearch'])->name('appointment.mediciensearch');
+//     Route::get('appointment/list', [AppointmentController::class, 'getList'])->name('appointment.list');
+//     Route::get('doctor/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('doctor.appointment.edit');
+//     Route::post('doctor/appointment/update', [AppointmentController::class, 'update']);
+//     Route::get('doctor/appointment/view/{id}', [AppointmentController::class, 'show'])->name('doctor.appointment.view');
+//     Route::post('doctor/appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('doctor.appointment.changestatus');
+//     Route::post('doctor/prescription/add', [PrescriptionController::class, 'store'])->name('doctor.prescription.add');
+//     Route::get('appointment/mediciensearch', [AppointmentController::class, 'medicienSearch'])->name('appointment.mediciensearch');
 
 
-    Route::get('mediciens', [MediciensController::class, 'index'])->name('mediciens.index');
-    Route::get('medicien/add', [MediciensController::class, 'create'])->name('medicien.add');
-    Route::get('medicien/list', [MediciensController::class, 'getList'])->name('medicien.list');
-    Route::post('medicien/store', [MediciensController::class, 'store']);
-    Route::get('medicien/check/{id}', [MediciensController::class, 'checkMedicien'])->name('medicien.check');
-    // Route::get('department/edit/{id}', [DepartmentController::class, 'edit'])->name('department.edit');
-    // Route::post('department/update', [DepartmentController::class, 'update'])->name('department.update');
-    // Route::get('department/view/{id}', [DepartmentController::class, 'show'])->name('department.view');
-    // Route::get('department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('department.changestatus');
-    // Route::post('department/delete',  [DepartmentController::class, 'destroy'])->name('department.delete');
+//     Route::get('mediciens', [MediciensController::class, 'index'])->name('mediciens.index');
+//     Route::get('medicien/add', [MediciensController::class, 'create'])->name('medicien.add');
+//     Route::get('medicien/list', [MediciensController::class, 'getList'])->name('medicien.list');
+//     Route::post('medicien/store', [MediciensController::class, 'store']);
+//     Route::get('medicien/check/{id}', [MediciensController::class, 'checkMedicien'])->name('medicien.check');
+//     // Route::get('department/edit/{id}', [DepartmentController::class, 'edit'])->name('department.edit');
+//     // Route::post('department/update', [DepartmentController::class, 'update'])->name('department.update');
+//     // Route::get('department/view/{id}', [DepartmentController::class, 'show'])->name('department.view');
+//     // Route::get('department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('department.changestatus');
+//     // Route::post('department/delete',  [DepartmentController::class, 'destroy'])->name('department.delete');
 
-});
+// });
 
 /*------------------------------------------
 --------------------------------------------
 Hospital Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:2'])->group(function () {
-    Route::get('hospital/dashboard', [HomeController::class, 'hospitalHome'])->name('hospital.dashboard');
+Route::get('hospital/dashboard', [HomeController::class, 'hospitalHome'])->name('hospital.dashboard');
+// Route::middleware(['auth', 'user-access:2'])->group(function () {
+//     Route::get('hospital/dashboard', [HomeController::class, 'hospitalHome'])->name('hospital.dashboard');
 
-    Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
-    Route::get('/department/add', [DepartmentController::class, 'create'])->name('department.add');
-    Route::get('/department/list', [DepartmentController::class, 'getDepartments'])->name('department.list');
-    Route::post('/department/store', [DepartmentController::class, 'store']);
-    Route::get('department/edit/{id}', [DepartmentController::class, 'edit'])->name('department.edit');
-    Route::post('department/update', [DepartmentController::class, 'update'])->name('department.update');
-    Route::get('department/view/{id}', [DepartmentController::class, 'show'])->name('department.view');
-    Route::get('department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('department.changestatus');
-    Route::post('department/delete',  [DepartmentController::class, 'destroy'])->name('department.delete');
+//     Route::get('/departments', [DepartmentController::class, 'index'])->name('departments.index');
+//     Route::get('/department/add', [DepartmentController::class, 'create'])->name('department.add');
+//     Route::get('/department/list', [DepartmentController::class, 'getDepartments'])->name('department.list');
+//     Route::post('/department/store', [DepartmentController::class, 'store']);
+//     Route::get('department/edit/{id}', [DepartmentController::class, 'edit'])->name('department.edit');
+//     Route::post('department/update', [DepartmentController::class, 'update'])->name('department.update');
+//     Route::get('department/view/{id}', [DepartmentController::class, 'show'])->name('department.view');
+//     Route::get('department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('department.changestatus');
+//     Route::post('department/delete',  [DepartmentController::class, 'destroy'])->name('department.delete');
 
-    Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctor.list');
-    Route::get('doctor/add', [DoctorsController::class, 'create'])->name('doctor.add');
-    Route::post('doctor/store', [DoctorsController::class, 'store']);
-    Route::get('doctor/list', [DoctorsController::class, 'getDoctors'])->name('doctor.lists');
-    Route::get('doctor/edit/{id}', [DoctorsController::class, 'edit'])->name('doctor.edit');
-    Route::post('doctor/update', [DoctorsController::class, 'update'])->name('doctor.update');
-    Route::get('doctor/changestatus/{id}/{status}', [DoctorsController::class, 'changeStatus'])->name('doctor.changestatus');
-    Route::post('doctor/delete',  [DoctorsController::class, 'destroy'])->name('doctor.delete');
+//     Route::get('/doctors', [DoctorsController::class, 'index'])->name('doctor.list');
+//     Route::get('doctor/add', [DoctorsController::class, 'create'])->name('doctor.add');
+//     Route::post('doctor/store', [DoctorsController::class, 'store']);
+//     Route::get('doctor/list', [DoctorsController::class, 'getDoctors'])->name('doctor.lists');
+//     Route::get('doctor/edit/{id}', [DoctorsController::class, 'edit'])->name('doctor.edit');
+//     Route::post('doctor/update', [DoctorsController::class, 'update'])->name('doctor.update');
+//     Route::get('doctor/changestatus/{id}/{status}', [DoctorsController::class, 'changeStatus'])->name('doctor.changestatus');
+//     Route::post('doctor/delete',  [DoctorsController::class, 'destroy'])->name('doctor.delete');
 
-    Route::get('receptions', [ReceptionController::class, 'index'])->name('reception.list');
-    Route::get('reception/add', [ReceptionController::class, 'create'])->name('reception.add');
-    Route::post('reception/store', [ReceptionController::class, 'store']);
-    Route::get('reception/list', [ReceptionController::class, 'getList'])->name('reception.lists');
-    Route::get('reception/view/{id}', [ReceptionController::class, 'show'])->name('reception.view');
-    Route::get('reception/edit/{id}', [ReceptionController::class, 'edit'])->name('reception.edit');
-    Route::post('reception/update', [ReceptionController::class, 'update'])->name('reception.update');
-    Route::get('reception/changestatus/{id}/{status}', [ReceptionController::class, 'changeStatus'])->name('reception.changestatus');
-    Route::post('reception/delete',  [ReceptionController::class, 'destroy'])->name('reception.delete');
-});
+//     Route::get('receptions', [ReceptionController::class, 'index'])->name('hospital.reception.list');
+//     Route::get('reception/add', [ReceptionController::class, 'create'])->name('hospital.reception.add');
+//     Route::post('reception/store', [ReceptionController::class, 'store'])->name('hospital.reception.store');
+//     Route::get('reception/list', [ReceptionController::class, 'getList'])->name('hospital.reception.lists');
+//     Route::get('reception/view/{id}', [ReceptionController::class, 'show'])->name('hospital.reception.view');
+//     Route::get('reception/edit/{id}', [ReceptionController::class, 'edit'])->name('hospital.reception.edit');
+//     Route::post('reception/update', [ReceptionController::class, 'update'])->name('hospital.reception.update');
+//     Route::get('reception/changestatus/{id}/{status}', [ReceptionController::class, 'changeStatus'])->name('reception.changestatus');
+//     Route::post('reception/delete',  [ReceptionController::class, 'destroy'])->name('hospital.reception.delete');
+// });
 /*------------------------------------------
 --------------------------------------------
 Super Admin Routes List
 --------------------------------------------
 --------------------------------------------*/
-Route::middleware(['auth', 'user-access:3'])->group(function () {
+Route::get('admin/dashboard', [HomeController::class, 'adminHome'])->name('admin.dashboard');
+// Route::middleware(['auth', 'user-access:3'])->group(function () {
 
-    Route::get('admin/dashboard', [HomeController::class, 'adminHome'])->name('admin.dashboard');
-    Route::get('admin/patient/appointments', [AppointmentController::class, 'index'])->name('admin.patient.appointment.index');
-    Route::get('admin/appointment/add', [AppointmentController::class, 'create'])->name('admin.appointment.add');
-    // Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
-    Route::post('admin/appointment/store', [AppointmentController::class, 'store']);
-    Route::get('admin/patient/appointment/list', [AppointmentController::class, 'getList'])->name('admin.patient.appointment.list');
-    Route::get('admin/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('admin.appointment.edit');
-    Route::get('admin/appointment/clone/{id}', [AppointmentController::class, 'clone'])->name('admin.appointment.clone');
-    Route::post('admin/appointment/cloneStore', [AppointmentController::class, 'cloneStore']);
-    Route::post('admin/appointment/update', [AppointmentController::class, 'update']);
-    Route::post('admin/appointment/delete',  [AppointmentController::class, 'destroy'])->name('admin.appointment.delete');
-    Route::post('admin/appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('admin.appointment.changestatus');
-    Route::get('admin/appointment/view/{id}', [AppointmentController::class, 'show'])->name('admin.patient.appointment.view');
-    Route::get('generate_report/{id}', [AppointmentController::class, 'generateReport']);
+//     Route::get('admin/dashboard', [HomeController::class, 'adminHome'])->name('admin.dashboard');
+
+//     Route::get('admin/patient/appointments', [AppointmentController::class, 'index'])->name('admin.patient.appointment.index');
+//     Route::get('admin/appointment/add', [AppointmentController::class, 'create'])->name('admin.appointment.add');
+//     // Route::post('fetch-department', [AppointmentController::class, 'fetchDepartment']);
+//     Route::post('admin/appointment/store', [AppointmentController::class, 'store']);
+//     Route::get('admin/patient/appointment/list', [AppointmentController::class, 'getList'])->name('admin.patient.appointment.list');
+//     Route::get('admin/appointment/edit/{id}', [AppointmentController::class, 'edit'])->name('admin.appointment.edit');
+//     Route::get('admin/appointment/clone/{id}', [AppointmentController::class, 'clone'])->name('admin.appointment.clone');
+//     Route::post('admin/appointment/cloneStore', [AppointmentController::class, 'cloneStore']);
+//     Route::post('admin/appointment/update', [AppointmentController::class, 'update']);
+//     Route::post('admin/appointment/delete',  [AppointmentController::class, 'destroy'])->name('admin.appointment.delete');
+//     Route::post('admin/appointment/changestatus', [AppointmentController::class, 'changeStatus'])->name('admin.appointment.changestatus');
+//     Route::get('admin/appointment/view/{id}', [AppointmentController::class, 'show'])->name('admin.patient.appointment.view');
 
 
-    Route::get('admin/hospitals', [HospitalController::class, 'index'])->name('admin.hospital.list');
-    Route::get('admin/hospital/add', [HospitalController::class, 'create'])->name('admin.hospital.add');
-    Route::post('admin/hospital/store', [HospitalController::class, 'store']);
-    Route::get('admin/hospital/list', [HospitalController::class, 'getList'])->name('admin.hospital.lists');
-    Route::get('admin/hospital/view/{id}', [HospitalController::class, 'show'])->name('admin.hospital.view');
-    Route::get('admin/hospital/edit/{id}', [HospitalController::class, 'edit'])->name('admin.hospital.edit');
-    Route::post('admin/hospital/update', [HospitalController::class, 'update'])->name('admin.hospital.update');
-    Route::get('admin/hospital/changestatus/{id}/{status}', [HospitalController::class, 'changeStatus'])->name('admin.hospital.changestatus');
-    Route::post('admin/hospital/delete',  [HospitalController::class, 'destroy'])->name('admin.hospital.delete');
 
-    Route::get('admin/receptions', [ReceptionController::class, 'index'])->name('admin.reception.list');
-    Route::get('admin/reception/add', [ReceptionController::class, 'create'])->name('admin.reception.add');
-    Route::post('admin/reception/store', [ReceptionController::class, 'store']);
-    Route::get('admin/reception/list', [ReceptionController::class, 'getList'])->name('admin.reception.lists');
-    Route::get('admin/reception/view/{id}', [ReceptionController::class, 'show'])->name('admin.reception.view');
-    Route::get('admin/reception/edit/{id}', [ReceptionController::class, 'edit'])->name('admin.reception.edit');
-    Route::post('admin/reception/update', [ReceptionController::class, 'update'])->name('admin.reception.update');
-    Route::get('admin/reception/changestatus/{id}/{status}', [ReceptionController::class, 'changeStatus'])->name('admin.reception.changestatus');
-    Route::post('admin/reception/delete',  [ReceptionController::class, 'destroy'])->name('admin.reception.delete');
+//     Route::get('admin/hospitals', [HospitalController::class, 'index'])->name('admin.hospital.list');
+//     Route::get('admin/hospital/add', [HospitalController::class, 'create'])->name('admin.hospital.add');
+//     Route::post('admin/hospital/store', [HospitalController::class, 'store']);
+//     Route::get('admin/hospital/list', [HospitalController::class, 'getList'])->name('admin.hospital.lists');
+//     Route::get('admin/hospital/view/{id}', [HospitalController::class, 'show'])->name('admin.hospital.view');
+//     Route::get('admin/hospital/edit/{id}', [HospitalController::class, 'edit'])->name('admin.hospital.edit');
+//     Route::post('admin/hospital/update', [HospitalController::class, 'update'])->name('admin.hospital.update');
+//     Route::get('admin/hospital/changestatus/{id}/{status}', [HospitalController::class, 'changeStatus'])->name('admin.hospital.changestatus');
+//     Route::post('admin/hospital/delete',  [HospitalController::class, 'destroy'])->name('admin.hospital.delete');
 
-    Route::get('admin/doctors', [DoctorsController::class, 'index'])->name('admin.doctor.list');
-    Route::get('admin/doctor/add', [DoctorsController::class, 'create'])->name('admin.doctor.add');
-    Route::post('admin/doctor/store', [DoctorsController::class, 'store']);
-    Route::get('admin/doctor/list', [DoctorsController::class, 'getDoctors'])->name('admin.doctor.lists');
-    Route::get('admin/doctor/edit/{id}', [DoctorsController::class, 'edit'])->name('admin.doctor.edit');
-    Route::post('admin/doctor/update', [DoctorsController::class, 'update'])->name('admin.doctor.update');
-    Route::get('admin/doctor/changestatus/{id}/{status}', [DoctorsController::class, 'changeStatus'])->name('admin.doctor.changestatus');
-    Route::post('admin/doctor/delete',  [DoctorsController::class, 'destroy'])->name('admin.doctor.delete');
+//     Route::get('admin/receptions', [ReceptionController::class, 'index'])->name('admin.reception.list');
+//     Route::get('admin/reception/add', [ReceptionController::class, 'create'])->name('admin.reception.add');
+//     Route::post('admin/reception/store', [ReceptionController::class, 'store'])->name('admin.reception.store');
+//     Route::get('admin/reception/list', [ReceptionController::class, 'getList'])->name('admin.reception.lists');
+//     Route::get('admin/reception/view/{id}', [ReceptionController::class, 'show'])->name('admin.reception.view');
+//     Route::get('admin/reception/edit/{id}', [ReceptionController::class, 'edit'])->name('admin.reception.edit');
+//     Route::post('admin/reception/update', [ReceptionController::class, 'update'])->name('admin.reception.update');
+//     Route::get('admin/reception/changestatus/{id}/{status}', [ReceptionController::class, 'changeStatus'])->name('admin.reception.changestatus');
+//     Route::post('admin/reception/delete',  [ReceptionController::class, 'destroy'])->name('admin.reception.delete');
 
-    Route::get('admin/departments', [DepartmentController::class, 'index'])->name('admin.departments.index');
-    Route::get('admin/department/add', [DepartmentController::class, 'create'])->name('admin.department.add');
-    Route::get('admin/department/list', [DepartmentController::class, 'getDepartments'])->name('admin.department.list');
-    Route::post('admin/department/store', [DepartmentController::class, 'store']);
-    Route::get('admin/department/edit/{id}', [DepartmentController::class, 'edit'])->name('admin.department.edit');
-    Route::post('admin/department/update', [DepartmentController::class, 'update'])->name('admin.department.update');
-    Route::get('admin/department/view/{id}', [DepartmentController::class, 'show'])->name('admin.department.view');
-    Route::get('admin/department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('admin.department.changestatus');
-    Route::post('admin/department/delete',  [DepartmentController::class, 'destroy'])->name('admin.department.delete');
-    Route::get('admin/department/check-department/{id}', [DepartmentController::class, 'checkDepartment'])->name('admin.department.check-department');
-});
+//     Route::get('admin/doctors', [DoctorsController::class, 'index'])->name('admin.doctor.list');
+//     Route::get('admin/doctor/add', [DoctorsController::class, 'create'])->name('admin.doctor.add');
+//     Route::post('admin/doctor/store', [DoctorsController::class, 'store']);
+//     Route::get('admin/doctor/list', [DoctorsController::class, 'getDoctors'])->name('admin.doctor.lists');
+//     Route::get('admin/doctor/edit/{id}', [DoctorsController::class, 'edit'])->name('admin.doctor.edit');
+//     Route::post('admin/doctor/update', [DoctorsController::class, 'update'])->name('admin.doctor.update');
+//     Route::get('admin/doctor/changestatus/{id}/{status}', [DoctorsController::class, 'changeStatus'])->name('admin.doctor.changestatus');
+//     Route::post('admin/doctor/delete',  [DoctorsController::class, 'destroy'])->name('admin.doctor.delete');
+
+//     Route::get('admin/departments', [DepartmentController::class, 'index'])->name('admin.departments.index');
+//     Route::get('admin/department/add', [DepartmentController::class, 'create'])->name('admin.department.add');
+//     Route::get('admin/department/list', [DepartmentController::class, 'getDepartments'])->name('admin.department.list');
+//     Route::post('admin/department/store', [DepartmentController::class, 'store']);
+//     Route::get('admin/department/edit/{id}', [DepartmentController::class, 'edit'])->name('admin.department.edit');
+//     Route::post('admin/department/update', [DepartmentController::class, 'update'])->name('admin.department.update');
+//     Route::get('admin/department/view/{id}', [DepartmentController::class, 'show'])->name('admin.department.view');
+//     Route::get('admin/department/changestatus/{id}/{status}', [DepartmentController::class, 'changeStatus'])->name('admin.department.changestatus');
+//     Route::post('admin/department/delete',  [DepartmentController::class, 'destroy'])->name('admin.department.delete');
+//     Route::get('admin/department/check-department/{id}', [DepartmentController::class, 'checkDepartment'])->name('admin.department.check-department');
+// });

@@ -8,7 +8,7 @@
 
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="{{(Auth::user()->type==2)?url('doctor/store'):url('admin/doctor/store')}}" id="add_doctor" enctype="multipart/form-data">
+                        <form method="POST" action="{{url('doctor/store')}}" id="add_doctor" enctype="multipart/form-data">
                             @csrf
                             <div class="row">
                                 <div class="col-12">

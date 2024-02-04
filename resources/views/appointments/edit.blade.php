@@ -10,20 +10,7 @@
                     </div>
                     <div class="card">
                         <div class="card-body">
-                            @php
-                                $updateUrl = url('appointment/update');
-                            @endphp
-                            @if (Auth::user()->type == 1)
-                                @php
-                                    $updateUrl = url('doctor/appointment/update');
-                                @endphp
-                            @elseif(Auth::user()->type == 3)
-                                @php
-                                    $updateUrl = url('admin/appointment/update');
-                                @endphp
-                            @endif
-
-                            <form method="POST" action="{{ $updateUrl }}" id="add_appointment">
+                            <form method="POST" action="{{ url('appointment/update') }}" id="add_appointment">
                                 @csrf
                                 <input type="text" name="id" value="{{ $data->id }}" style="display: none">
                                 @if (Auth::user()->type == 0 || Auth::user()->type == 3)

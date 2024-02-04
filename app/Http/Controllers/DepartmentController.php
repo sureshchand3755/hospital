@@ -39,27 +39,27 @@ class DepartmentController extends Controller
                     if($row->status==0){
                         $statusVal = 1;
                         $changestatusUrl=url('department/changestatus/'.$row->id.'/'.$statusVal);
-                        if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/department/changestatus/'.$row->id.'/'.$statusVal);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $changestatusUrl=url('admin/department/changestatus/'.$row->id.'/'.$statusVal);
+                        // }
 
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-green ">Active</button></a>';
                     }
                     if($row->status==1){
                         $statusVal = 0;
                         $changestatusUrl=url('department/changestatus/'.$row->id.'/'.$statusVal);
-                        if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/department/changestatus/'.$row->id.'/'.$statusVal);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $changestatusUrl=url('admin/department/changestatus/'.$row->id.'/'.$statusVal);
+                        // }
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-pink">In Active</button></a>';
                     }
                     return $actionBtn;
                 })
                 ->addColumn('action', function($row){
                     $editUrl=url('department/edit/'.$row->id);
-                    if(Auth::user()->type==3){
-                        $editUrl=url('admin/department/edit/'.$row->id);
-                    }
+                    // if(Auth::user()->type==3){
+                    //     $editUrl=url('admin/department/edit/'.$row->id);
+                    // }
 
 
                     $actionBtn = '<div class="action"><a class="view_department" data-bs-target="#view_department"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i><a title="Edit"  href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a><a class="delete_department" href="#" data-bs-toggle="modal" title="Delete"  data-id="'.$row->id.'" data-bs-target="#delete_department"><i class="far fa-trash-alt m-r-5"></i></a></div>';
@@ -110,9 +110,9 @@ class DepartmentController extends Controller
         $department->save();
         // Toastr::success('Department created successfully!');
         $redirect = 'departments.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.departments.index';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.departments.index';
+        // }
         return Redirect::route($redirect)->with('success','Department Added successfully!');
 
     }
@@ -154,9 +154,9 @@ class DepartmentController extends Controller
         $department->getChanges();
 
         $redirect = 'departments.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.departments.index';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.departments.index';
+        // }
         return Redirect::route($redirect)->with('success','Department Updated successfully!');
     }
 
@@ -170,9 +170,9 @@ class DepartmentController extends Controller
         }
 
         $redirect = 'departments.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.departments.index';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.departments.index';
+        // }
         return Redirect::route($redirect)->with('success',"Department ".$ustatus);
         // Toastr::success("User ".$ustatus ,'Success');
         // return redirect('user/list');
@@ -195,9 +195,9 @@ class DepartmentController extends Controller
     public function destroy(Department $department, Request $request)
     {
         $redirect = 'departments.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.departments.index';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.departments.index';
+        // }
         try {
             Department::where("id", $request->id)->update(['deleted_at'=>'Y']);
             // Toastr::success('User deleted successfully :)','Success');

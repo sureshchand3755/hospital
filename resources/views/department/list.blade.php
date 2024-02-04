@@ -23,7 +23,7 @@
                                                 </form>
                                             </div> --}}
                                             <div class="add-group">
-                                                <a href="{{(Auth::user()->type==2)?url('department/add'):url('admin/department/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{url('department/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::to('public/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
                                         </div>
@@ -134,7 +134,7 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body text-center">
-                <form action="{{(Auth::user()->type==0)?route('department.delete'):route('admin.department.delete')}}" method="POST">
+                <form action="{{route('department.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
                     <img src="assets/img/sent.png" alt="" width="50" height="46">
@@ -152,9 +152,7 @@
 $(document).on('click','.view_department',function(){
     var loginType = "{{ Auth::user()->type}}";
     var url = "{{ route('department.view', ':id') }}";
-    if(loginType==3){
-        url="{{ route('admin.department.view', ':id') }}";
-    }
+
     var id = $(this).data('id');
     url = url.replace(':id', id);
     $.get(url, function (data) {
@@ -174,9 +172,7 @@ $(document).on('click','.view_department',function(){
 $(document).ready(function($) {
     var loginType = "{{ Auth::user()->type}}";
     var listUrl="{{ route('department.list') }}";
-    if(loginType==3){
-        listUrl="{{ route('admin.department.list') }}";
-    }
+
     $(document).on('click','.delete_department',function(){
         var id = $(this).data('id');
         $('#e_id').val(id);

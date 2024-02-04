@@ -36,27 +36,27 @@ class HospitalController extends Controller
                     if($row->status==0){
                         $statusVal = 1;
                         $changestatusUrl=url('hospital/changestatus/'.$row->id.'/'.$statusVal);
-                        if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/hospital/changestatus/'.$row->id.'/'.$statusVal);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $changestatusUrl=url('admin/hospital/changestatus/'.$row->id.'/'.$statusVal);
+                        // }
 
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-green ">Active</button></a>';
                     }
                     if($row->status==1){
                         $statusVal = 0;
                         $changestatusUrl=url('hospital/changestatus/'.$row->id.'/'.$statusVal);
-                        if(Auth::user()->type==3){
-                            $changestatusUrl=url('admin/hospital/changestatus/'.$row->id.'/'.$statusVal);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $changestatusUrl=url('admin/hospital/changestatus/'.$row->id.'/'.$statusVal);
+                        // }
                         $actionBtn='<a href="'.$changestatusUrl.'"<button class="custom-badge status-pink">In Active</button></a>';
                     }
                     return $actionBtn;
                 })
                 ->addColumn('action', function($row){
                     $editUrl=url('hospital/edit/'.$row->id);
-                    if(Auth::user()->type==3){
-                        $editUrl=url('admin/hospital/edit/'.$row->id);
-                    }
+                    // if(Auth::user()->type==3){
+                    //     $editUrl=url('admin/hospital/edit/'.$row->id);
+                    // }
 
                     $actionBtn = '<div class="action"><a class="view_hospital" data-bs-target="#view_hospital"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i>
                     <a href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>
@@ -86,9 +86,9 @@ class HospitalController extends Controller
         $userData->save();
 
         $redirect = 'hospital.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.hospital.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.hospital.list';
+        // }
 
         return Redirect::route($redirect)->with('success','Hospital created successfully!');
     }
@@ -120,9 +120,9 @@ class HospitalController extends Controller
         $userData->updated_at = new Carbon();
         $userData->save();
         $redirect = 'hospital.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.hospital.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.hospital.list';
+        // }
         return Redirect::route($redirect)->with('success','Hospital Updated successfully!');
 
     }
@@ -136,18 +136,18 @@ class HospitalController extends Controller
             $ustatus='Activeted';
         }
         $redirect = 'hospital.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.hospital.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.hospital.list';
+        // }
         return Redirect::route($redirect)->with('success',"Hospital is ".$ustatus);
     }
 
     public function destroy(Request $request)
     {
         $redirect = 'hospital.list';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.hospital.list';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.hospital.list';
+        // }
         try {
             User::where("id", $request->id)->update(['deleted_at'=>'Y']);
             return Redirect::route($redirect)->with('success','Hospital deleted successfully');

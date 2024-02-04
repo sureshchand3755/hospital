@@ -116,10 +116,10 @@ class AppointmentController extends Controller
         $appointment->symptoms_id = $request->symptoms_id;
         $appointment->created_at = new Carbon();
         $appointment->save();
-        $redirect = 'patient.appointment.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.patient.appointment.index';
-        }
+        $redirect = 'appointment.index';
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.patient.appointment.index';
+        // }
         return Redirect::route($redirect)->with('success','Appointment booked successfully!');
 
         // $str = 'Appolo Hospital';
@@ -221,16 +221,16 @@ class AppointmentController extends Controller
                     return $actionBtn;
                 });
 
-                if(Auth::user()->type==0 || Auth::user()->type==3){
+                // if(Auth::user()->type==0 || Auth::user()->type==3){
 
                     $dt =  $dt->addColumn('action', function($row) {
                         $cloneUrl=url('appointment/clone/'.$row->id);
                         $editUrl=url('appointment/edit/'.$row->id);
                         $generateReportUrl=url('generate_report/'.$row->id);
-                        if(Auth::user()->type==3){
-                            $cloneUrl=url('admin/appointment/clone/'.$row->id);
-                            $editUrl=url('admin/appointment/edit/'.$row->id);
-                        }
+                        // if(Auth::user()->type==3){
+                        //     $cloneUrl=url('admin/appointment/clone/'.$row->id);
+                        //     $editUrl=url('admin/appointment/edit/'.$row->id);
+                        // }
                         $actionBtn = '<div class="action">';
                         if($row->status=='C'){
                             $actionBtn .='<a href="'.$cloneUrl.'" title="Clone"><i class="fa-solid fa-clone m-r-5"></i></a>';
@@ -242,20 +242,20 @@ class AppointmentController extends Controller
                         return $actionBtn;
                     })
                     ->rawColumns(['idRows','appointment_no','patient_name','date_of_birth','age', 'patient_gender',  'patient_mobile',  'doctor',  'department', 'status', 'action']);
-                }else{
-                    $dt =  $dt->addColumn('action', function($row){
-                        $editUrl=url('doctor/appointment/edit/'.$row->id);
+                // }else{
+                //     $dt =  $dt->addColumn('action', function($row){
+                //         $editUrl=url('doctor/appointment/edit/'.$row->id);
 
-                        $actionBtn = '<div class="action">
-                        <a class="view_appointment" data-bs-target="#view_appointment"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i></a><a href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>';
-                        // if($row->status=='A'){
-                        //     $actionBtn .='<a class="dropdown-item prescription" data-bs-target="#prescription" href="#" data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="'.$row->doctor_id.'" ><i class="fas fa-book-medical m-r-5"></i> Add Medicine</a>';
-                        // }
-                        $actionBtn .='</div>';
-                        return $actionBtn;
-                    })
-                    ->rawColumns(['idRows','appointment_no','patient_name','date_of_birth','age', 'patient_gender',  'patient_mobile', 'address', 'status', 'action']);
-                }
+                //         $actionBtn = '<div class="action">
+                //         <a class="view_appointment" data-bs-target="#view_appointment"  data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="1" href="#"><i class="fa-solid fa-eye m-r-5"></i></a><a href="'.$editUrl.'"><i class="fa-solid fa-pen-to-square m-r-5"></i></a>';
+                //         // if($row->status=='A'){
+                //         //     $actionBtn .='<a class="dropdown-item prescription" data-bs-target="#prescription" href="#" data-bs-toggle="modal" data-id="'.$row->id.'" data-doctorid="'.$row->doctor_id.'" ><i class="fas fa-book-medical m-r-5"></i> Add Medicine</a>';
+                //         // }
+                //         $actionBtn .='</div>';
+                //         return $actionBtn;
+                //     })
+                //     ->rawColumns(['idRows','appointment_no','patient_name','date_of_birth','age', 'patient_gender',  'patient_mobile', 'address', 'status', 'action']);
+                // }
         return $dt->make(true);
     }
 
@@ -338,10 +338,10 @@ class AppointmentController extends Controller
         $appointment->created_at = new Carbon();
         $appointment->save();
 
-        $redirect = 'patient.appointment.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.patient.appointment.index';
-        }
+        $redirect = 'appointment.index';
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.patient.appointment.index';
+        // }
         return Redirect::route($redirect)->with('success','Appointment cloned successfully!');
     }
 
@@ -409,12 +409,13 @@ class AppointmentController extends Controller
 
         $appointment->save();
 
-        $redirect = 'patient.appointment.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.patient.appointment.index';
-        }else if(Auth::user()->type==1){
-            $redirect = 'appointment.index';
-        }
+        // $redirect = 'patient.appointment.index';
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.patient.appointment.index';
+        // }else if(Auth::user()->type==1){
+        //     $redirect = 'appointment.index';
+        // }
+        $redirect = 'appointment.index';
         return Redirect::route($redirect)->with('success','Appointment updated successfully!');
     }
 
@@ -432,10 +433,10 @@ class AppointmentController extends Controller
      */
     public function destroy(Request $request)
     {
-        $redirect = 'patient.appointment.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.patient.appointment.index';
-        }
+        $redirect = 'appointment.index';
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.patient.appointment.index';
+        // }
         try {
             PatientDetails::where("id", $request->id)->update(['deleted_at'=>'Y']);
             return Redirect::route($redirect)->with('success','Appointment deleted successfully');
@@ -448,7 +449,8 @@ class AppointmentController extends Controller
     }
 
     public function generateReport($id){
-        // $data['data'] = PatientDetails::with(['doctordetails', 'department', 'state', 'city', 'patientprescription', 'patientprescription.medicien'])->where('id', $id)->first();
+        $data['data'] = PatientDetails::with(['doctordetails', 'department', 'state', 'city', 'patientprescription', 'patientprescription.medicien'])->where('id', $id)->first();
+        dd($data);
         $data = [
             'title' => 'Welcome to Tutsmake.com',
             'date' => date('m/d/Y')

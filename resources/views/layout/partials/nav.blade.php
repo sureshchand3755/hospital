@@ -8,8 +8,8 @@
                         <li class="{{ Request::is('reception/dashboard') ? 'active' : '' }}">
                             <a href="{{ url('reception/dashboard') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
                         </li>
-                        <li class="{{ Request::is('patient/appointments','appointment/add','appointment/edit/1') ? 'active' : '' }}">
-                            <a href="{{ url('patient/appointments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
+                        <li class="{{ Request::is('appointments','appointment/add','appointment/edit/1') ? 'active' : '' }}">
+                            <a href="{{ url('appointments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
                         </li>
                     @elseif (Auth::user()->type==1)
                         <li class="{{ Request::is('doctor/dashboard') ? 'active' : '' }}">
@@ -39,20 +39,20 @@
                         <li class="{{ Request::is('admin/dashboard') ? 'active' : '' }}">
                             <a href="{{ url('admin/dashboard') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-01.svg')}}" alt=""></span> <span> Dashboard </span></a>
                         </li>
-                        <li class="{{ Request::is('admin/patient/appointments','admin/appointment/add','appointment/edit/1') ? 'active' : '' }}">
-                            <a href="{{ url('admin/patient/appointments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
+                        <li class="{{ Request::is('appointments','appointment/add','appointment/edit/1') ? 'active' : '' }}">
+                            <a href="{{ url('appointments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-03.svg')}}" alt=""></span> <span> OP Bookings </span></a>
                         </li>
-                        <li  class="{{ Request::is('admin/hospitals','admin/hospital/edit','admin/hospital/add') ? 'active' : '' }}">
-                            <a href="{{ url('admin/hospitals') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Hospital </span></a>
+                        <li  class="{{ Request::is('hospitals','hospital/edit','hospital/add') ? 'active' : '' }}">
+                            <a href="{{ url('hospitals') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Hospital </span></a>
                         </li>
-                        <li  class="{{ Request::is('admin/doctors','admin/doctor/edit/*','admin/doctor/add') ? 'active' : '' }}">
-                            <a href="{{ url('admin/doctors') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
+                        <li  class="{{ Request::is('doctors','doctor/edit/*','doctor/add') ? 'active' : '' }}">
+                            <a href="{{ url('doctors') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Doctors </span></a>
                         </li>
-                        <li  class="{{ Request::is('admin/receptions','admin/reception/edit','admin/reception/add') ? 'active' : '' }}">
-                            <a href="{{ url('admin/receptions') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Receptionist </span></a>
+                        <li  class="{{ Request::is('receptions','reception/edit/*','reception/add') ? 'active' : '' }}">
+                            <a href="{{ url('receptions') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-02.svg')}}" alt=""></span> <span> Receptionist </span></a>
                         </li>
-                        <li class="{{ Request::is('admin/departments','edit-department','add-departments') ? 'active' : '' }}">
-                            <a href="{{ url('admin/departments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
+                        <li class="{{ Request::is('departments','department/edit/*','department/add') ? 'active' : '' }}">
+                            <a href="{{ url('departments') }}"><span class="menu-side"><img src="{{ URL::to('public/assets/img/icons/menu-icon-06.svg')}}" alt=""></span> <span> Departments </span></a>
                         </li>
 
                         <li class="{{ Request::is('visits','visit/add','visit/edit/*') ? 'active' : '' }}">

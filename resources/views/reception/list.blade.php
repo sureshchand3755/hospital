@@ -23,7 +23,7 @@
                                                 </form>
                                             </div> --}}
                                             <div class="add-group">
-                                                <a href="{{(Auth::user()->type==2)?url('hospital/add'):url('admin/reception/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
+                                                <a href="{{(Auth::user()->type==2)?url('reception/add'):url('admin/reception/add')}}" class="btn btn-primary add-pluss ms-2" title="Add"><img src="{{URL::to('public/assets/img/icons/plus.svg')}}" alt=""></a>
                                                 {{-- <a href="javascript:;" class="btn btn-primary doctor-refresh ms-2" title="Refresh"><img src="{{URL::to('public/assets/img/icons/re-fresh.svg')}}" alt=""></a> --}}
                                             </div>
                                         </div>
@@ -34,7 +34,8 @@
                         <!-- /Table Header -->
 
                         <div class="table-responsive">
-                            <table class="table border-0 custom-table comman-table datatable mb-0" id="hospital_list">
+                            <table class="table border-0 custom-table comman-table datatable mb-0"
+                            id="receptionist_list">
                                 <thead>
                                     <tr>
                                         <th>
@@ -120,7 +121,7 @@
         <div class="modal-content">
             <div class="modal-body text-center">
 
-                <form action="{{route('admin.reception.delete')}}" method="POST">
+                <form action="{{route('reception.delete')}}" method="POST">
                     @csrf
                     <input type="hidden" id="e_id" name="id">
                     <img src="{{URL::to('public/assets/img/sent.png')}}" alt="" width="50" height="46">
@@ -136,16 +137,14 @@
 <script>
 $(document).ready(function($) {
     var loginType = "{{ Auth::user()->type}}";
-    var listUrl="{{ route('admin.reception.lists') }}";
-    if(loginType==3){
-        listUrl="{{ route('admin.reception.lists') }}";
-    }
+    var listUrl="{{ route('reception.lists') }}";
+
     $(document).on('click','.delete_reception',function(){
         var id = $(this).data('id');
         $('#e_id').val(id);
     });
 
-    var doctorTable = $('#hospital_list').DataTable({
+    var doctorTable = $('#receptionist_list').DataTable({
         processing: true,
         responsive: true,
         pageLength: 10,
@@ -164,7 +163,9 @@ $(document).ready(function($) {
 
     $(document).on('click','.view_reception',function(){
         var id = $(this).data('id');
-        var url = "{{ route('admin.reception.view', ':id') }}";
+        var url = "{{ route('reception.view', ':id') }}";
+        var loginType = "{{ Auth::user()->type}}";
+
         url = url.replace(':id', id);
         $.get(url, function (data) {
             var status = 'Active'

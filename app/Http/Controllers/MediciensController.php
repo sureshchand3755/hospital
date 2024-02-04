@@ -134,9 +134,9 @@ class MediciensController extends Controller
         $department->getChanges();
 
         $redirect = 'departments.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.departments.index';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.departments.index';
+        // }
         return Redirect::route($redirect)->with('success','Department Updated successfully!');
     }
 
@@ -150,9 +150,9 @@ class MediciensController extends Controller
         }
 
         $redirect = 'departments.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.departments.index';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.departments.index';
+        // }
         return Redirect::route($redirect)->with('success',"Department ".$ustatus);
         // Toastr::success("User ".$ustatus ,'Success');
         // return redirect('user/list');
@@ -165,9 +165,9 @@ class MediciensController extends Controller
     public function destroy(Department $department, Request $request)
     {
         $redirect = 'departments.index';
-        if(Auth::user()->type==3){
-            $redirect = 'admin.departments.index';
-        }
+        // if(Auth::user()->type==3){
+        //     $redirect = 'admin.departments.index';
+        // }
         try {
             Department::where("id", $request->id)->update(['deleted_at'=>'Y']);
             // Toastr::success('User deleted successfully :)','Success');
